@@ -12,19 +12,58 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  Widget buildRow(String text, IconData icon, {style}) {
+    if (text == null) {
+      return new Padding(padding: EdgeInsets.all(0.0));
+    }
+
+    style = style ?? new TextStyle(
+        color: Colors.black54
+    );
+    return new Row(
+      children: <Widget>[
+        new Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: new Icon(icon, color: Colors.black54)
+        ),
+        new Expanded(
+            child: new Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: new Text(text,
+                    textAlign: TextAlign.center,
+                    style: style
+                )
+            ),
+            key: Key('expanded')
+        )
+      ],
+    );
+  }
+
+  Widget buildRowPadding(String context) {
+    if (context == null) {
+      return new Padding(padding: EdgeInsets.all(0.0));
+    }
+
+    return new Padding(padding: EdgeInsets.only(bottom: 20.0));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title)
+        title: new Text("Profile"),
       ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.white,
+      body: Center(
+        child: ListView(
+          padding: EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
           children: <Widget>[
-            new Text(
-              'Profile Screen',
-            ),
+            buildRow("Test User", Icons.person),
+            buildRowPadding("Test User"),
+            buildRow("Test Email", Icons.email),
+            buildRowPadding("Test Email"),
           ],
         ),
       ),
