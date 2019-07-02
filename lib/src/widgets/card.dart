@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:groupie/model.dart' show HobbyCard;
 
-Widget createCard(HobbyCard card) {
+Widget createCard(HobbyCard card, VoidCallback remove) {
   return new Positioned(
     top: 50.0,
     child: Draggable(
-//      onDragCompleted: (drag){
-//        _removeCard(x);
-//      },
+      onDragCompleted: () {
+        remove();
+      },
       childWhenDragging: Container(),
       feedback: _createCard(card),
       child: _createCard(card),
