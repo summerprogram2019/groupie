@@ -1,6 +1,6 @@
 # groupie
 
-Find people to do hobbies with
+Find friends to do hobbies with
 
 ## Getting Started
 
