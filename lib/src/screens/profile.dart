@@ -57,16 +57,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       backgroundColor: Colors.white,
       body: Center(
-        child: ListView(
-          padding: EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
-          children: <Widget>[
-            buildRow("Test User", Icons.person),
-            buildRowPadding("Test User"),
-            buildRow("Test Email", Icons.email),
-            buildRowPadding("Test Email"),
-          ],
-        ),
-      ),
+        child: Row(
+            children: [
+              Text("Laura Davis\n"),
+              Text("lauragrace949@gmail.com")
+            ]
+            )
+      )
     );
   }
 }
