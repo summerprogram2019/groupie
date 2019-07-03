@@ -5,7 +5,7 @@ import 'package:groupie/screens.dart' show HomePage, ProfileScreen;
 
 void main() => runApp(new MyApp());
 
-// Main application, specifies the application to display when first opening the app.
+// Main application, specifies the application to dispglay when first opening the app.
 class MyApp extends StatelessWidget {
   static final String title = 'Groupie';
 
