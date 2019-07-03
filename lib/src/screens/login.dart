@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show WelcomeScreen;
+import 'package:groupie/screens.dart' show WelcomeScreen, HomePage;
 import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class LoginScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       color: Colors.red,
       onPressed: () {
-        Navigator.of(context).pushNamed(WelcomeScreen.tag);
+        Navigator.of(context).pushNamed(HomePage.tag);
       },
     );
 

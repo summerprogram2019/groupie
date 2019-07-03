@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Profile"),
+        title: new Text("My Profile"),
       ),
       backgroundColor: Colors.white,
       body: Center(
