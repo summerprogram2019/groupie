@@ -1,6 +1,6 @@
 # groupie
 
-Find friends to do hobbies with
+Find friends to do hobbies with. How fun?!
 
 ![](images/friendship.png)
 
