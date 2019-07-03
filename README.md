@@ -2,7 +2,7 @@
 
 Grab life by the hand. Create friendships and grow memories that span cultures and last lifetimes.
 
-![](images/friendship.png)
+![](assests/sun.png)
 
 ## Getting Started
 
