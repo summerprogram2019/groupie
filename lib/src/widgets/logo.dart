@@ -22,7 +22,7 @@ class GroupieProfile extends Hero {
     child: GestureDetector(
       child: CircleAvatar(
         backgroundColor: Colors.white,
-        radius: 70.0,
+        radius: 40.0,
         child: Image.asset('laura.jpg'),
       ),
     )

@@ -61,6 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       style: TextStyle(color: Colors.grey),
     ),
     color: Colors.white,
+    shape: new CircleBorder(),
     onPressed: () {
       Navigator.of(context).pushNamed(HomePage.tag);
     },
@@ -78,15 +79,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Column(
           children: [ //Profile pic goes here
-            profile
+            new Container(
+              width: 70,
+              height: 70,
+              child: new Image.asset('laura.jpg'))
           ],
           ),
           Column( //Profile Declaration goes here
             children: [
-              Text("Username\r\n", textAlign: TextAlign.right),
-              SizedBox(height: 8.0),
-              Text("User email\r\n", textAlign: TextAlign.right),
-              SizedBox(height: 24.0),
+              Text("Username\r\n",
+                  textAlign: TextAlign.right,
+                style: new TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                ),
+              ),
+
+              SizedBox(height: 10.0),
               Text("The user can add a \r\n short bio describing \r\n themselves and "
                       "their \r\n interests.\r\n", textAlign: TextAlign.center)
             ]
