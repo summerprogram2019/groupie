@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:groupie/widgets.dart' show GroupieProfile;
+import 'package:groupie/screens.dart' show HomePage;
+
 class ProfileScreen extends StatefulWidget {
   final String title;
 
@@ -49,6 +52,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return new Padding(padding: EdgeInsets.only(bottom: 20.0));
   }
 
+  final profile = new GroupieProfile(); //Profile picture
+
+  final editButton = (context) => RaisedButton(
+    key: Key('edit_button'),
+    child: Text(
+      'Edit',
+      style: TextStyle(color: Colors.grey),
+    ),
+    color: Colors.white,
+    onPressed: () {
+      Navigator.of(context).pushNamed(HomePage.tag);
+    },
+  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +77,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Row(
         children: [
           Column(
-          children: [
-            Text("hi")
+          children: [ //Profile pic goes here
+            profile
           ],
+          ),
+          Column( //Profile Declaration goes here
+            children: [
+              Text("Username\r\n", textAlign: TextAlign.right),
+              SizedBox(height: 8.0),
+              Text("User email\r\n", textAlign: TextAlign.right),
+              SizedBox(height: 24.0),
+              Text("The user can add a \r\n short bio describing \r\n themselves and "
+                      "their \r\n interests.\r\n", textAlign: TextAlign.center)
+            ]
           ),
           Column(
             children: [
-              Text("Laura Davis\n"),
-              Text("lauragrace949@gmail.com")
-            ]
-            )
+              editButton(context)
+          ]
+    )
     ]
       )
     );

@@ -2,7 +2,7 @@
 
 Grab life by the hand. Create friendships and grow memories that span cultures and last lifetimes.
 
-![](assests/sun.png)
+![](assets/sun.png)
 
 Groupie connects strangers - sign up now to share your hobby and join in local events.
 

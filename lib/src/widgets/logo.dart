@@ -14,3 +14,17 @@ class GroupieLogo extends Hero {
       )
   );
 }
+
+class GroupieProfile extends Hero {
+  GroupieProfile() : super(
+    tag: 'profileimage',
+    key: Key('profile_image'),
+    child: GestureDetector(
+      child: CircleAvatar(
+        backgroundColor: Colors.white,
+        radius: 70.0,
+        child: Image.asset('laura.jpg'),
+      ),
+    )
+  );
+}
