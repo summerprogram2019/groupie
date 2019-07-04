@@ -80,11 +80,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
           children: [ //Profile pic goes here
             new Container(
-              width: 70,
-              height: 70,
-              child: new Image.asset('laura.jpg'))
-          ],
-          ),
+              width: 80,
+              height: 80,
+                child: new ClipOval(
+                    child: Image.asset('laura.jpg',
+                        fit: BoxFit.cover)
+                )
+            )
+        ],),
           Column( //Profile Declaration goes here
             children: [
               Text("Username\r\n",
@@ -96,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               SizedBox(height: 10.0),
-              Text("The user can add a \r\n short bio describing \r\n themselves and "
+              Text("The user can add a short bio \r\n describing themselves and "
                       "their \r\n interests.\r\n", textAlign: TextAlign.center)
             ]
           ),
