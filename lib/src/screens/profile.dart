@@ -49,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return new Padding(padding: EdgeInsets.only(bottom: 20.0));
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,13 +57,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: new Text("My Profile"),
       ),
       backgroundColor: Colors.white,
-      body: Center(
-        child: Row(
+      body: Row(
+        children: [
+          Column(
+          children: [
+            Text("hi")
+          ],
+          ),
+          Column(
             children: [
               Text("Laura Davis\n"),
               Text("lauragrace949@gmail.com")
             ]
             )
+    ]
       )
     );
   }
