@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       },
       title: title,
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        //primarySwatch: Colors.white54,
       ),
       home: new WelcomeScreen(title: title),
       routes: routes,
