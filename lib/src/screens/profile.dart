@@ -77,7 +77,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
+          
+          /*Row(
           children: <Widget>[
             Column(
               children: [ //Profile pic goes here
@@ -129,7 +130,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          
+                          new Container(
+                              width: 60.0,
+                              height: 60.0,
+                              child: new ClipOval(
+                                  child: Image.asset('assets/hiking.jpg',
+                                      fit: BoxFit.cover)
+                              )
+                          )
                         ],
                       )
                       ],
@@ -146,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   )
     ],
-          )
+          )*/
     ]
       )
     );
