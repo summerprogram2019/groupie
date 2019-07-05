@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Import the home screen from the screens package
-import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen, SignupPage, RecoveryPage;
+import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen, SignupPage, RecoveryPage, DisclaimerScreen;
 
 void main() => runApp(new MyApp());
 
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
     HomePage.tag: (context) => new HomePage(title: title),
     ProfileScreen.tag: (context) => new ProfileScreen(title: title),
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
+    DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
   };
 
   @override
