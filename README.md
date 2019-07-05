@@ -8,6 +8,8 @@ Groupie connects strangers - sign up now to share your hobby and join in local e
 
 ## Getting Started
 
+After creating your profile, groupies can select their favourite activities and join groups participating in those activities.
+
 ## Code Structure
 
 For help getting started with Flutter, view our online

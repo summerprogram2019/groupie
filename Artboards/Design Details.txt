@@ -1,0 +1,15 @@
+###Font
+Segoe UI
+36pt Headings
+30pt sub headings
+26pt Buttons
+
+### Colours
+#ADADAD - Light text Colour (temporary text in input boxes)
+#0034FF - Hyperlink Colour
+#707070 - text colour
+#39B54A - Logo/ accent  colour
+#D50101 Red text colour
+#F7F7F7 Background Colour
+#E8E8E8 Slider Back and unavailable button
+#FFFFFF (White) Card colour
