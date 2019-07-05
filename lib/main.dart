@@ -5,6 +5,15 @@ import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen,
 
 void main() => runApp(new MyApp());
 
+// For removing glow effect everywhere
+class RemoveGlowEffectBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}
+
 // Main application, specifies the application to dispglay when first opening the app.
 class MyApp extends StatelessWidget {
   static final String title = 'Groupie';
@@ -21,6 +30,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: RemoveGlowEffectBehavior(),
+          child: child,
+        );
+      },
       title: title,
       theme: new ThemeData(
         primarySwatch: Colors.blue,
