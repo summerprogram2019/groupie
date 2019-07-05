@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show LoginScreen;
+import 'package:groupie/screens.dart' show LoginScreen, CreateNewEventMajorPage;
 import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class WelcomeScreen extends StatelessWidget {
@@ -52,7 +52,20 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.of(context).pushNamed(LoginScreen.tag);
                     },
                   ),
-                  SizedBox(height: 48.0),
+                  SizedBox(height: 16.0),
+                  RaisedButton(
+                    key: Key('createNewEvent'),
+                    child: Text(
+                      'Create new event \r\n For dev. purp.',
+                      style: TextStyle(color: Colors.black54, fontSize: 32.0),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
+                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
+                    },
+                  ),
+                  SizedBox(height: 32.0),
                 ]
               )
             ],
