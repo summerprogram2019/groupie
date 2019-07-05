@@ -80,8 +80,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
           children: [ //Profile pic goes here
             new Container(
-              width: 80,
-              height: 80,
+              width: 80.0,
+              height: 80.0,
                 child: new ClipOval(
                     child: Image.asset('laura.jpg',
                         fit: BoxFit.cover)

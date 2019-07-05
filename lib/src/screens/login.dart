@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show WelcomeScreen, HomePage;
-import 'package:groupie/widgets.dart' show GroupieLogo;
+import 'package:groupie/screens.dart' show WelcomeScreen, HomePage, SignupPage, RecoveryPage;
+//import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class LoginScreen extends StatefulWidget {
   final String title;
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
+    //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
 
     // the email entry field
     final email = TextFormField(
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style: TextStyle(color: Colors.blue),
       ),
       onPressed: () {
-        Navigator.of(context).pushNamed(WelcomeScreen.tag);
+        Navigator.of(context).pushNamed(RecoveryPage.tag);
       },
     );
 
@@ -78,11 +78,23 @@ class _LoginScreenState extends State<LoginScreen> {
       key: Key('signup_button'),
       child: Text(
         'Sign Up',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.black),
       ),
-      color: Colors.red,
+      color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(HomePage.tag);
+        Navigator.of(context).pushNamed(SignupPage.tag);
+      },
+    );
+
+    final loginButton = RaisedButton(
+      key: Key('login_button'),
+      child: Text(
+        'Log In',
+        style: TextStyle(color: Colors.black),
+      ),
+      color: Colors.white,
+      onPressed: () {
+        Navigator.of(context).pushNamed(LoginScreen.tag);
       },
     );
 
@@ -96,7 +108,13 @@ class _LoginScreenState extends State<LoginScreen> {
               shrinkWrap: true,
               padding: EdgeInsets.only(left: 24.0, right: 24.0),
               children: <Widget>[
-                logo,
+               //logo,
+                Center(
+                  child: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.black, fontSize: 30.0),
+                  )
+                ),
                 // Sizedboxes are used for whitespace and padding on the screen
                 SizedBox(height: 48.0),
                 email,
@@ -106,6 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 forgotLabel,
                 SizedBox(height: 24.0),
                 Text(errors),
+                SizedBox(height: 24.0),
+                loginButton,
                 SizedBox(height: 24.0),
                 signupButton
 //                loginButton,

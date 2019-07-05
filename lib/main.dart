@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Import the home screen from the screens package
-import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen;
+import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen, SignupPage, RecoveryPage;
 
 void main() => runApp(new MyApp());
 
@@ -12,8 +12,10 @@ class MyApp extends StatelessWidget {
   static final routes = <String, WidgetBuilder>{
     WelcomeScreen.tag: (context) => new WelcomeScreen(title: title),
     LoginScreen.tag: (context) => new LoginScreen(title: title),
+    SignupPage.tag: (context) => new SignupPage(title: title),
     HomePage.tag: (context) => new HomePage(title: title),
     ProfileScreen.tag: (context) => new ProfileScreen(title: title),
+    RecoveryPage.tag: (context) => new RecoveryPage(title: title),
   };
 
   @override

@@ -4,3 +4,5 @@ export 'src/screens/welcome.dart';
 export 'src/screens/login.dart';
 export 'src/screens/homescreen.dart';
 export 'src/screens/profile.dart';
+export 'src/screens/signup.dart';
+export 'src/screens/recovery.dart';
