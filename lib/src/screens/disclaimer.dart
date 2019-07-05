@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:groupie/screens.dart' show LoginScreen;
 //import 'package:groupie/widgets.dart' show GroupieLogo;
 
-class RecoveryPage extends StatefulWidget {
+class DisclaimerScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "recovery";
+  static String tag = "disclaimer";
 
-  RecoveryPage({Key key, this.title}) : super(key: key);
+  DisclaimerScreen({Key key, this.title}) : super(key: key);
 
   @override
-  _RecoveryPageState createState() => new _RecoveryPageState();
+  _DisclaimerScreenState createState() => new _DisclaimerScreenState();
 }
 
-class _RecoveryPageState extends State<RecoveryPage> {
+class _DisclaimerScreenState extends State<DisclaimerScreen> {
   final FocusNode focus = FocusNode();
 
   /// Retrieves the text in the email entry field
@@ -45,23 +45,18 @@ class _RecoveryPageState extends State<RecoveryPage> {
       ),
     );
 
-    final sendRecovery = RaisedButton(
-      key: Key('recovery_button'),
-      child: Text(
-        'Send Recovery Link',
-        style: TextStyle(color: Colors.black),
-      ),
-      color: Colors.white,
-      onPressed: () {
-        Navigator.of(context).pushNamed(LoginScreen.tag);
-      },
+    final confirm = CheckboxListTile(
+        key: Key('checkbox'),
+        title: const Text('I have read and agree to the Terms and Conditions'),
+        value: false,
+        onChanged: null
     );
 
-    final backButton = RaisedButton(
-      key: Key('back_button'),
+    final continueButton = RaisedButton(
+      key: Key('continue_button'),
       child: Text(
-        '<',
-        style: TextStyle(color: Colors.black, fontSize: 50.0),
+        'Continue',
+        style: TextStyle(color: Colors.black),
       ),
       color: Colors.white,
       onPressed: () {
@@ -86,7 +81,7 @@ class _RecoveryPageState extends State<RecoveryPage> {
                   //logo,
                   Center(
                       child: Text(
-                        'Password Recovery',
+                        'Disclaimer',
                         style: TextStyle(color: Colors.black, fontSize: 30.0),
                       )
                   ),
@@ -96,7 +91,9 @@ class _RecoveryPageState extends State<RecoveryPage> {
                   SizedBox(height: 24.0),
                   Text(errors),
                   SizedBox(height: 48.0),
-                  sendRecovery
+                  confirm,
+                  SizedBox(height: 12.0),
+                  continueButton
 //                loginButton,
 //                SizedBox(height: 8.0),
 //                newUser,

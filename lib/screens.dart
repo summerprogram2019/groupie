@@ -6,3 +6,4 @@ export 'src/screens/homescreen.dart';
 export 'src/screens/profile.dart';
 export 'src/screens/signup.dart';
 export 'src/screens/recovery.dart';
+export 'src/screens/disclaimer.dart';
