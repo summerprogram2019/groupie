@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:groupie/util.dart' show login;
 import 'package:groupie/screens.dart' show WelcomeScreen, HomePage;
 import 'package:groupie/widgets.dart' show GroupieLogo;
 
@@ -28,6 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    login("email@braewebb.com", "password1234").then((userId) => {
+      setState(() => {
+        errors = userId.toString()
+      })
+    });
 
     final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
 
