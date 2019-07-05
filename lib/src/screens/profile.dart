@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:groupie/widgets.dart' show GroupieProfile;
 import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/util.dart' show GroupieColours;
 
 class ProfileScreen extends StatefulWidget {
   final String title;
@@ -74,13 +75,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: new AppBar(
         title: new Text("My Profile",
             style: new TextStyle(
-              color: Colors.grey69,
+              color: GroupieColours.grey69,
               fontSize: 20.0,)),
-        backgroundColor: Colors.white69,
+        backgroundColor: GroupieColours.white69,
 
-        iconTheme: new IconThemeData(color: Colors.grey69),
+        iconTheme: new IconThemeData(color: GroupieColours.grey69),
       ),
-      backgroundColor: Colors.white69,
+      backgroundColor: GroupieColours.white69,
       body: ListView(
         children: [
           new Row(
@@ -100,20 +101,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 24.0),
           new Row(
             children: <Widget>[
+
               Expanded(
                 child: new Container(
                             width: 80.0,
+                            height: 30.0,
                             child: Row(
                               children: <Widget>[
-                                Text("Profile Name\r\n",
-                                    style: new TextStyle(
-                                        color: Colors.darkText,
-                                        fontSize: 15.0)),
-                                Text("Daisy",
-                                textAlign: TextAlign.left,
-                                style: new TextStyle(
-                                    color: Colors.grey69,
-                                    fontSize: 15.0))
+                                RichText(
+                                text: TextSpan(
+                                    text: "Profile Name\r\n",
+                                  style: new TextStyle(
+                                    color: GroupieColours.darkText,
+                                    fontSize: 15.0)
+                                ),
+                                )
                               ],
                             )
                 )
@@ -130,12 +132,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Bio\r\n",
                               style: new TextStyle(
-                                  color: Colors.darkText,
+                                  color: GroupieColours.darkText,
                                   fontSize: 15.0)),
                           Text("Living, laughing and loving life.",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey69,
+                                  color: GroupieColours.grey69,
                                   fontSize: 15.0))
                         ],
                       )
@@ -153,12 +155,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Location\r\n",
                               style: new TextStyle(
-                                  color: Colors.darkText,
+                                  color: GroupieColours.darkText,
                                   fontSize: 15.0)),
                           Text("Chengdu, China",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey69,
+                                  color: GroupieColours.grey69,
                                   fontSize: 15.0))
                         ],
                       )
@@ -176,12 +178,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Contact Details\r\n",
                               style: new TextStyle(
-                                  color: Colors.darkText,
+                                  color: GroupieColours.darkText,
                                   fontSize: 15.0)),
-                          Text("Ph:",
+                          Text("Ph: 0467 345 321 \r\n Em: DaisyFlower@gmail.com",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey69,
+                                  color: GroupieColours.grey69,
                                   fontSize: 15.0))
                         ],
                       )
@@ -192,7 +194,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 12.0),
           new Row(
             children: <Widget>[
-
+              Expanded(
+                  child: new Container(
+                      width: 80.0,
+                      child: Row(
+                        children: <Widget>[
+                          Text("Profile Details\r\n",
+                              style: new TextStyle(
+                                  color: GroupieColours.darkText,
+                                  fontSize: 15.0)),
+                          Text("Member Since:\r\nEvents Created:\r\nEvents Joined:",
+                              textAlign: TextAlign.left,
+                              style: new TextStyle(
+                                  color: GroupieColours.grey69,
+                                  fontSize: 15.0)),
+                          Text("8/4/2019\r\n8\r\n12",
+                              textAlign: TextAlign.right,
+                              style: new TextStyle(
+                                  color: GroupieColours.grey69,
+                                  fontSize: 15.0))
+                        ],
+                      )
+                  )
+              )
             ],
           ),
           /*Row(

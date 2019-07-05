@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'package:groupie/widgets.dart' show createCard;
 import 'package:groupie/model.dart' show HobbyCard;
+import 'package:groupie/util.dart' show GroupieColours;
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
-        backgroundColor: Colors.white69,
+        backgroundColor: GroupieColours.white69,
         actions: <Widget>[
            new IconButton(
              icon: new Icon(Icons.person_outline),
