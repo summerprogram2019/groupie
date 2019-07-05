@@ -75,39 +75,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: new Text("My Profile"),
       ),
       backgroundColor: Colors.white,
-      body: Row(
+      body: ListView(
         children: [
-          Column(
-          children: [ //Profile pic goes here
-            new Container(
-              width: 80,
-              height: 80,
-                child: new ClipOval(
-                    child: Image.asset('laura.jpg',
-                        fit: BoxFit.cover)
+          Row(
+          children: <Widget>[
+            Column(
+              children: [ //Profile pic goes here
+                //SizedBox(width: 4.0),
+                new Container(
+                    width: 80,
+                    height: 80,
+                    child: new ClipOval(
+                        child: Image.asset('laura.jpg',
+                            fit: BoxFit.cover)
+                    )
                 )
-            )
-        ],),
-          Column( //Profile Declaration goes here
-            children: [
-              Text("Username\r\n",
-                  textAlign: TextAlign.right,
-                style: new TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                ),
-              ),
+              ],),
+            Expanded(
+              child: Column( //Profile Declaration goes here
+                  children: [
+                    Text("Username\r\n",
+                      textAlign: TextAlign.right,
+                      style: new TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                      ),
+                    ),
 
-              SizedBox(height: 10.0),
-              Text("The user can add a short bio \r\n describing themselves and "
-                      "their \r\n interests.\r\n", textAlign: TextAlign.center)
-            ]
+                    SizedBox(height: 10.0),
+                    Text("The user can add a short bio \r\n describing themselves and "
+                        "their \r\n interests.\r\n", textAlign: TextAlign.right)
+                  ]
+              ),
+            ),
+            Column(
+                children: [
+                  editButton(context)
+                ]
+            )
+          ],
           ),
-          Column(
-            children: [
-              editButton(context)
-          ]
-    )
+          Row(
+                children:[
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text("Top Activities",
+                      textAlign: TextAlign.center,
+                      style: new TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,)
+                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          
+                        ],
+                      )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text("Connections",
+                          textAlign: TextAlign.center,
+                          style: new TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,)
+                      )
+                    ],
+                  )
+    ],
+          )
     ]
       )
     );
