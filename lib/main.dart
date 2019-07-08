@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Import the home screen from the screens package
-import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen, SignupPage, RecoveryPage, DisclaimerScreen, CreateNewEventMajorPage, CreateEventSecondScreen, CreateEventPreviewScreen;
+import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen, PreferencesScreen, SignupPage, RecoveryPage, DisclaimerScreen, CreateNewEventMajorPage, CreateEventSecondScreen, CreateEventPreviewScreen;
 
 void main() => runApp(new MyApp());
 
@@ -17,7 +17,6 @@ class RemoveGlowEffectBehavior extends ScrollBehavior {
 // Main application, specifies the application to dispglay when first opening the app.
 class MyApp extends StatelessWidget {
   static final String title = 'Groupie';
-
   static final routes = <String, WidgetBuilder>{
     WelcomeScreen.tag: (context) => new WelcomeScreen(title: title),
     LoginScreen.tag: (context) => new LoginScreen(title: title),
@@ -26,6 +25,7 @@ class MyApp extends StatelessWidget {
     ProfileScreen.tag: (context) => new ProfileScreen(title: title),
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
     DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
+    PreferencesScreen.tag: (context) => new PreferencesScreen(title: title),
     CreateNewEventMajorPage.tag: (context) => new CreateNewEventMajorPage(title: title),
     CreateEventSecondScreen.tag: (context) => new CreateEventSecondScreen(title: title),
     CreateEventPreviewScreen.tag: (context) => new CreateEventPreviewScreen(title: title),
@@ -43,6 +43,9 @@ class MyApp extends StatelessWidget {
       title: title,
       theme: new ThemeData(
         //primarySwatch: Colors.white54,
+        backgroundColor: Color.fromARGB(255, 247, 247, 247),
+        //define the default font family
+        fontFamily: 'Roboto'
       ),
       home: new WelcomeScreen(title: title),
       routes: routes,

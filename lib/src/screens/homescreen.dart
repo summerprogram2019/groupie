@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'profile.dart';
+
+//have to add in to link to the screen
+import 'preferences.dart';
 import 'package:groupie/widgets.dart' show createCard;
 import 'package:groupie/model.dart' show HobbyCard;
 import 'package:groupie/util.dart' show GroupieColours;
@@ -33,8 +36,12 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
+  //navigator functions to change the screen
   void _openProfile() {
     Navigator.pushNamed(context, ProfileScreen.tag);
+  }
+  void _openPreferences() {
+    Navigator.pushNamed(context, PreferencesScreen.tag);
   }
 
   void _removeCard(int index) {
@@ -54,6 +61,11 @@ class _HomePageState extends State<HomePage> {
              tooltip: 'Open Profile',
              onPressed: _openProfile,
            ),
+          new IconButton(
+              icon: new Icon(Icons.brightness_low),
+              tooltip: 'Open Preferences',
+              onPressed: _openPreferences,
+          )
         ]
       ),
       body: new Center(
