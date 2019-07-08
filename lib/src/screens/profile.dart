@@ -1,59 +1,62 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/widgets.dart' show GroupieProfile;
+import 'package:groupie/model.dart' show User;
+import 'package:groupie/widgets.dart' show GroupieProfile, profileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
-import 'package:groupie/util.dart' show GroupieColours;
+import 'package:groupie/util.dart' show GroupieColours, getUser;
 
 class ProfileScreen extends StatefulWidget {
   final String title;
 
   static String tag = "profile";
 
-  ProfileScreen({Key key, this.title}) : super(key: key);
+  final User profile;
+
+  ProfileScreen({Key key, this.title, this.profile}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => new _ProfileScreenState();
+  _ProfileScreenState createState() => new _ProfileScreenState(profile);
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String name;
+  String biography;
+  String location;
+  String contactDetails;
+  String profileDetails;
 
-  Widget buildRow(String text, IconData icon, {style}) {
-    if (text == null) {
-      return new Padding(padding: EdgeInsets.all(0.0));
+  bool _loading = true;
+
+  _ProfileScreenState(User profile) : super() {
+    if (profile == null) {
+      getUser().then(setupDisplay).catchError((error) {
+        // TODO When I get internet connection, make this a snackbar popup instead of this hack
+        setupDisplay(User.fromJson({
+          "given_name": "Error Loading Data",
+          "birthday": DateTime.now().toIso8601String(),
+          'family_name': "",
+          'country': "",
+          'city': "",
+          'sex': "",
+          'picture_id': ""
+        }));
+      });
+    } else {
+      setupDisplay(profile);
     }
-
-    style = style ?? new TextStyle(
-        color: Colors.black54
-    );
-    return new Row(
-      children: <Widget>[
-        new Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: new Icon(icon, color: Colors.black54)
-        ),
-        new Expanded(
-            child: new Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: new Text(text,
-                    textAlign: TextAlign.center,
-                    style: style
-                )
-            ),
-            key: Key('expanded')
-        )
-      ],
-    );
   }
 
-  Widget buildRowPadding(String context) {
-    if (context == null) {
-      return new Padding(padding: EdgeInsets.all(0.0));
-    }
-
-    return new Padding(padding: EdgeInsets.only(bottom: 20.0));
+  void setupDisplay(User user) {
+    setState(() {
+      name = user.givenName + " " + user.familyName;
+      biography = "Loaded but not actually cause database doesn't support it";
+      location = user.city + ", " + user.country;
+      contactDetails = "Also not supported";
+      profileDetails = "As above";
+    });
   }
 
-  final profile = new GroupieProfile(); //Profile picture
+  final profile = new GroupieProfile();
 
   void _openEditScreen() {
     Navigator.pushNamed(context, EditProfile.tag);
@@ -95,228 +98,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ]
       ),
       backgroundColor: GroupieColours.white69,
-      body: ListView(
+      body: new Stack(
         children: [
-          new Row(
-            children: <Widget>[
-              Expanded(
-                child: Card(
-                child: new Container(
-                      width: 80.0,
-                      height: 240.0,
-            decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  alignment: FractionalOffset.topCenter,
-                  image: AssetImage('laura.jpg'),
+          ListView(
+            children: [
+              new Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Card(
+                    child: new Container(
+                          width: 80.0,
+                          height: 240.0,
+                decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      alignment: FractionalOffset.topCenter,
+                      image: AssetImage('laura.jpg'),
+                    )
+                  )
                 )
-              )
-            )
-                )
-              )
-            ],
-          ),
-          SizedBox(height: 18.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-              child: Card(
-                child: new Container(
-                    decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.only(
-                            topLeft: const Radius.circular(10.0),
-                            topRight: const Radius.circular(10.0),
-                            bottomLeft: const Radius.circular(10.0),
-                            bottomRight: const Radius.circular(10.0))),
-                            child: Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                child: RichText(
-                                text: TextSpan(
-                                    text: "Profile Name\r\n",
-                                    style: new TextStyle(
-                                      color: GroupieColours.darkText,
-                                      fontSize: 15.0),
-                                    children: [
-                                      TextSpan(text: 'Daisy', style: new TextStyle(
-                                          color: GroupieColours.grey69,
-                                          fontSize: 18.0))
-                                    ]
-                                ),
-                                )
-                                )
-                              ],
-                            )
-                )
-                )
-              )
-            ],
-          ),
-          SizedBox(height: 8.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-              child: Card(
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0),
-                              bottomLeft: const Radius.circular(10.0),
-                              bottomRight: const Radius.circular(10.0))),
-                      child: Row(
-                        children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: RichText(
-                            text: TextSpan(
-                                text: "Bio\r\n",
-                                style: new TextStyle(
-                                    color: GroupieColours.darkText,
-                                    fontSize: 15.0),
-                                children: [
-                                  TextSpan(text: 'Living, laughting and '
-                                      'loving life!', style: new TextStyle(
-                                      color: GroupieColours.grey69,
-                                      fontSize: 18.0))
-                                ]
-                            ),
-                          )
-                      )
-                        ],
-                      )
+                    )
                   )
-              )
-              )
-            ],
-          ),
-          SizedBox(height: 8.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-                  child: Card(
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0),
-                              bottomLeft: const Radius.circular(10.0),
-                              bottomRight: const Radius.circular(10.0))),
-                      width: 80.0,
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                      padding: EdgeInsets.all(10.0),
-                          child: RichText(
-                            text: TextSpan(
-                                text: "Location\r\n",
-                                style: new TextStyle(
-                                    color: GroupieColours.darkText,
-                                    fontSize: 15.0),
-                                children: [
-                                  TextSpan(text: 'Chengdu, China', style: new TextStyle(
-                                      color: GroupieColours.grey69,
-                                      fontSize: 18.0))
-                                ]
-                            ),
-                          )
-                          )
-                        ],
-                      )
-                  )
-                  )
-              )
-            ],
-          ),
-          SizedBox(height: 8.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-                child: Card(
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0),
-                              bottomLeft: const Radius.circular(10.0),
-                              bottomRight: const Radius.circular(10.0))),
-                      width: 80.0,
-                      child: Row(
-                        children: <Widget>[
-                        Padding(
-                        padding: EdgeInsets.all(10.0),
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "Contact Details\r\n",
-                                  style: new TextStyle(
-                                      color: GroupieColours.darkText,
-                                      fontSize: 15.0),
-                                  children: [
-                                    TextSpan(text: 'ph. 0845 349 235\r\n'
-                                        'Em. DaisyFlower@gmail.com',
-                                        style: new TextStyle(
-                                        color: GroupieColours.grey69,
-                                        fontSize: 18.0))
-                                  ]
-                              ),
-                            )
-                        )
-                        ],
-                      )
-                  )
-                  )
-              )
-            ],
-          ),
-          SizedBox(height: 8.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-                  child: Card(
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0),
-                              bottomLeft: const Radius.circular(10.0),
-                              bottomRight: const Radius.circular(10.0))),
-                      child: Row(
-                        children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "Profile Details\r\n",
-                                  style: new TextStyle(
-                                      color: GroupieColours.darkText,
-                                      fontSize: 15.0),
-                                  children: [
-                                    TextSpan(
-                                        text: 'Member Since:        8/4/2019\r\n'
-                                              'Events Created:             8\r\n'
-                                              'Events Joined:             12\r\n'
-                                              'Top Activity:          Bowling',
-                                        style: new TextStyle(
-                                        color: GroupieColours.grey69,
-                                        fontSize: 18.0)),
-                                  ]
-                              ),
-                            ),
-                      )
-                        ],
-                      )
-                  )
-              )
+                ],
               ),
-            ],
+              SizedBox(height: 18.0),
+              profileCard("Profile Name", name),
+              SizedBox(height: 8.0),
+              profileCard("Bio", biography),
+              SizedBox(height: 8.0),
+              profileCard("Location", location),
+              SizedBox(height: 8.0),
+              profileCard("Contact Details", contactDetails),
+              SizedBox(height: 8.0),
+              profileCard("Profile Details", profileDetails),
+              viewEvents(context)
+            ]
           ),
-        viewEvents(context)
+          LoadingIcon(_loading)
         ]
       )
     );
