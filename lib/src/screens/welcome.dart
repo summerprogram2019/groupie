@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show LoginScreen, CreateNewEventMajorPage;
+import 'package:groupie/util.dart' show getUserId;
+import 'package:groupie/screens.dart' show HomePage, LoginScreen, CreateNewEventMajorPage;
 import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class WelcomeScreen extends StatelessWidget {
@@ -12,6 +13,12 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getUserId().then((id) {
+      if (id != null) {
+        Navigator.pushReplacementNamed(context, HomePage.tag);
+      }
+    });
+
     final logo = new GroupieLogo(() => {});
 
     return Scaffold(
