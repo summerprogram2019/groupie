@@ -4,6 +4,8 @@ Segoe UI
 30pt sub headings
 26pt Buttons
 
+Edit Page buttons - fontWeight set to FontWeight.w300
+
 ### Colours
 #ADADAD - Light text Colour (temporary text in input boxes)
 #0034FF - Hyperlink Colour

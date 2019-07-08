@@ -37,6 +37,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   double _maxDistance = 20;
   var _maxDistanceString = '20';
 
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -84,7 +86,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             'Maximum Cost of Event:'
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
