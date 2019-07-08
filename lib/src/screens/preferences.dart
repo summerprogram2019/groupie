@@ -33,7 +33,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   double _maxCost = 100;
   var _maxCostString = '100';
 
+
   double _maxDistance = 20;
+  var _maxDistanceString = '20';
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 )
             ),
 
-
+            //Max cost Slider
             Card(
               child: ListView(
                 shrinkWrap: true,
@@ -79,7 +81,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                         padding: EdgeInsets.all(10.0),
                         child: Text(
                           //'Maximum Cost: \$ ${_maxCostString}',
-                            'Maximum Cost:'
+                            'Maximum Cost of Event:'
                         ),
                       ),
 
@@ -118,15 +120,55 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
               ),
             ),
 
-
+            //max distance slider
             Card(
-                child: Column(
-                  children: <Widget>[
-                    const ListTile(
-                        title: Text('Maximum Distance')
-                    )
-                  ],
-                )
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          //'Maximum Cost: \$ ${_maxCostString}',
+                            'Maximum Distance of Event:'
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                            _maxDistanceString
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Slider(
+                      value: _maxDistance,
+                      min: 0,
+                      max: 200,
+                      divisions: 20,
+                      onChanged: (double value){
+                        setState(() {
+                          _maxDistance = value;
+                          _maxDistanceString = value.toStringAsFixed(0) + ' km';
+
+                          if (value == 0){
+                            _maxDistanceString = 'Free';
+                          }
+                          if (value == 200){
+                            _maxDistanceString = 'No limit';
+                          }
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
 
             Card(
