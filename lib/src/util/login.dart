@@ -23,7 +23,7 @@ Future<LoginResponse> login(String email, String password) async {
 
   Response response = await post(_LOGIN_ENDPOINT, body: request);
 
-  if (response.statusCode == 200) {
+  if (response.statusCode != 200) {
     return LoginResponse(hasError: true,
         error: "Request failed with status: ${response.statusCode}.");
   }

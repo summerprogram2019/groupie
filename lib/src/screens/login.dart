@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _loggingIn = false;
       });
     } else {
+      _loggingIn = false;
       Navigator.pushNamed(context, HomePage.tag);
     }
   }
@@ -117,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: Center(
         child: Stack(
-          fit: StackFit.passthrough,
+//          fit: StackFit.passthrough,
           children: [
             ListView(
               shrinkWrap: true,
@@ -143,22 +144,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 loginButton,
                 SizedBox(height: 24.0),
                 signupButton
-//                loginButton,
-//                SizedBox(height: 8.0),
-//                newUser,
-//                SizedBox(height: 4.0),
-//                forgotLabel
               ],
             ),
             new Offstage(
               // displays the loading icon while the user is logging in
-                offstage: !_loggingIn,
-                child: new Center(
-                    child: _loggingIn ? new CircularProgressIndicator(
-                      value: null,
-                      strokeWidth: 7.0,
-                    ) : null
-                )
+              offstage: !_loggingIn,
+              child: new Center(
+                child: _loggingIn ? new CircularProgressIndicator(
+                  value: null,
+                  strokeWidth: 7.0,
+                ) : null
+              )
             )
           ]),
       ),

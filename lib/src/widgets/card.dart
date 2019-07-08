@@ -25,7 +25,12 @@ Widget _createCard(HobbyCard card) {
     child: Container(
       width: 240.0,
       height: 300.0,
-      child: Image.asset("sun.png"),
+      child: Stack(
+        children: [
+          Text(card.text),
+          Image.asset("sun.png")
+        ]
+      ),
     ),
   );
 }
