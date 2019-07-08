@@ -63,7 +63,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text(widget.title, style: new TextStyle(
+            color: GroupieColours.grey69)),
         backgroundColor: GroupieColours.white69,
         actions: <Widget>[
            new IconButton(
@@ -77,6 +78,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: _openPreferences,
           )
         ],
+        iconTheme: new IconThemeData(color: GroupieColours.grey69),
         automaticallyImplyLeading: false,
       ),
       body: new Center(
