@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/widgets.dart' show GroupieProfile;
-import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/screens.dart' show HomePage, CreateNewEventMajor;
 
 class ProfileScreen extends StatefulWidget {
   final String title;
@@ -67,20 +67,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     },
   );
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
         title: new Text("My Profile",
             style: new TextStyle(
-              color: Colors.grey69,
+              color: Colors.grey,
               fontSize: 20.0,)),
-        backgroundColor: Colors.white69,
+        backgroundColor: Colors.white,
 
-        iconTheme: new IconThemeData(color: Colors.grey69),
+        iconTheme: new IconThemeData(color: Colors.grey),
       ),
-      backgroundColor: Colors.white69,
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
           new Row(
@@ -107,12 +106,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: <Widget>[
                                 Text("Profile Name\r\n",
                                     style: new TextStyle(
-                                        color: Colors.darkText,
+                                        color: Colors.black,
                                         fontSize: 15.0)),
                                 Text("Daisy",
                                 textAlign: TextAlign.left,
                                 style: new TextStyle(
-                                    color: Colors.grey69,
+                                    color: Colors.grey,
                                     fontSize: 15.0))
                               ],
                             )
@@ -130,12 +129,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Bio\r\n",
                               style: new TextStyle(
-                                  color: Colors.darkText,
+                                  color: Colors.black,
                                   fontSize: 15.0)),
                           Text("Living, laughing and loving life.",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey69,
+                                  color: Colors.grey,
                                   fontSize: 15.0))
                         ],
                       )
@@ -153,12 +152,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Location\r\n",
                               style: new TextStyle(
-                                  color: Colors.darkText,
+                                  color: Colors.black,
                                   fontSize: 15.0)),
                           Text("Chengdu, China",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey69,
+                                  color: Colors.grey,
                                   fontSize: 15.0))
                         ],
                       )
@@ -176,12 +175,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Contact Details\r\n",
                               style: new TextStyle(
-                                  color: Colors.darkText,
+                                  color: Colors.black,
                                   fontSize: 15.0)),
                           Text("Ph:",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey69,
+                                  color: Colors.grey,
                                   fontSize: 15.0))
                         ],
                       )

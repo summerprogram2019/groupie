@@ -14,3 +14,8 @@ After creating your profile, groupies can select their favourite activities and 
 
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
+
+## Install additional packages
+
+Android Studio/Intellij IDEA: Open pubspec.yaml and push the button "Packages get"
+Others: https://flutter.dev/docs/development/packages-and-plugins/using-packages
