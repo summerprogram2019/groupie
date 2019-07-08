@@ -119,8 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
 //          fit: StackFit.passthrough,
           children: [
             ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(left: 24.0, right: 24.0),
               children: <Widget>[
                //logo,
                 Center(
