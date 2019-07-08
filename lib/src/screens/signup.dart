@@ -21,6 +21,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController emailController = new TextEditingController();
   /// Retrieves the text in the password entry field
   final TextEditingController passwordController = new TextEditingController();
+  /// Retrieves the text in the password entry field
+  final TextEditingController confirmController = new TextEditingController();
 
   bool _loggingIn = false;
 
@@ -68,7 +70,7 @@ class _SignupPageState extends State<SignupPage> {
       key: Key('confirmation_field'),
       autofocus: false,
       obscureText: true,
-      controller: passwordController,
+      controller: confirmController,
       decoration: InputDecoration(
         labelText: "Confirm Password",
         border: OutlineInputBorder(
