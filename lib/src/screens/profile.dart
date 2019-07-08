@@ -116,6 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           new Row(
             children: <Widget>[
               Expanded(
+              child: Card(
                 child: new Container(
                     decoration: new BoxDecoration(
                         color: Colors.white,
@@ -143,12 +144,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                 )
                 )
+              )
             ],
           ),
           SizedBox(height: 12.0),
           new Row(
             children: <Widget>[
               Expanded(
+              child: Card(
                   child: new Container(
                       decoration: new BoxDecoration(
                           color: Colors.white,
@@ -177,12 +180,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       )
                   )
               )
+              )
             ],
           ),
           SizedBox(height: 12.0),
           new Row(
             children: <Widget>[
               Expanded(
+                  child: Card(
                   child: new Container(
                       decoration: new BoxDecoration(
                           color: Colors.white,
@@ -210,6 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       )
                   )
+                  )
               )
             ],
           ),
@@ -217,6 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           new Row(
             children: <Widget>[
               Expanded(
+                child: Card(
                   child: new Container(
                       decoration: new BoxDecoration(
                           color: Colors.white,
@@ -246,6 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       )
                   )
+                  )
               )
             ],
           ),
@@ -253,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           new Row(
             children: <Widget>[
               Expanded(
-
+                  child: Card(
                   child: new Container(
                       decoration: new BoxDecoration(
                           color: Colors.white,
@@ -262,7 +270,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               topRight: const Radius.circular(10.0),
                               bottomLeft: const Radius.circular(10.0),
                               bottomRight: const Radius.circular(10.0))),
-                      width: 80.0,
                       child: Row(
                         children: <Widget>[
                           RichText(
@@ -276,31 +283,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       style: new TextStyle(
                                       color: GroupieColours.grey69,
                                       fontSize: 15.0)),
-                                  TextSpan(text: '8/4/2019\r\n8\r\n12',
-                                      style: new TextStyle(
-                                      color: GroupieColours.grey69,
-                                      fontSize: 15.0))
                                 ]
                             ),
-                          )
-                          /*Text("Profile Details\r\n",
-                              style: new TextStyle(
-                                  color: GroupieColours.darkText,
-                                  fontSize: 15.0)),
-                          Text("Member Since:\r\nEvents Created:\r\nEvents Joined:",
-                              textAlign: TextAlign.left,
-                              style: new TextStyle(
-                                  color: GroupieColours.grey69,
-                                  fontSize: 15.0)),
-                          Text("8/4/2019\r\n8\r\n12",
+                          ),
+                          SizedBox(width: 220.0),
+                          Text("\n8/4/2019\r\n8\r\n12",
                               textAlign: TextAlign.right,
                               style: new TextStyle(
                                   color: GroupieColours.grey69,
-                                  fontSize: 15.0))*/
+                                  fontSize: 15.0))
                         ],
                       )
                   )
               )
+              ),
             ],
           ),
         viewEvents(context)
