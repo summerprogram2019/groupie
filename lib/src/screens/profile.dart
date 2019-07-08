@@ -288,9 +288,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               bottomRight: const Radius.circular(10.0))),
                       child: Row(
                         children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: RichText(
+                        Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: RichText(
                               text: TextSpan(
                                   text: "Profile Details\r\n",
                                   style: new TextStyle(
@@ -300,7 +300,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     TextSpan(
                                         text: 'Member Since:        8/4/2019\r\n'
                                               'Events Created:             8\r\n'
-                                              'Events Joined:             12',
+                                              'Events Joined:             12\r\n'
+                                              'Top Activity:          Bowling',
                                         style: new TextStyle(
                                         color: GroupieColours.grey69,
                                         fontSize: 18.0)),
