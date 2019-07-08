@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show HomePage, DisclaimerScreen;
+import 'package:groupie/screens.dart' show HomePage, DisclaimerScreen, LoginScreen;
 import 'package:groupie/util.dart' show signup, SignupResponse;
 
 class SignupPage extends StatefulWidget {
@@ -98,7 +98,12 @@ class _SignupPageState extends State<SignupPage> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(DisclaimerScreen.tag);
+        setState(() {
+          _signingUp = true;
+        });
+        signup(emailController.text, passwordController.text).then((response) {
+          _signup(response);
+        });
       },
     );
 
@@ -110,12 +115,7 @@ class _SignupPageState extends State<SignupPage> {
       ),
       color: Colors.white,
       onPressed: () {
-        setState(() {
-          _signingUp = true;
-        });
-        signup(emailController.text, passwordController.text).then((response) {
-          _signup(response);
-        });
+        Navigator.of(context).pushReplacementNamed(LoginScreen.tag);
       },
     );
 
