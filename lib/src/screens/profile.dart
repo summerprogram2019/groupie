@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Card(
                 child: new Container(
                       width: 80.0,
-                      height: 160.0,
+                      height: 240.0,
             decoration: new BoxDecoration(
                 image: new DecorationImage(
                   fit: BoxFit.fitWidth,
@@ -116,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
-          SizedBox(height: 24.0),
+          SizedBox(height: 18.0),
           new Row(
             children: <Widget>[
               Expanded(
@@ -132,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.all(5.0),
+                                  padding: EdgeInsets.all(10.0),
                                 child: RichText(
                                 text: TextSpan(
                                     text: "Profile Name\r\n",
@@ -154,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
-          SizedBox(height: 12.0),
+          SizedBox(height: 8.0),
           new Row(
             children: <Widget>[
               Expanded(
@@ -170,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(10.0),
                           child: RichText(
                             text: TextSpan(
                                 text: "Bio\r\n",
@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
-          SizedBox(height: 12.0),
+          SizedBox(height: 8.0),
           new Row(
             children: <Widget>[
               Expanded(
@@ -210,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         children: <Widget>[
                           Padding(
-                      padding: EdgeInsets.all(5.0),
+                      padding: EdgeInsets.all(10.0),
                           child: RichText(
                             text: TextSpan(
                                 text: "Location\r\n",
@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
-          SizedBox(height: 12.0),
+          SizedBox(height: 8.0),
           new Row(
             children: <Widget>[
               Expanded(
@@ -249,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         children: <Widget>[
                         Padding(
-                        padding: EdgeInsets.all(5.0),
+                        padding: EdgeInsets.all(10.0),
                           child: RichText(
                               text: TextSpan(
                                   text: "Contact Details\r\n",
@@ -273,7 +273,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
-          SizedBox(height: 12.0),
+          SizedBox(height: 8.0),
           new Row(
             children: <Widget>[
               Expanded(
@@ -289,7 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(5.0),
+                        padding: EdgeInsets.all(10.0),
                         child: RichText(
                               text: TextSpan(
                                   text: "Profile Details\r\n",
