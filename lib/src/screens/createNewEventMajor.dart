@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-import 'package:groupie/screens.dart' show HomePage, CreateNewEventMinorPage;
+import 'package:groupie/screens.dart' show HomePage;
 
 class CreateNewEventMajorPage extends StatefulWidget {
   final String title;
@@ -114,12 +113,43 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
     );
 
     // the event's name entry field
+    final eventStartTime = TextFormField(
+      key: Key('eventStartTime_field'),
+      keyboardType: TextInputType.datetime,
+      autofocus: false,
+      controller: eventStartTimeController,
+      decoration: InputDecoration(
+        labelText: "Start-time",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.0,
+          ),
+        ),
+      ),
+    );
+
+    // the event's name entry field
+    final eventFinishTime = TextFormField(
+      key: Key('eventFinishTime_field'),
+      keyboardType: TextInputType.datetime,
+      autofocus: false,
+      controller: eventFinishTimeController,
+      decoration: InputDecoration(
+        labelText: "Finish-time",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.0,
+          ),
+        ),
+      ),
+    );
+
+    // the event's name entry field
     final eventDescription = TextFormField(
       key: Key('eventDescription_field'),
-      keyboardType: TextInputType.multiline,
+      keyboardType: TextInputType.text,
       autofocus: false,
       maxLines: 5,
-      // it'll have problems on different devices (screen sizes), but it seems hard for fixing
 //      expands: true,
       controller: eventDescriptionController,
       decoration: InputDecoration(
@@ -132,6 +162,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       ),
     );
 
+
     final continueButton = RaisedButton(
       key: Key('continue_button'),
       child: Text(
@@ -140,65 +171,40 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(CreateNewEventMinorPage.tag);
+        Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
       },
     );
 
-    bool startTimeChoosed = false;
-    DateTime startTime;
-
-    DateTime getStartTime() {
-      if (!startTimeChoosed) {
-        startTime = DateTime.now();
-      }
-      return startTime;
-    }
-
-    final startTimePicker = RaisedButton(
-        onPressed: () {
-          DatePicker.showDateTimePicker(context, onChanged: (date) {
-            startTimeChoosed = true;
-            startTime = date;
-            print('change $date');
-          }, onConfirm: (date) {
-            startTimeChoosed = true;
-            startTime = date;
-            print('confirm $date');
-          }, currentTime: getStartTime() /*DateTime.now()*/, locale: LocaleType.en);
-        },
-        child: Text(
-          "Tap to choose",  // it's hard to do it updateable
-          style: TextStyle(color: Colors.blue),
-        ),
-        color: Colors.white);
-
-    bool finishTimeChoosed = false;
-    DateTime finishTime;
-
-    DateTime getFinishTime() {
-      if (!finishTimeChoosed) {
-        finishTime = DateTime.now();
-      }
-      return finishTime;
-    }
-
-    final finishTimePicker = RaisedButton(
-        onPressed: () {
-          DatePicker.showDateTimePicker(context, onChanged: (date) {
-            finishTimeChoosed = true;
-            finishTime = date;
-            print('change $date');
-          }, onConfirm: (date) {
-            finishTimeChoosed = true;
-            finishTime = date;
-            print('confirm $date');
-          }, currentTime: getFinishTime() /*DateTime.now()*/, locale: LocaleType.en);
-        },
-        child: Text(
-          "Tap to choose",
-          style: TextStyle(color: Colors.blue),
-        ),
-        color: Colors.white);
+//    return Scaffold(
+//        appBar: new AppBar(
+//          title: new Text("Create Event"),
+//        ),
+//        backgroundColor: Colors.white,
+//        body: Row(
+//            children: [
+//              Column( //CreateEventPreview Declaration goes here
+//                  children: [
+//                    Text("Lolkek\r\n",
+//                      textAlign: TextAlign.right,
+//                      style: new TextStyle(
+//                        color: Colors.black,
+//                        fontSize: 20.0,
+//                      ),
+//                    ),
+//
+//                    SizedBox(height: 10.0),
+//                    Text("LOLOLOLOL The user can add a short bio \r\n describing themselves and "
+//                        "their \r\n interests.\r\n", textAlign: TextAlign.center)
+//                  ]
+//              ),
+//              Column(
+//                  children: [
+//                    editButton(context)
+//                  ]
+//              )
+//            ]
+//        )
+//    );
 
     final double standartFontSize = 14.0;
     final double standartSmallGap = 4.0;
@@ -215,43 +221,100 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 24.0, right: 24.0),
             children: <Widget>[
+//              Expanded(
+//                child: TextField(
+//                  expands: true,
+//                  maxLines: null,
+//                ),
+//              ),
+//              Center(
+//                  child: Text(
+//                'Create a New Event',
+//                style: TextStyle(color: Colors.black, fontSize: 30.0),
+//              )),
               // Sizedboxes are used for whitespace and padding on the screen
               SizedBox(height: 8.0),
               Text('Enter Event Name',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventName,
               SizedBox(height: standartBigGap),
               Text('Set Event Location',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventLocation,
               SizedBox(height: standartBigGap),
               Text('Set Event Start-Time',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
-              //eventStartTime,
-              startTimePicker,
+              eventStartTime,
               SizedBox(height: standartBigGap),
               Text('Set Event Finish-Time',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
-//              eventFinishTime,
-              finishTimePicker,
+              eventFinishTime,
               SizedBox(height: standartBigGap),
               Text('Set Event Description',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventDescription,
               SizedBox(height: standartBigGap),
               continueButton,
+
+
+//              Text('Fill fields',
+//                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
+//              SizedBox(height: standartSmallGap),
+//              eventName,
+//              SizedBox(height: standartSmallGap),
+//              eventLocation,
+//              SizedBox(height: standartBigGap),
+//              Text('Set Event Start-Time',
+//                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
+//              SizedBox(height: standartSmallGap),
+//              eventStartTime,
+//              SizedBox(height: standartBigGap),
+//              Text('Set Event Finish-Time',
+//                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
+//              SizedBox(height: standartSmallGap),
+//              eventFinishTime,
+//              SizedBox(height: standartBigGap),
+//              Text('Set Event Description',
+//                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
+//              SizedBox(height: standartSmallGap),
+//              eventDescription,
+
+
+//              SizedBox(height: 8.0),
+//              SizedBox(height: 8.0),
+//              password,
+//              SizedBox(height: 24.0),
+//              forgotLabel,
+//              SizedBox(height: 24.0),
+//              Text(errors),
+//              SizedBox(height: 24.0),
+//              loginButton,
+//              SizedBox(height: 24.0),
+//              signupButton
+
+//                loginButton,
+//                SizedBox(height: 8.0),
+//                newUser,
+//                SizedBox(height: 4.0),
+//                forgotLabel
             ],
           ),
+
+//          new Offstage(
+//               displays the loading icon while the user is logging in
+//              offstage: !_loggingIn,
+//              child: new Center(
+//                  child: _loggingIn
+//                      ? new CircularProgressIndicator(
+//                          value: null,
+//                          strokeWidth: 7.0,
+//                        )
+//                      : null))
         ]),
       ),
     );

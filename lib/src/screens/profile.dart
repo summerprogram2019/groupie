@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/widgets.dart' show GroupieProfile;
-import 'package:groupie/screens.dart' show HomePage, CreateNewEventMajor;
+import 'package:groupie/screens.dart' show HomePage;
 
 class ProfileScreen extends StatefulWidget {
   final String title;
@@ -67,19 +67,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     },
   );
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
         title: new Text("My Profile",
             style: new TextStyle(
-              color: Colors.grey,
+              color: Colors.grey69,
               fontSize: 20.0,)),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white69,
 
-        iconTheme: new IconThemeData(color: Colors.grey),
+        iconTheme: new IconThemeData(color: Colors.grey69),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white69,
       body: ListView(
         children: [
           new Row(
@@ -106,12 +107,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: <Widget>[
                                 Text("Profile Name\r\n",
                                     style: new TextStyle(
-                                        color: Colors.black,
+                                        color: Colors.darkText,
                                         fontSize: 15.0)),
                                 Text("Daisy",
                                 textAlign: TextAlign.left,
                                 style: new TextStyle(
-                                    color: Colors.grey,
+                                    color: Colors.grey69,
                                     fontSize: 15.0))
                               ],
                             )
@@ -129,12 +130,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Bio\r\n",
                               style: new TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.darkText,
                                   fontSize: 15.0)),
                           Text("Living, laughing and loving life.",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.grey69,
                                   fontSize: 15.0))
                         ],
                       )
@@ -152,12 +153,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Location\r\n",
                               style: new TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.darkText,
                                   fontSize: 15.0)),
                           Text("Chengdu, China",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.grey69,
                                   fontSize: 15.0))
                         ],
                       )
@@ -175,12 +176,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Text("Contact Details\r\n",
                               style: new TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.darkText,
                                   fontSize: 15.0)),
                           Text("Ph:",
                               textAlign: TextAlign.left,
                               style: new TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.grey69,
                                   fontSize: 15.0))
                         ],
                       )
