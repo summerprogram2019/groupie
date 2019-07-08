@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show LoginScreen;
+import 'package:groupie/screens.dart' show EditProfile;
 //import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class DisclaimerScreen extends StatefulWidget {
@@ -68,7 +68,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(LoginScreen.tag);
+        Navigator.of(context).pushNamed(EditProfile.tag);
       },
     );
 

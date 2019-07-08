@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/model.dart' show HobbyCard;
+import 'package:groupie/util.dart' show GroupieColours;
+
 
 Widget createCard(HobbyCard card, VoidCallback remove) {
   return new Positioned(
-    top: 50.0,
+    top: 5.0,
     child: Draggable(
       onDragCompleted: () {
         remove();
@@ -23,12 +25,26 @@ Widget _createCard(HobbyCard card) {
     shape:
     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     child: Container(
-      width: 240.0,
-      height: 300.0,
-      child: Stack(
-        children: [
-          Text(card.text),
-          Image.asset("sun.png")
+      width: 360.0,
+      height: 575.0,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+              child: Card(
+                  child: new Container(
+                      width: 80.0,
+                      height: 240.0,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            alignment: FractionalOffset.topCenter,
+                            image: AssetImage('laura.jpg'),
+                          )
+                      )
+                  )
+              )
+          )
+
         ]
       ),
     ),
