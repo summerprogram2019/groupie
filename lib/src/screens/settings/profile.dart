@@ -53,6 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       location = user.city + ", " + user.country;
       contactDetails = "Also not supported";
       profileDetails = "As above";
+      _loading = false;
     });
   }
 

@@ -11,11 +11,13 @@ const String _BASE_ENDPOINT = "https://brae.uqcloud.net/groupie";
 const String _USER_ENDPOINT = _BASE_ENDPOINT + "/profile_user.php";
 
 class Reply {
-  bool hasError;
-  String error;
-  Map<String, dynamic> result;
+  final bool hasError;
+  final String error;
+  final Map<String, dynamic> result;
 
-  Reply({this.hasError, this.error, this.result});
+  final String request;
+
+  Reply({this.hasError, this.error, this.result, this.request});
 }
 
 Reply _makeRequest(Response response) {
@@ -26,14 +28,18 @@ Reply _makeRequest(Response response) {
 
   if (response.body.startsWith(_ERROR_MESSAGE)) {
     String error = response.body.substring(0, _ERROR_MESSAGE.length);
-    return Reply(hasError: true, error: error);
+    return Reply(hasError: true, error: error, request: response.request.toString());
   }
 
   try {
     Map<String, dynamic> result = jsonDecode(response.body);
-    return Reply(hasError: false, result: result);
+    return Reply(hasError: false, result: result, request: response.request.toString());
   } catch (exception) {
-    return Reply(hasError: true, error: "Invalid response: " + exception.toString());
+    return Reply(
+        hasError: true,
+        error: "Invalid response: " + exception.toString(),
+        request: response.request.toString()
+    );
   }
 }
 
@@ -62,6 +68,7 @@ Future<User> getUser() async {
 
   Reply reply = await makeGetRequest(_USER_ENDPOINT, request);
   if (reply.hasError) {
+    print(reply.request);
     print(reply.error);
     return null;
   }
