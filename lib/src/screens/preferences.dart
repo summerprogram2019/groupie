@@ -30,9 +30,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     return new Scaffold(
       //the universal background colour
       //backgroundColor: Color.fromARGB(255, 112, 112, 112),
+      backgroundColor: Theme.of(context).backgroundColor,
 
-      //the universal background colour
-      backgroundColor: Color.fromARGB(255, 247, 247, 247),
       appBar: new AppBar(
         title: new Text(widget.title),
         backgroundColor: GroupieColours.white69,
@@ -47,8 +46,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       body: new Center(
         child: new ListView(
           children: <Widget>[
-            Image.asset('laura.jpg'),
-            Image.asset('laura.jpg')
+            //Image.asset('laura.jpg'),
+            Image.asset('assets/hiking.jpg')
           ],
         ),
       ),

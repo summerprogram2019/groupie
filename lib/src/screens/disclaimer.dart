@@ -24,6 +24,14 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
 
   String errors = "";
 
+  bool _ticked = false;
+
+  void _tick(bool value) {
+    setState(() {
+      _ticked = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,8 +56,8 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
     final confirm = CheckboxListTile(
         key: Key('checkbox'),
         title: const Text('I have read and agree to the Terms and Conditions'),
-        value: false,
-        onChanged: null
+        value: _ticked,
+        onChanged: _tick,
     );
 
     final continueButton = RaisedButton(
