@@ -52,6 +52,90 @@ class _EditProfileState extends State<EditProfile> {
     ),
   );
 
+  final setBio = TextFormField(
+    key: Key('bio_field'),
+    keyboardType: TextInputType.text,
+    decoration: InputDecoration(
+      labelText: "User Bio",
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1.0,
+        ),
+      ),
+    ),
+  );
+
+  final setLocation = TextFormField(
+    key: Key('location_field'),
+    keyboardType: TextInputType.text,
+    decoration: InputDecoration(
+      labelText: "User location",
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1.0,
+        ),
+      ),
+    ),
+  );
+
+  final setNumber = TextFormField(
+    key: Key('phNumber_field'),
+    keyboardType: TextInputType.number,
+    decoration: InputDecoration(
+      labelText: "User Telephone Number",
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1.0,
+        ),
+      ),
+    ),
+  );
+
+  final setEmail = TextFormField(
+    key: Key('email_field'),
+    keyboardType: TextInputType.text,
+    decoration: InputDecoration(
+      labelText: "User Email",
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1.0,
+        ),
+      ),
+    ),
+  );
+
+  final saveChanges = (context) => RaisedButton(
+    key: Key('savechanges_button'),
+    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+    child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Text(
+          'Save Changes',
+          style: TextStyle(color: GroupieColours.logoColor,
+              fontSize: 30.0),
+        )),
+    color: Colors.white,
+    onPressed: () {
+      Navigator.of(context).pushNamed(EditProfile.tag);
+    },
+  );
+
+  final discardChanges = (context) => RaisedButton(
+    key: Key('discard_changes_button'),
+    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+    child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Text(
+          'Discard Changes',
+          style: TextStyle(color: Colors.red,
+              fontSize: 30.0),
+        )),
+    color: Colors.white,
+    onPressed: () {
+      Navigator.of(context).pushNamed(HomePage.tag);
+    },
+  );
+
   @override
   Widget build(BuildContext context){
     return new Scaffold(
@@ -87,32 +171,56 @@ class _EditProfileState extends State<EditProfile> {
           ),
           changeProfileImage(context),
           SizedBox(height: 12.0),
-          new Column(
-            children: [
-              Text("Set Profile Name",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: GroupieColours.grey69,
-                    fontSize: 30.0)),
-              setName,
-              SizedBox(height: 6.0),
-              Text("Set Bio",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: GroupieColours.grey69,
+          Center(
+            child: new Container(
+              width: 325.0,
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Set Profile Name",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GroupieColours.grey69,
                       fontSize: 30.0)),
-              Text("Set Location",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: GroupieColours.grey69,
+                  setName,
+                  SizedBox(height: 6.0),
+                  Text("Set Bio",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GroupieColours.grey69,
                       fontSize: 30.0)),
-              Text("Set Phone Number",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: GroupieColours.grey69,
+                  setBio,
+                  SizedBox(height: 6.0),
+                  Text("Set Location",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GroupieColours.grey69,
                       fontSize: 30.0)),
-              Text("Set Email",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: GroupieColours.grey69,
+                  setLocation,
+                  SizedBox(height: 6.0),
+                  Text("Set Phone Number",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GroupieColours.grey69,
                       fontSize: 30.0)),
-          ]
+                  setNumber,
+                  SizedBox(height: 6.0),
+                  Text("Set Email",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GroupieColours.grey69,
+                      fontSize: 30.0)),
+                  setEmail,
+                  SizedBox(height: 6.0),
+                ],
+            ),
           )
+          ),
+          saveChanges(context),
+          SizedBox(height: 12.0),
+          discardChanges(context)
+          /*Expanded(
+            child: new Row(
+              children: <Widget>[
+
+              ],
+            )
+          )*/
         ],
       )
     );
