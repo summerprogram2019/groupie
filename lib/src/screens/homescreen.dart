@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     hobbyCards = buildCards();
     getUser().then((user) {
       setState(() {
-        hobbyCards.add(createCard(new HobbyCard(text: user.email, red: 233, green: 10, blue: 12), () {}));
+        hobbyCards.add(createCard(new HobbyCard(text: user.toJson().toString(), red: 233, green: 10, blue: 12), () {}));
       });
     });
     getUserId().then((id) {

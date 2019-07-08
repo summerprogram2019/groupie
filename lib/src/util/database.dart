@@ -8,7 +8,7 @@ import 'login.dart' show getUserId;
 
 const String _ERROR_MESSAGE = "ERROR";
 const String _BASE_ENDPOINT = "https://brae.uqcloud.net/groupie";
-const String _USER_ENDPOINT = _BASE_ENDPOINT + "/user.php";
+const String _USER_ENDPOINT = _BASE_ENDPOINT + "/profile_user.php";
 
 class Reply {
   bool hasError;
@@ -18,9 +18,7 @@ class Reply {
   Reply({this.hasError, this.error, this.result});
 }
 
-Future<Reply> makeRequest(String endpoint, Map<String, String> request) async {
-  Response response = await post(_USER_ENDPOINT, body: request);
-
+Reply _makeRequest(Response response) {
   if (response.statusCode != 200) {
     return Reply(hasError: true,
         error: "Request failed with status: ${response.statusCode}.");
@@ -39,14 +37,30 @@ Future<Reply> makeRequest(String endpoint, Map<String, String> request) async {
   }
 }
 
+Future<Reply> makeGetRequest(String endpoint, Map<String, String> request) async {
+  String requests = "";
+  for (MapEntry<String, String> entry in request.entries) {
+    requests += entry.key + "=" + entry.value + "&";
+  }
+  Response response = await get(endpoint + "?" + requests);
+
+  return _makeRequest(response);
+}
+
+Future<Reply> makePostRequest(String endpoint, Map<String, String> request) async {
+  Response response = await post(endpoint, body: request);
+
+  return _makeRequest(response);
+}
+
 Future<User> getUser() async {
   int id = await getUserId();
 
   Map<String, String> request = {
-    "user_key": id.toString()
+    "account_id": id.toString()
   };
 
-  Reply reply = await makeRequest(_USER_ENDPOINT, request);
+  Reply reply = await makeGetRequest(_USER_ENDPOINT, request);
   if (reply.hasError) {
     print(reply.error);
     return null;
