@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/screens.dart' show EditProfile;
-//import 'package:groupie/widgets.dart' show GroupieLogo;
+import 'package:groupie/widgets.dart' show LoadableScreen;
 
 class DisclaimerScreen extends StatefulWidget {
   final String title;
@@ -34,10 +34,6 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
-
-    // the email entry field
     final email = TextFormField(
       key: Key('email_field'),
       keyboardType: TextInputType.emailAddress,
@@ -79,47 +75,29 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
         iconTheme: IconThemeData(color: Colors.red),
       ),
       body: Center(
-        child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                children: <Widget>[
-                  //logo,
-                  Center(
-                      child: Text(
-                        'Disclaimer',
-                        style: TextStyle(color: Colors.black, fontSize: 30.0),
-                      )
-                  ),
-                  // Sizedboxes are used for whitespace and padding on the screen
-                  SizedBox(height: 48.0),
-                  email,
-                  SizedBox(height: 24.0),
-                  Text(errors),
-                  SizedBox(height: 48.0),
-                  confirm,
-                  SizedBox(height: 12.0),
-                  continueButton
-//                loginButton,
-//                SizedBox(height: 8.0),
-//                newUser,
-//                SizedBox(height: 4.0),
-//                forgotLabel
-                ],
-              ),
-              new Offstage(
-                // displays the loading icon while the user is logging in
-                  offstage: !_loggingIn,
-                  child: new Center(
-                      child: _loggingIn ? new CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 7.0,
-                      ) : null
-                  )
-              )
-            ]),
+        child: LoadableScreen(
+          visible: _loggingIn,
+          child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+              children: <Widget>[
+                Center(
+                    child: Text(
+                      'Disclaimer',
+                      style: TextStyle(color: Colors.black, fontSize: 30.0),
+                    )
+                ),
+                SizedBox(height: 48.0),
+                email,
+                SizedBox(height: 24.0),
+                Text(errors),
+                SizedBox(height: 48.0),
+                confirm,
+                SizedBox(height: 12.0),
+                continueButton
+              ],
+            )
+          ),
       ),
     );
   }

@@ -14,11 +14,11 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getUserId().then((id) {
-      if (id != null) {
-        Navigator.pushReplacementNamed(context, HomePage.tag);
-      }
-    });
+//    getUserId().then((id) {
+//      if (id != null) {
+//        Navigator.pushReplacementNamed(context, HomePage.tag);
+//      }
+//    });
 
     final logo = new GroupieLogo(() => {});
 

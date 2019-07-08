@@ -6,7 +6,7 @@ export 'src/screens/homescreen.dart';
 // Settings related screens
 export 'src/screens/settings/profile.dart';
 export 'src/screens/settings/preferences.dart';
-export 'src/screens/settings/editprofile.dart';
+export 'src/screens/settings/edit_profile.dart';
 
 // Event related screens
 export 'src/screens/events/createNewEventMajor.dart';

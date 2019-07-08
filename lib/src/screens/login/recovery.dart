@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/screens.dart' show LoginScreen;
-//import 'package:groupie/widgets.dart' show GroupieLogo;
+import 'package:groupie/widgets.dart' show LoadableScreen;
 
 class RecoveryPage extends StatefulWidget {
   final String title;
@@ -26,10 +26,6 @@ class _RecoveryPageState extends State<RecoveryPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
-
-    // the email entry field
     final email = TextFormField(
       key: Key('email_field'),
       keyboardType: TextInputType.emailAddress,
@@ -57,18 +53,6 @@ class _RecoveryPageState extends State<RecoveryPage> {
       },
     );
 
-    final backButton = RaisedButton(
-      key: Key('back_button'),
-      child: Text(
-        '<',
-        style: TextStyle(color: Colors.black, fontSize: 50.0),
-      ),
-      color: Colors.white,
-      onPressed: () {
-        Navigator.of(context).pushNamed(LoginScreen.tag);
-      },
-    );
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: new AppBar(
@@ -76,45 +60,27 @@ class _RecoveryPageState extends State<RecoveryPage> {
         iconTheme: IconThemeData(color: Colors.red),
       ),
       body: Center(
-        child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                children: <Widget>[
-                  //logo,
-                  Center(
-                      child: Text(
-                        'Password Recovery',
-                        style: TextStyle(color: Colors.black, fontSize: 30.0),
-                      )
-                  ),
-                  // Sizedboxes are used for whitespace and padding on the screen
-                  SizedBox(height: 48.0),
-                  email,
-                  SizedBox(height: 24.0),
-                  Text(errors),
-                  SizedBox(height: 48.0),
-                  sendRecovery
-//                loginButton,
-//                SizedBox(height: 8.0),
-//                newUser,
-//                SizedBox(height: 4.0),
-//                forgotLabel
-                ],
-              ),
-              new Offstage(
-                // displays the loading icon while the user is logging in
-                  offstage: !_loggingIn,
-                  child: new Center(
-                      child: _loggingIn ? new CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 7.0,
-                      ) : null
+        child: LoadableScreen(
+          visible: !_loggingIn,
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            children: <Widget>[
+              Center(
+                  child: Text(
+                    'Password Recovery',
+                    style: TextStyle(color: Colors.black, fontSize: 30.0),
                   )
-              )
-            ]),
+              ),
+              SizedBox(height: 48.0),
+              email,
+              SizedBox(height: 24.0),
+              Text(errors),
+              SizedBox(height: 48.0),
+              sendRecovery
+            ],
+          )
+        ),
       ),
     );
   }

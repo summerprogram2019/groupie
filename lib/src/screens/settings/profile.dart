@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/model.dart' show User;
-import 'package:groupie/widgets.dart' show GroupieProfile, profileCard, LoadingIcon;
+import 'package:groupie/widgets.dart' show GroupieProfile, ProfileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
 import 'package:groupie/util.dart' show GroupieColours, getUser;
 
@@ -107,34 +107,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Expanded(
                     child: Card(
                     child: new Container(
-                          width: 80.0,
-                          height: 240.0,
-                decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      alignment: FractionalOffset.topCenter,
-                      image: AssetImage('laura.jpg'),
-                    )
-                  )
-                )
+                      width: 80.0,
+                      height: 240.0,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            alignment: FractionalOffset.topCenter,
+                            image: AssetImage('laura.jpg'),
+                          )
+                        )
+                      )
                     )
                   )
                 ],
               ),
               SizedBox(height: 18.0),
-              profileCard("Profile Name", name),
+              ProfileCard("Profile Name", name),
               SizedBox(height: 8.0),
-              profileCard("Bio", biography),
+              ProfileCard("Bio", biography),
               SizedBox(height: 8.0),
-              profileCard("Location", location),
+              ProfileCard("Location", location),
               SizedBox(height: 8.0),
-              profileCard("Contact Details", contactDetails),
+              ProfileCard("Contact Details", contactDetails),
               SizedBox(height: 8.0),
-              profileCard("Profile Details", profileDetails),
+              ProfileCard("Profile Details", profileDetails),
               viewEvents(context)
             ]
           ),
-          LoadingIcon(_loading)
+          LoadingIcon(!_loading)
         ]
       )
     );
