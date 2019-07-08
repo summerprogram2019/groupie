@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/widgets.dart' show GroupieProfile;
-import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/screens.dart' show HomePage, EditProfile;
 import 'package:groupie/util.dart' show GroupieColours;
 
 class ProfileScreen extends StatefulWidget {
@@ -55,8 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final profile = new GroupieProfile(); //Profile picture
 
-  void _open_edit_screen() {
-    Navigator.pushNamed(context, ProfileScreen.tag);
+  void _openEditScreen() {
+    Navigator.pushNamed(context, EditProfile.tag);
   }
 
   final viewEvents = (context) => RaisedButton(
@@ -90,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             new IconButton(
               icon: new Icon(Icons.border_color),
               tooltip: 'Open Edit Screen',
-              onPressed: _open_edit_screen,
+              onPressed: _openEditScreen,
             ),
           ]
       ),
