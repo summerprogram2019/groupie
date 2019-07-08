@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-import 'package:groupie/screens.dart' show HomePage, CreateNewEventMinorPage;
+import 'package:groupie/screens.dart' show HomePage;
 
-class CreateNewEventMajorPage extends StatefulWidget {
+class CreateNewEventMinorPage extends StatefulWidget {
   final String title;
 
-  static String tag = "createNewEventMajor";
+  static String tag = "CreateNewEventMinor";
 
-  CreateNewEventMajorPage({Key key, this.title}) : super(key: key);
+  CreateNewEventMinorPage({Key key, this.title}) : super(key: key);
 
   @override
-  _CreateNewEventMajorPageState createState() =>
-      new _CreateNewEventMajorPageState();
+  _CreateNewEventMinorPageState createState() =>
+      new _CreateNewEventMinorPageState();
 }
 
-class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
+class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
   final FocusNode focus = FocusNode();
 
   /// Retrieves the text in the event's name entry field
@@ -23,19 +22,19 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
 
   /// Retrieves the text in the event's location entry field
   final TextEditingController eventLocationController =
-      new TextEditingController();
+  new TextEditingController();
 
   /// Retrieves the text in the event's start-time entry field
   final TextEditingController eventStartTimeController =
-      new TextEditingController();
+  new TextEditingController();
 
   /// Retrieves the text in the event's finish-time entry field
   final TextEditingController eventFinishTimeController =
-      new TextEditingController();
+  new TextEditingController();
 
   /// Retrieves the text in the event's description entry field
   final TextEditingController eventDescriptionController =
-      new TextEditingController();
+  new TextEditingController();
 
   Widget buildRow(String text, IconData icon, {style}) {
     if (text == null) {
@@ -52,7 +51,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
             child: new Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                    new Text(text, textAlign: TextAlign.center, style: style)),
+                new Text(text, textAlign: TextAlign.center, style: style)),
             key: Key('expanded'))
       ],
     );
@@ -67,17 +66,17 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
   }
 
   final editButton = (context) => RaisedButton(
-        key: Key('edit_button'),
-        child: Text(
-          'Edit',
-          style: TextStyle(color: Colors.grey),
-        ),
-        color: Colors.white,
-        shape: new CircleBorder(),
-        onPressed: () {
-          Navigator.of(context).pushNamed(HomePage.tag);
-        },
-      );
+    key: Key('edit_button'),
+    child: Text(
+      'Edit',
+      style: TextStyle(color: Colors.grey),
+    ),
+    color: Colors.white,
+    shape: new CircleBorder(),
+    onPressed: () {
+      Navigator.of(context).pushNamed(HomePage.tag);
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -114,12 +113,43 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
     );
 
     // the event's name entry field
+    final eventStartTime = TextFormField(
+      key: Key('eventStartTime_field'),
+      keyboardType: TextInputType.datetime,
+      autofocus: false,
+      controller: eventStartTimeController,
+      decoration: InputDecoration(
+        labelText: "Start-time",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.0,
+          ),
+        ),
+      ),
+    );
+
+    // the event's name entry field
+    final eventFinishTime = TextFormField(
+      key: Key('eventFinishTime_field'),
+      keyboardType: TextInputType.datetime,
+      autofocus: false,
+      controller: eventFinishTimeController,
+      decoration: InputDecoration(
+        labelText: "Finish-time",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.0,
+          ),
+        ),
+      ),
+    );
+
+    // the event's name entry field
     final eventDescription = TextFormField(
       key: Key('eventDescription_field'),
       keyboardType: TextInputType.multiline,
       autofocus: false,
-      maxLines: 5,
-      // it'll have problems on different devices (screen sizes), but it seems hard for fixing
+      maxLines: 5,        // it'll have problems on different devices (screen sizes), but it seems hard for fixing
 //      expands: true,
       controller: eventDescriptionController,
       decoration: InputDecoration(
@@ -132,6 +162,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       ),
     );
 
+
     final continueButton = RaisedButton(
       key: Key('continue_button'),
       child: Text(
@@ -143,62 +174,6 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
         Navigator.of(context).pushNamed(CreateNewEventMinorPage.tag);
       },
     );
-
-    bool startTimeChoosed = false;
-    DateTime startTime;
-
-    DateTime getStartTime() {
-      if (!startTimeChoosed) {
-        startTime = DateTime.now();
-      }
-      return startTime;
-    }
-
-    final startTimePicker = RaisedButton(
-        onPressed: () {
-          DatePicker.showDateTimePicker(context, onChanged: (date) {
-            startTimeChoosed = true;
-            startTime = date;
-            print('change $date');
-          }, onConfirm: (date) {
-            startTimeChoosed = true;
-            startTime = date;
-            print('confirm $date');
-          }, currentTime: getStartTime() /*DateTime.now()*/, locale: LocaleType.en);
-        },
-        child: Text(
-          "Tap to choose",  // it's hard to do it updateable
-          style: TextStyle(color: Colors.blue),
-        ),
-        color: Colors.white);
-
-    bool finishTimeChoosed = false;
-    DateTime finishTime;
-
-    DateTime getFinishTime() {
-      if (!finishTimeChoosed) {
-        finishTime = DateTime.now();
-      }
-      return finishTime;
-    }
-
-    final finishTimePicker = RaisedButton(
-        onPressed: () {
-          DatePicker.showDateTimePicker(context, onChanged: (date) {
-            finishTimeChoosed = true;
-            finishTime = date;
-            print('change $date');
-          }, onConfirm: (date) {
-            finishTimeChoosed = true;
-            finishTime = date;
-            print('confirm $date');
-          }, currentTime: getFinishTime() /*DateTime.now()*/, locale: LocaleType.en);
-        },
-        child: Text(
-          "Tap to choose",
-          style: TextStyle(color: Colors.blue),
-        ),
-        color: Colors.white);
 
     final double standartFontSize = 14.0;
     final double standartSmallGap = 4.0;
@@ -217,35 +192,28 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
             children: <Widget>[
               // Sizedboxes are used for whitespace and padding on the screen
               SizedBox(height: 8.0),
-              Text('Enter Event Name',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+              Text('Enter Event Name lolololo',
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventName,
               SizedBox(height: standartBigGap),
               Text('Set Event Location',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventLocation,
               SizedBox(height: standartBigGap),
               Text('Set Event Start-Time',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
-              //eventStartTime,
-              startTimePicker,
+              eventStartTime,
               SizedBox(height: standartBigGap),
               Text('Set Event Finish-Time',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
-//              eventFinishTime,
-              finishTimePicker,
+              eventFinishTime,
               SizedBox(height: standartBigGap),
               Text('Set Event Description',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: standartFontSize)),
+                  style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventDescription,
               SizedBox(height: standartBigGap),
