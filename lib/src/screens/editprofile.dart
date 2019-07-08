@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/util.dart' show GroupieColours;
-import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/screens.dart' show HomePage, ProfileScreen;
 
 /*
   Note: fontWeight for save/discard changes buttons set to FontWeight.w300
@@ -163,7 +163,7 @@ class _EditProfileState extends State<EditProfile> {
         )),
     color: Colors.white,
     onPressed: () {
-      Navigator.of(context).pushNamed(HomePage.tag);
+      Navigator.of(context).pushNamed(ProfileScreen.tag);
     },
   );
 
