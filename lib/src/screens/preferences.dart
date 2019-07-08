@@ -29,7 +29,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   //the values for the switches and sliders
   bool _silenceNotificationToggle = false;
   bool _pushNotificationToggle = false;
+
   double _maxCost = 100;
+  var _maxCostString = '100';
+
   double _maxDistance = 20;
 
   @override
@@ -50,50 +53,71 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
            ),
         ]
       ),
-      body: new Center(
-        child: new ListView(
+      body: new Column(
           children: <Widget>[
+
+
             Card(
-              child: Column(
+                child: Column(
+                  children: <Widget>[
+                    const ListTile(
+                        title: Text('View your profile')
+                    )
+                  ],
+                )
+            ),
+
+
+            Card(
+              child: ListView(
+                shrinkWrap: true,
                 children: <Widget>[
-                  const ListTile(
-                    title: Text('View your profile')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          //'Maximum Cost: \$ ${_maxCostString}',
+                            'Maximum Cost:'
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                            _maxCostString
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Slider(
+                      value: _maxCost,
+                      min: 0,
+                      max: 1000,
+                      divisions: 50,
+                      onChanged: (double value){
+                        setState(() {
+                          _maxCost = value;
+                          _maxCostString = '\$' + value.toStringAsFixed(0);
+
+                          if (value == 0){
+                            _maxCostString = 'Free';
+                          }
+                          if (value == 1000){
+                            _maxCostString = 'No limit';
+                          }
+                        });
+                      },
+                    ),
                   )
                 ],
-              )
+              ),
             ),
 
-            Card(
-              child: Column(
-                children: <Widget>[
-                  Text('Maximum Cost: \$ ${_maxCost.toStringAsFixed(0)}'),
-
-                  CupertinoSlider(
-                    value: _maxCost,
-                    min: 0,
-                    max: 1000,
-                    divisions: 50,
-                    onChanged: (double value){
-                      setState(() {
-                        _maxCost = value;
-                      });
-                    },
-
-                    onChangeEnd: (double value){
-                      if (value == 0) {
-
-
-
-
-                      }
-                      setState(() {
-                        _maxCost = value;
-                      });
-                    },
-                  ),
-                ],
-              )
-            ),
 
             Card(
                 child: Column(
@@ -159,6 +183,15 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 )
             ),
 
+            FlatButton(
+              onPressed: () {
+            /*...*/
+            },
+              child: Text(
+                "Logout",
+              ),
+            ),
+
             Card(
                 child: Column(
                   children: <Widget>[
@@ -171,7 +204,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
           ],
         ),
-      ),
-    );
+      );
   }
 }
