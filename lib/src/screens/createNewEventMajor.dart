@@ -164,10 +164,12 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
             startTimeChoosed = true;
             startTime = date;
             print('confirm $date');
-          }, currentTime: getStartTime() /*DateTime.now()*/, locale: LocaleType.en);
+          },
+              currentTime: getStartTime() /*DateTime.now()*/,
+              locale: LocaleType.en);
         },
         child: Text(
-          "Tap to choose",  // it's hard to do it updateable
+          "Tap to choose", // it's hard to do it updateable
           style: TextStyle(color: Colors.blue),
         ),
         color: Colors.white);
@@ -192,7 +194,9 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
             finishTimeChoosed = true;
             finishTime = date;
             print('confirm $date');
-          }, currentTime: getFinishTime() /*DateTime.now()*/, locale: LocaleType.en);
+          },
+              currentTime: getFinishTime() /*DateTime.now()*/,
+              locale: LocaleType.en);
         },
         child: Text(
           "Tap to choose",

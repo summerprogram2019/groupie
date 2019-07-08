@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/screens.dart' show HomePage, CreateNewEventPreviewPage;
 
 class CreateNewEventMinorPage extends StatefulWidget {
   final String title;
@@ -171,7 +171,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(CreateNewEventMinorPage.tag);
+        Navigator.of(context).pushNamed(CreateNewEventPreviewPage.tag);
       },
     );
 
@@ -192,7 +192,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
             children: <Widget>[
               // Sizedboxes are used for whitespace and padding on the screen
               SizedBox(height: 8.0),
-              Text('Enter Event Name lolololo',
+              Text('EVENT MINOR PAGE',
                   style: TextStyle(color: Colors.black, fontSize: standartFontSize)),
               SizedBox(height: standartSmallGap),
               eventName,
