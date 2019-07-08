@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/widgets.dart' show GroupieProfile;
-import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/screens.dart' show HomePage, EditProfile;
 import 'package:groupie/util.dart' show GroupieColours;
 
 class ProfileScreen extends StatefulWidget {
@@ -55,19 +55,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final profile = new GroupieProfile(); //Profile picture
 
-  final editButton = (context) => RaisedButton(
-    key: Key('edit_button'),
-    child: Text(
-      'Edit',
-      style: TextStyle(color: Colors.grey),
-    ),
+  void _openEditScreen() {
+    Navigator.pushNamed(context, EditProfile.tag);
+  }
+
+  final viewEvents = (context) => RaisedButton(
+    key: Key('viewevents_button'),
+    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+    child: Padding(
+      padding: EdgeInsets.all(10.0),
+        child: Text(
+          'View Your Created Events',
+          style: TextStyle(color: GroupieColours.darkText,
+          fontSize: 26.0),
+        )),
     color: Colors.white,
-    shape: new CircleBorder(),
     onPressed: () {
       Navigator.of(context).pushNamed(HomePage.tag);
     },
   );
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +86,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: GroupieColours.white69,
 
         iconTheme: new IconThemeData(color: GroupieColours.grey69),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.border_color),
+              tooltip: 'Open Edit Screen',
+              onPressed: _openEditScreen,
+            ),
+          ]
       ),
       backgroundColor: GroupieColours.white69,
       body: ListView(
@@ -87,216 +100,223 @@ class _ProfileScreenState extends State<ProfileScreen> {
           new Row(
             children: <Widget>[
               Expanded(
+                child: Card(
                 child: new Container(
                       width: 80.0,
-                      height: 160.0,
-                      child: new ClipOval(
-                        child: Image.asset('laura.jpg',
-                          fit: BoxFit.cover)
-                      )
+                      height: 240.0,
+            decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  alignment: FractionalOffset.topCenter,
+                  image: AssetImage('laura.jpg'),
+                )
+              )
+            )
                 )
               )
             ],
           ),
-          SizedBox(height: 24.0),
+          SizedBox(height: 18.0),
           new Row(
             children: <Widget>[
-
               Expanded(
+              child: Card(
                 child: new Container(
-                            width: 80.0,
-                            height: 30.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0))),
                             child: Row(
                               children: <Widget>[
-                                RichText(
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                child: RichText(
                                 text: TextSpan(
                                     text: "Profile Name\r\n",
-                                  style: new TextStyle(
-                                    color: GroupieColours.darkText,
-                                    fontSize: 15.0)
+                                    style: new TextStyle(
+                                      color: GroupieColours.darkText,
+                                      fontSize: 15.0),
+                                    children: [
+                                      TextSpan(text: 'Daisy', style: new TextStyle(
+                                          color: GroupieColours.grey69,
+                                          fontSize: 18.0))
+                                    ]
                                 ),
+                                )
                                 )
                               ],
                             )
                 )
                 )
+              )
             ],
           ),
-          SizedBox(height: 12.0),
+          SizedBox(height: 8.0),
           new Row(
             children: <Widget>[
               Expanded(
+              child: Card(
                   child: new Container(
-                      width: 80.0,
+                      decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(10.0),
+                              topRight: const Radius.circular(10.0),
+                              bottomLeft: const Radius.circular(10.0),
+                              bottomRight: const Radius.circular(10.0))),
                       child: Row(
                         children: <Widget>[
-                          Text("Bio\r\n",
-                              style: new TextStyle(
-                                  color: GroupieColours.darkText,
-                                  fontSize: 15.0)),
-                          Text("Living, laughing and loving life.",
-                              textAlign: TextAlign.left,
-                              style: new TextStyle(
-                                  color: GroupieColours.grey69,
-                                  fontSize: 15.0))
+                      Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: RichText(
+                            text: TextSpan(
+                                text: "Bio\r\n",
+                                style: new TextStyle(
+                                    color: GroupieColours.darkText,
+                                    fontSize: 15.0),
+                                children: [
+                                  TextSpan(text: 'Living, laughting and '
+                                      'loving life!', style: new TextStyle(
+                                      color: GroupieColours.grey69,
+                                      fontSize: 18.0))
+                                ]
+                            ),
+                          )
+                      )
                         ],
                       )
                   )
               )
-            ],
-          ),
-          SizedBox(height: 12.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-                  child: new Container(
-                      width: 80.0,
-                      child: Row(
-                        children: <Widget>[
-                          Text("Location\r\n",
-                              style: new TextStyle(
-                                  color: GroupieColours.darkText,
-                                  fontSize: 15.0)),
-                          Text("Chengdu, China",
-                              textAlign: TextAlign.left,
-                              style: new TextStyle(
-                                  color: GroupieColours.grey69,
-                                  fontSize: 15.0))
-                        ],
-                      )
-                  )
               )
             ],
           ),
-          SizedBox(height: 12.0),
+          SizedBox(height: 8.0),
           new Row(
             children: <Widget>[
               Expanded(
+                  child: Card(
                   child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(10.0),
+                              topRight: const Radius.circular(10.0),
+                              bottomLeft: const Radius.circular(10.0),
+                              bottomRight: const Radius.circular(10.0))),
                       width: 80.0,
                       child: Row(
                         children: <Widget>[
-                          Text("Contact Details\r\n",
-                              style: new TextStyle(
-                                  color: GroupieColours.darkText,
-                                  fontSize: 15.0)),
-                          Text("Ph: 0467 345 321 \r\n Em: DaisyFlower@gmail.com",
-                              textAlign: TextAlign.left,
-                              style: new TextStyle(
-                                  color: GroupieColours.grey69,
-                                  fontSize: 15.0))
-                        ],
-                      )
-                  )
-              )
-            ],
-          ),
-          SizedBox(height: 12.0),
-          new Row(
-            children: <Widget>[
-              Expanded(
-                  child: new Container(
-                      width: 80.0,
-                      child: Row(
-                        children: <Widget>[
-                          Text("Profile Details\r\n",
-                              style: new TextStyle(
-                                  color: GroupieColours.darkText,
-                                  fontSize: 15.0)),
-                          Text("Member Since:\r\nEvents Created:\r\nEvents Joined:",
-                              textAlign: TextAlign.left,
-                              style: new TextStyle(
-                                  color: GroupieColours.grey69,
-                                  fontSize: 15.0)),
-                          Text("8/4/2019\r\n8\r\n12",
-                              textAlign: TextAlign.right,
-                              style: new TextStyle(
-                                  color: GroupieColours.grey69,
-                                  fontSize: 15.0))
-                        ],
-                      )
-                  )
-              )
-            ],
-          ),
-          /*Row(
-          children: <Widget>[
-            Column(
-              children: [ //Profile pic goes here
-                //SizedBox(width: 4.0),
-                new Container(
-                    width: 80.0,
-                    height: 80.0,
-                    child: new ClipOval(
-                        child: Image.asset('laura.jpg',
-                            fit: BoxFit.cover)
-                    )
-                )
-              ],),
-            Expanded(
-              child: Column( //Profile Declaration goes here
-                  children: [
-                    Text("Username\r\n",
-                      textAlign: TextAlign.right,
-                      style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                      ),
-                    ),
-
-                    SizedBox(height: 10.0),
-                    Text("The user can add a short bio \r\n describing themselves and "
-                        "their \r\n interests.\r\n", textAlign: TextAlign.right)
-                  ]
-              ),
-            ),
-            Column(
-                children: [
-                  editButton(context)
-                ]
-            )
-          ],
-          ),
-          Row(
-                children:[
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text("Top Activities",
-                      textAlign: TextAlign.center,
-                      style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,)
-                        ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          new Container(
-                              width: 60.0,
-                              height: 60.0,
-                              child: new ClipOval(
-                                  child: Image.asset('assets/hiking.jpg',
-                                      fit: BoxFit.cover)
-                              )
+                          Padding(
+                      padding: EdgeInsets.all(10.0),
+                          child: RichText(
+                            text: TextSpan(
+                                text: "Location\r\n",
+                                style: new TextStyle(
+                                    color: GroupieColours.darkText,
+                                    fontSize: 15.0),
+                                children: [
+                                  TextSpan(text: 'Chengdu, China', style: new TextStyle(
+                                      color: GroupieColours.grey69,
+                                      fontSize: 18.0))
+                                ]
+                            ),
+                          )
                           )
                         ],
                       )
-                      ],
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      Text("Connections",
-                          textAlign: TextAlign.center,
-                          style: new TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,)
-                      )
-                    ],
                   )
-    ],
-          )*/
-    ]
+                  )
+              )
+            ],
+          ),
+          SizedBox(height: 8.0),
+          new Row(
+            children: <Widget>[
+              Expanded(
+                child: Card(
+                  child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(10.0),
+                              topRight: const Radius.circular(10.0),
+                              bottomLeft: const Radius.circular(10.0),
+                              bottomRight: const Radius.circular(10.0))),
+                      width: 80.0,
+                      child: Row(
+                        children: <Widget>[
+                        Padding(
+                        padding: EdgeInsets.all(10.0),
+                          child: RichText(
+                              text: TextSpan(
+                                  text: "Contact Details\r\n",
+                                  style: new TextStyle(
+                                      color: GroupieColours.darkText,
+                                      fontSize: 15.0),
+                                  children: [
+                                    TextSpan(text: 'ph. 0845 349 235\r\n'
+                                        'Em. DaisyFlower@gmail.com',
+                                        style: new TextStyle(
+                                        color: GroupieColours.grey69,
+                                        fontSize: 18.0))
+                                  ]
+                              ),
+                            )
+                        )
+                        ],
+                      )
+                  )
+                  )
+              )
+            ],
+          ),
+          SizedBox(height: 8.0),
+          new Row(
+            children: <Widget>[
+              Expanded(
+                  child: Card(
+                  child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(10.0),
+                              topRight: const Radius.circular(10.0),
+                              bottomLeft: const Radius.circular(10.0),
+                              bottomRight: const Radius.circular(10.0))),
+                      child: Row(
+                        children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: RichText(
+                              text: TextSpan(
+                                  text: "Profile Details\r\n",
+                                  style: new TextStyle(
+                                      color: GroupieColours.darkText,
+                                      fontSize: 15.0),
+                                  children: [
+                                    TextSpan(
+                                        text: 'Member Since:        8/4/2019\r\n'
+                                              'Events Created:             8\r\n'
+                                              'Events Joined:             12',
+                                        style: new TextStyle(
+                                        color: GroupieColours.grey69,
+                                        fontSize: 18.0)),
+                                  ]
+                              ),
+                            ),
+                      )
+                        ],
+                      )
+                  )
+              )
+              ),
+            ],
+          ),
+        viewEvents(context)
+        ]
       )
     );
   }
