@@ -42,10 +42,13 @@ class MyApp extends StatelessWidget {
       },
       title: title,
       theme: new ThemeData(
-        //primarySwatch: Colors.white54,
-        backgroundColor: Color.fromARGB(255, 247, 247, 247),
-        //define the default font family
-        fontFamily: 'Roboto'
+          //primarySwatch: Colors.white54,
+          backgroundColor: Color.fromARGB(255, 247, 247, 247),
+          //define the default font family
+          fontFamily: 'Roboto',
+          textTheme: TextTheme(
+            headline: TextStyle(fontSize: 36.0, fontWeight: FontWeight.normal),
+          )
       ),
       home: new WelcomeScreen(title: title),
       routes: routes,
