@@ -5,7 +5,7 @@ import 'package:groupie/screens.dart' show HomePage;
 class CreateEventSecondScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "createEventSecond";
+  static String tag = "createEventSecond🐢";
 
   CreateEventSecondScreen({Key key, this.title}) : super(key: key);
 

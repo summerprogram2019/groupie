@@ -6,7 +6,7 @@ import 'package:groupie/widgets.dart' show LoadableScreen;
 class DisclaimerScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "disclaimer";
+  static String tag = "disclaimer🐢";
 
   DisclaimerScreen({Key key, this.title}) : super(key: key);
 

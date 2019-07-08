@@ -5,7 +5,7 @@ import 'package:groupie/screens.dart' show HomePage;
 class CreateEventPreviewScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "createEventPreview";
+  static String tag = "createEventPreview🐢";
 
   CreateEventPreviewScreen({Key key, this.title}) : super(key: key);
 

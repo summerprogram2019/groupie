@@ -8,7 +8,7 @@ import 'package:groupie/util.dart' show GroupieColours, getUser;
 class ProfileScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "profile";
+  static String tag = "profile🐢";
 
   final User profile;
 

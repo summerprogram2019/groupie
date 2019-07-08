@@ -10,7 +10,7 @@ import 'package:groupie/util.dart' show GroupieColours, getUser, getUserId;
 
 class HomePage extends StatefulWidget {
   final String title;
-  static String tag = "homepage";
+  static String tag = "homepage🐢";
 
   HomePage({Key key, this.title}) : super(key: key);
 

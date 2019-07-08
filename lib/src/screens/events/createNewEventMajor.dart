@@ -5,7 +5,7 @@ import 'package:groupie/screens.dart' show HomePage;
 class CreateNewEventMajorPage extends StatefulWidget {
   final String title;
 
-  static String tag = "createNewEventMajor";
+  static String tag = "createNewEventMajor🐢";
 
   CreateNewEventMajorPage({Key key, this.title}) : super(key: key);
 

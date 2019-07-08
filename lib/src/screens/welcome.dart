@@ -8,17 +8,17 @@ import 'package:groupie/widgets.dart' show GroupieLogo;
 class WelcomeScreen extends StatelessWidget {
   final String title;
 
-  static String tag = "welcome";
+  static String tag = "welcome🐢";
 
   WelcomeScreen({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-//    getUserId().then((id) {
-//      if (id != null) {
-//        Navigator.pushReplacementNamed(context, HomePage.tag);
-//      }
-//    });
+    getUserId().then((id) {
+      if (id != null) {
+        Navigator.pushReplacementNamed(context, HomePage.tag);
+      }
+    });
 
     final logo = new GroupieLogo(() => {});
 

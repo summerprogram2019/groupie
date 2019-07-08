@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show HomePage, DisclaimerScreen, LoginScreen;
+import 'package:groupie/screens.dart' show HomePage, LoginScreen;
 import 'package:groupie/util.dart' show signup, SignupResponse;
 import 'package:groupie/widgets.dart' show LoadableScreen;
 
 class SignupPage extends StatefulWidget {
   final String title;
 
-  static String tag = "signup";
+  static String tag = "signup🐢";
 
   SignupPage({Key key, this.title}) : super(key: key);
 

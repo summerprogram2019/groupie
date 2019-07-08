@@ -6,7 +6,7 @@ import 'package:groupie/widgets.dart' show LoadableScreen;
 class RecoveryPage extends StatefulWidget {
   final String title;
 
-  static String tag = "recovery";
+  static String tag = "recovery🐢";
 
   RecoveryPage({Key key, this.title}) : super(key: key);
 

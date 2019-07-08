@@ -7,7 +7,7 @@ import 'package:groupie/widgets.dart' show LoadableScreen;
 class LoginScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "login";
+  static String tag = "login🐢";
 
   LoginScreen({Key key, this.title}) : super(key: key);
 
