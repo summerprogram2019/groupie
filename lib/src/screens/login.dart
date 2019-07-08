@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:groupie/util.dart' show login, LoginResponse;
 import 'package:groupie/screens.dart' show HomePage, SignupPage, RecoveryPage;
-//import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class LoginScreen extends StatefulWidget {
   final String title;
@@ -26,9 +26,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String errors = "";
 
+  void _login(LoginResponse response) {
+    if (response.hasError) {
+      setState(() {
+        errors = response.error;
+        _loggingIn = false;
+      });
+    } else {
+      _loggingIn = false;
+      Navigator.pushNamed(context, HomePage.tag);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
 
     // the email entry field
@@ -94,7 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(HomePage.tag);
+        setState(() {
+          _loggingIn = true;
+        });
+        login(emailController.text, passwordController.text).then((LoginResponse response) =>
+          _login(response)
+        );
       },
     );
 
@@ -102,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: Center(
         child: Stack(
-          fit: StackFit.passthrough,
+//          fit: StackFit.passthrough,
           children: [
             ListView(
               shrinkWrap: true,
@@ -128,22 +144,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 loginButton,
                 SizedBox(height: 24.0),
                 signupButton
-//                loginButton,
-//                SizedBox(height: 8.0),
-//                newUser,
-//                SizedBox(height: 4.0),
-//                forgotLabel
               ],
             ),
             new Offstage(
               // displays the loading icon while the user is logging in
-                offstage: !_loggingIn,
-                child: new Center(
-                    child: _loggingIn ? new CircularProgressIndicator(
-                      value: null,
-                      strokeWidth: 7.0,
-                    ) : null
-                )
+              offstage: !_loggingIn,
+              child: new Center(
+                child: _loggingIn ? new CircularProgressIndicator(
+                  value: null,
+                  strokeWidth: 7.0,
+                ) : null
+              )
             )
           ]),
       ),
