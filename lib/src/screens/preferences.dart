@@ -29,8 +29,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   //the values for the switches and sliders
   bool _silenceNotificationToggle = false;
   bool _pushNotificationToggle = false;
-  double _maxCost = 100;
-  double _maxDistance = 20;
+  double _maxCost = 100.0;
+  double _maxDistance = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +70,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                   CupertinoSlider(
                     value: _maxCost,
-                    min: 0,
-                    max: 1000,
+                    min: 0.0,
+                    max: 1000.0,
                     divisions: 50,
                     onChanged: (double value){
                       setState(() {
