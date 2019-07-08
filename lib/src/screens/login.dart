@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/util.dart' show login;
-import 'package:groupie/screens.dart' show WelcomeScreen, HomePage;
+import 'package:groupie/util.dart' show login, LoginResponse;
 import 'package:groupie/screens.dart' show HomePage, SignupPage, RecoveryPage;
 
 class LoginScreen extends StatefulWidget {
@@ -27,14 +26,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String errors = "";
 
+  void _login(LoginResponse response) {
+    if (response.hasError) {
+      setState(() {
+        errors = response.error;
+        _loggingIn = false;
+      });
+    } else {
+      Navigator.pushNamed(context, HomePage.tag);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    login("email@braewebb.com", "password1234").then((userId) => {
-      setState(() => {
-        errors = userId.toString()
-      })
-    });
-
     //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
 
     // the email entry field
@@ -100,7 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(HomePage.tag);
+        setState(() {
+          _loggingIn = true;
+        });
+        login(emailController.text, passwordController.text).then((LoginResponse response) =>
+          _login(response)
+        );
       },
     );
 
