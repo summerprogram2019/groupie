@@ -76,7 +76,8 @@ class _HomePageState extends State<HomePage> {
               tooltip: 'Open Preferences',
               onPressed: _openPreferences,
           )
-        ]
+        ],
+        automaticallyImplyLeading: false,
       ),
       body: new Center(
         child: new Stack(

@@ -40,8 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
-
     // the email entry field
     final email = TextFormField(
         key: Key('email_field'),

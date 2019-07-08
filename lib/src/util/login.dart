@@ -43,6 +43,11 @@ Future<LoginResponse> login(String email, String password) async {
   return LoginResponse(hasError: false, userId: result);
 }
 
+Future<bool> logout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.remove(_USER_KEY);
+}
+
 Future<int> getUserId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getInt(_USER_KEY);
