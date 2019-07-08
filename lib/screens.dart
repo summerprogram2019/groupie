@@ -1,14 +1,20 @@
 /// Available application screens
 
 export 'src/screens/welcome.dart';
-export 'src/screens/login.dart';
 export 'src/screens/homescreen.dart';
-export 'src/screens/profile.dart';
-export 'src/screens/signup.dart';
-export 'src/screens/recovery.dart';
-export 'src/screens/disclaimer.dart';
-export 'src/screens/createNewEventMajor.dart';
-export 'src/screens/createEventSecond.dart';
-export 'src/screens/createEventPreview.dart';
-export 'src/screens/preferences.dart';
-export 'src/screens/editprofile.dart';
+
+// Settings related screens
+export 'src/screens/settings/profile.dart';
+export 'src/screens/settings/preferences.dart';
+export 'src/screens/settings/editprofile.dart';
+
+// Event related screens
+export 'src/screens/events/createNewEventMajor.dart';
+export 'src/screens/events/createEventSecond.dart';
+export 'src/screens/events/createEventPreview.dart';
+
+// Login related screens
+export 'src/screens/login/login.dart';
+export 'src/screens/login/signup.dart';
+export 'src/screens/login/recovery.dart';
+export 'src/screens/login/disclaimer.dart';
