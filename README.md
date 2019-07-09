@@ -29,3 +29,4 @@ Others: https://flutter.dev/docs/development/packages-and-plugins/using-packages
 
 [Flutter layout](https://flutter.dev/docs/development/ui/layout)
 [Layout Widgets](https://flutter.dev/docs/development/ui/widgets/layout)
+[Good examples. Useful for swipe-screen](https://github.com/nisrulz/flutter-examples)

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
     DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
     PreferencesScreen.tag: (context) => new PreferencesScreen(title: title),
-    EditProfile.tag: (context) => new EditProfile(title: title)
+    EditProfile.tag: (context) => new EditProfile(title: title),
     CreateNewEventMajorPage.tag: (context) =>
     new CreateNewEventMajorPage(title: title),
     CreateNewEventMinorPage.tag: (context) =>
