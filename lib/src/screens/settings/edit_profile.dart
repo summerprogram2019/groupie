@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/util.dart' show GroupieColours;
+import 'package:groupie/model.dart' show User;
+import 'package:groupie/util.dart' show GroupieColours, getUser;
 import 'package:groupie/screens.dart' show HomePage;
 
 /*
@@ -21,8 +22,9 @@ class TextPrompt extends Text {
 }
 
 class TextInput extends TextFormField {
-  TextInput(String key, String text) : super(
+  TextInput(String key, String text, {TextEditingController controller}) : super(
     key: Key(key),
+    controller: controller,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
       labelText: text,
@@ -71,7 +73,25 @@ class EditProfile extends StatefulWidget {
 
 /// Initiates the state of the edit profile screen
 class _EditProfileState extends State<EditProfile> {
-  _EditProfileState() : super();
+  String name;
+  String biography;
+  String location;
+  String phone;
+  String email;
+
+  _EditProfileState() : super() {
+    getUser().then(setFields);
+  }
+
+  void setFields(User user) {
+    setState(() {
+      name = user.givenName + " " + user.familyName;
+      biography = "uh";
+      location = user.city + "," + user.country;
+      phone = ":O";
+      email = "🐢";
+    });
+  }
 
   /// Button for changing the profile picture of the user
   final changeProfileImage = (context) => RaisedButton(
@@ -90,43 +110,57 @@ class _EditProfileState extends State<EditProfile> {
         },
       );
 
-  /// Button for changing the username
-  final setName = TextInput("name_field", "Username");
-
-  /// Button for changing the user's bio
-  final setBio = TextInput("bio_field", "User Bio");
-
-  /// Button for changing the user's location
-  final setLocation = TextInput("location_field", "User location",);
-
-  /// Button for changing the user's number
-  final setNumber = TextInput("phNumber_field", "User Telephone Number");
-
-  /// Button for changing the user's email
-  final setEmail = TextInput("email_field", "User Email");
-
-  /// Button for saving any changes made to the profile
-  final saveChanges = (context) => ApplyButton(
-        key: 'savechanges_button',
-        text: 'Save Changes',
-        textColor: GroupieColours.logoColor,
-        onPressed: () {
-          Navigator.of(context).pushNamed(EditProfile.tag);
-        },
-  );
-
-  /// Button for discarding any changes the user may have begun to make
-  final discardChanges = (context) => ApplyButton(
-        key: 'discard_changes_button',
-        text: 'Discard Changes',
-        textColor: Colors.red,
-        onPressed: () {
-          Navigator.of(context).pushNamed(HomePage.tag);
-        },
-  );
+  final TextEditingController _nameController = new TextEditingController();
+  final TextEditingController _bioController = new TextEditingController();
+  final TextEditingController _locationController = new TextEditingController();
+  final TextEditingController _phoneController = new TextEditingController();
+  final TextEditingController _emailController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    /// Button for changing the username
+    final setName = TextInput("name_field", "Username", controller: _nameController);
+    _nameController.text = name;
+
+    /// Button for changing the user's bio
+    final setBio = TextInput("bio_field", "User Bio", controller: _bioController);
+    _bioController.text = biography;
+
+    /// Button for changing the user's location
+    final setLocation = TextInput("location_field", "User location",
+        controller: _locationController);
+    _locationController.text = location;
+
+    /// Button for changing the user's number
+    final setNumber = TextInput("phNumber_field", "User Telephone Number",
+        controller: _phoneController);
+    _phoneController.text = phone;
+
+    /// Button for changing the user's email
+    final setEmail = TextInput("email_field", "User Email",
+        controller: _emailController);
+    _emailController.text = email;
+
+    /// Button for saving any changes made to the profile
+    final saveChanges = (context) => ApplyButton(
+      key: 'savechanges_button',
+      text: 'Save Changes',
+      textColor: GroupieColours.logoColor,
+      onPressed: () {
+        Navigator.of(context).pushNamed(EditProfile.tag);
+      },
+    );
+
+    /// Button for discarding any changes the user may have begun to make
+    final discardChanges = (context) => ApplyButton(
+      key: 'discard_changes_button',
+      text: 'Discard Changes',
+      textColor: Colors.red,
+      onPressed: () {
+        Navigator.of(context).pushNamed(HomePage.tag);
+      },
+    );
+
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Edit Profile",
