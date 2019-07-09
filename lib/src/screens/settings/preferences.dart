@@ -161,7 +161,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                   Padding(
                     padding: EdgeInsets.all(10.0),
-                    child: Slider(
+                    child: CupertinoSlider(
                       //sets to 0 if null on first build to avoid null assert exception
                       value: _maxCost ?? 0,
                       min: 0,
@@ -215,7 +215,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                   Padding(
                     padding: EdgeInsets.all(10.0),
-                    child: Slider(
+                    child: CupertinoSlider(
                       //sets to 0 if null on first build to avoid null assert exception
                       value: _maxDistance ?? 5,
                       min: 5,
