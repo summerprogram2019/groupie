@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class GroupieColours {
   static const Color white69 = Color(0xFFF7F7F7);
 
+  //Standard font colour
   static const Color grey69 = Color(0xFF707070);
 
   static const Color hyperlinkText = Color(0xFF0034FF);

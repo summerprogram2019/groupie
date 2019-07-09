@@ -5,17 +5,21 @@ import 'package:groupie/widgets.dart' show ProfileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
 import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider;
 
+class ScreenArguments {
+  final User profile;
+
+  ScreenArguments(this.profile);
+}
+
 class ProfileScreen extends StatefulWidget {
   final String title;
 
   static String tag = "profile🐢";
 
-  final User profile;
-
-  ProfileScreen({Key key, this.title, this.profile}) : super(key: key);
+  ProfileScreen({Key key, this.title}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => new _ProfileScreenState(profile);
+  _ProfileScreenState createState() => new _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -29,8 +33,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool _loading = true;
 
-  _ProfileScreenState(User profile) : super() {
-    if (profile == null) {
+  _ProfileScreenState() : super() {
+//    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+    final ScreenArguments args = ScreenArguments(null);
+
+    if (args.profile == null) {
       getUser().then(setupDisplay).catchError((error) {
         // TODO When I get internet connection, make this a snackbar popup instead of this hack
         setupDisplay(User.fromJson({
@@ -44,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }));
       });
     } else {
-      setupDisplay(profile);
+      setupDisplay(args.profile);
     }
 
     getProfileImageProvider().then((image) {

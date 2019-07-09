@@ -15,16 +15,18 @@ class GroupieLogo extends Hero {
   );
 }
 
-class GroupieProfile extends Hero {
-  GroupieProfile(Image image) : super(
-    tag: 'profileimage',
-    key: Key('profile_image'),
-    child: GestureDetector(
-      child: CircleAvatar(
-        backgroundColor: Colors.white,
-        radius: 40.0,
-        child: image,
-      ),
+class GroupieProfile extends Container {
+  GroupieProfile(ImageProvider image) : super(
+    width: 100.0,
+    height: 100.0,
+    margin: EdgeInsets.all(10.0),
+
+    decoration: new BoxDecoration(
+      shape: BoxShape.circle,
+      image: new DecorationImage(
+        fit: BoxFit.fill,
+        image: image
+      )
     )
   );
 }

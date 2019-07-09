@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:groupie/util.dart' show GroupieColours;
+
 
 // Import the home screen from the screens package
-import 'package:groupie/screens.dart'
-    show
-    HomePage,
-    ProfileScreen,
-    LoginScreen,
-    WelcomeScreen,
-    PreferencesScreen,
-    SignupPage,
-    RecoveryPage,
-    DisclaimerScreen,
-    CreateNewEventMajorPage,
-    CreateNewEventMinorPage,
-    CreateNewEventPreviewPage,
-    EditProfile;
+import 'package:groupie/screens.dart';
 
-void main() => runApp(new MyApp());
+void main(){
+  //debugPaintSizeEnabled = false;
+  runApp(new MyApp());
+}
 
 // For removing glow effect everywhere
 class RemoveGlowEffectBehavior extends ScrollBehavior {
@@ -39,13 +32,11 @@ class MyApp extends StatelessWidget {
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
     DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
     PreferencesScreen.tag: (context) => new PreferencesScreen(title: title),
+    ParticipantsScreen.tag: (context) => new ParticipantsScreen(title: title),
     EditProfile.tag: (context) => new EditProfile(title: title),
-    CreateNewEventMajorPage.tag: (context) =>
-    new CreateNewEventMajorPage(title: title),
-    CreateNewEventMinorPage.tag: (context) =>
-    new CreateNewEventMinorPage(title: title),
-    CreateNewEventPreviewPage.tag: (context) =>
-    new CreateNewEventPreviewPage(title: title),
+    CreateNewEventMajorPage.tag: (context) => new CreateNewEventMajorPage(title: title),
+    CreateNewEventMinorPage.tag: (context) => new CreateNewEventMinorPage(title: title),
+    CreateNewEventPreviewPage.tag: (context) => new CreateNewEventPreviewPage(title: title)
   };
 
   @override
@@ -65,6 +56,12 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Roboto',
           textTheme: TextTheme(
             headline: TextStyle(fontSize: 36.0, fontWeight: FontWeight.normal),
+            //normal text in cards e.g. Logout button, view your profile
+            subhead: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+            //confirmation text style
+            body1: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.logoColor),
+            //extreme text style e.g. delete account, reject changes
+            body2: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.extremeText),
           )
       ),
       home: new WelcomeScreen(title: title),

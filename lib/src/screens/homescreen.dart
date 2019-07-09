@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //have to add in to link to the screen
 import 'settings/preferences.dart';
 import 'settings/profile.dart';
+import 'events/participants.dart';
 
 import 'package:groupie/widgets.dart' show createCard;
 import 'package:groupie/model.dart' show HobbyCard;
@@ -91,6 +92,9 @@ class _HomePageState extends State<HomePage> {
           children: hobbyCards
         ),
       ),
+      floatingActionButton: new FloatingActionButton(onPressed: () {
+        Navigator.of(context).pushNamed(ParticipantsScreen.tag);
+      }),
     );
   }
 }
