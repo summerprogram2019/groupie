@@ -11,7 +11,6 @@ class PreferencesScreen extends StatefulWidget {
 
   @override
   _PreferencesScreenState createState() {
-
     return new _PreferencesScreenState();
   }
 }
@@ -20,7 +19,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   _PreferencesScreenState() : super() {
 
   }
-
 
   void _openProfile() {
     Navigator.pushNamed(context, ProfileScreen.tag);
@@ -36,7 +34,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
   double _maxDistance = 20;
   var _maxDistanceString = '20';
-
 
 
   @override
@@ -62,12 +59,22 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
 
             Card(
-                child: Column(
-                  children: <Widget>[
-                    const ListTile(
-                        title: Text('View your profile')
-                    )
-                  ],
+                child: InkWell(
+                  onTap: _openProfile,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.all(10.0),
+                        child: Text('View your profile'),
+                      ),
+
+                      new IconButton(
+                        icon: new Icon(Icons.arrow_forward_ios),
+                        tooltip: 'Open Profile',
+                        onPressed: _openProfile,
+                      ),
+                    ],
+                  ),
                 )
             ),
 
