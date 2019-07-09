@@ -2,55 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:groupie/screens.dart' show HomePage;
 
-class CreateEventSecondScreen extends StatefulWidget {
+class CreateEventPreviewScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "createEventSecond";
+  static String tag = "createEventPreview🐢";
 
-  CreateEventSecondScreen({Key key, this.title}) : super(key: key);
+  CreateEventPreviewScreen({Key key, this.title}) : super(key: key);
 
   @override
-  _CreateEventSecondScreenState createState() => new _CreateEventSecondScreenState();
+  _CreateEventPreviewScreenState createState() => new _CreateEventPreviewScreenState();
 }
 
-class _CreateEventSecondScreenState extends State<CreateEventSecondScreen> {
-
-  Widget buildRow(String text, IconData icon, {style}) {
-    if (text == null) {
-      return new Padding(padding: EdgeInsets.all(0.0));
-    }
-
-    style = style ?? new TextStyle(
-        color: Colors.black54
-    );
-    return new Row(
-      children: <Widget>[
-        new Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: new Icon(icon, color: Colors.black54)
-        ),
-        new Expanded(
-            child: new Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: new Text(text,
-                    textAlign: TextAlign.center,
-                    style: style
-                )
-            ),
-            key: Key('expanded')
-        )
-      ],
-    );
-  }
-
-  Widget buildRowPadding(String context) {
-    if (context == null) {
-      return new Padding(padding: EdgeInsets.all(0.0));
-    }
-
-    return new Padding(padding: EdgeInsets.only(bottom: 20.0));
-  }
-
+class _CreateEventPreviewScreenState extends State<CreateEventPreviewScreen> {
   final editButton = (context) => RaisedButton(
     key: Key('edit_button'),
     child: Text(
@@ -69,13 +32,13 @@ class _CreateEventSecondScreenState extends State<CreateEventSecondScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-          title: new Text("My CreateEventSecond"),
+          title: new Text("My CreateEventPreview"),
         ),
         backgroundColor: Colors.white,
         body: Row(
             children: [
               Column(
-                children: [ //CreateEventSecond pic goes here
+                children: [ //CreateEventPreview pic goes here
                   new Container(
                       width: 80.0,
                       height: 80.0,
@@ -84,8 +47,9 @@ class _CreateEventSecondScreenState extends State<CreateEventSecondScreen> {
                               fit: BoxFit.cover)
                       )
                   )
-                ],),
-              Column( //CreateEventSecond Declaration goes here
+                ],
+              ),
+              Column( //CreateEventPreview Declaration goes here
                   children: [
                     Text("Username\r\n",
                       textAlign: TextAlign.right,

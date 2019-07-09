@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:groupie/util.dart' show GroupieColours;
 import 'package:groupie/util.dart' show getUserId;
-import 'package:groupie/screens.dart' show HomePage, LoginScreen, CreateNewEventMajorPage;
+import 'package:groupie/screens.dart' show HomePage, LoginScreen, SignupPage, CreateNewEventMajorPage;
 import 'package:groupie/widgets.dart' show GroupieLogo;
 
 class WelcomeScreen extends StatelessWidget {
   final String title;
 
-  static String tag = "welcome";
+  static String tag = "welcome🐢";
 
   WelcomeScreen({Key key, this.title}) : super(key: key);
 
@@ -57,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 12.0),
                     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                     onPressed: () {
-                      Navigator.of(context).pushNamed(LoginScreen.tag);
+                      Navigator.of(context).pushNamed(SignupPage.tag);
                     },
                   ),
                   SizedBox(height: 16.0),

@@ -5,7 +5,7 @@ import 'package:groupie/util.dart' show GroupieColours;
 
 class PreferencesScreen extends StatefulWidget {
   final String title;
-  static String tag = "preferences";
+  static String tag = "preferences🐢";
 
   PreferencesScreen({Key key, this.title}) : super(key: key);
 
@@ -48,7 +48,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
              tooltip: 'Open Profile',
              onPressed: _openProfile,
            ),
-        ]
+        ],
+          iconTheme: new IconThemeData(color: GroupieColours.grey69)
       ),
       body: new Center(
         child: new ListView(
