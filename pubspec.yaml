@@ -13,6 +13,8 @@ dependencies:
 
   flutter_datetime_picker:
 
+  intl: ^0.15.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

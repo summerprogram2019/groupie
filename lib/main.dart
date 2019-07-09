@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 // Import the home screen from the screens package
-import 'package:groupie/screens.dart' show HomePage, ProfileScreen, LoginScreen, WelcomeScreen, PreferencesScreen, SignupPage, RecoveryPage, DisclaimerScreen, CreateNewEventMajorPage, CreateNewEventMinorPage, CreateNewEventPreviewPage;
+import 'package:groupie/screens.dart'
+    show
+    HomePage,
+    ProfileScreen,
+    LoginScreen,
+    WelcomeScreen,
+    PreferencesScreen,
+    SignupPage,
+    RecoveryPage,
+    DisclaimerScreen,
+    CreateNewEventMajorPage,
+    CreateNewEventMinorPage,
+    CreateNewEventPreviewPage;
 
 void main() => runApp(new MyApp());
 
@@ -27,9 +39,12 @@ class MyApp extends StatelessWidget {
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
     DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
     PreferencesScreen.tag: (context) => new PreferencesScreen(title: title),
-    CreateNewEventMajorPage.tag: (context) => new CreateNewEventMajorPage(title: title),
-    CreateNewEventMinorPage.tag: (context) => new CreateNewEventMinorPage(title: title),
-    CreateNewEventPreviewPage.tag: (context) => new CreateNewEventPreviewPage(title: title),
+    CreateNewEventMajorPage.tag: (context) =>
+    new CreateNewEventMajorPage(title: title),
+    CreateNewEventMinorPage.tag: (context) =>
+    new CreateNewEventMinorPage(title: title),
+    CreateNewEventPreviewPage.tag: (context) =>
+    new CreateNewEventPreviewPage(title: title),
   };
 
   @override
@@ -44,13 +59,11 @@ class MyApp extends StatelessWidget {
       title: title,
       theme: new ThemeData(
         //primarySwatch: Colors.white54,
-        backgroundColor: Color.fromARGB(255, 247, 247, 247),
-        //define the default font family
-        fontFamily: 'Roboto'
-      ),
+          backgroundColor: Color.fromARGB(255, 247, 247, 247),
+          //define the default font family
+          fontFamily: 'Roboto'),
       home: new WelcomeScreen(title: title),
       routes: routes,
     );
   }
 }
-
