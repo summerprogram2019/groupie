@@ -108,7 +108,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         ],
           iconTheme: new IconThemeData(color: Colors.white)
       ),
-      body: new ListView(
+      body: new Column(
           children: <Widget>[
             //View your profile
             Card(
@@ -302,7 +302,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             ),
 
             //to push the logout and delete account elements to the bottom of the page
-            //Spacer(),
+            Spacer(),
 
             Card(
                 child: InkWell(
