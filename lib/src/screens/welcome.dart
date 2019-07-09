@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:groupie/util.dart' show GroupieColours;
 import 'package:groupie/util.dart' show getUserId;
 import 'package:groupie/screens.dart' show HomePage, LoginScreen, SignupPage, CreateNewEventMajorPage;
 import 'package:groupie/widgets.dart' show GroupieLogo;
@@ -7,7 +8,7 @@ import 'package:groupie/widgets.dart' show GroupieLogo;
 class WelcomeScreen extends StatelessWidget {
   final String title;
 
-  static String tag = "welcome";
+  static String tag = "welcome🐢";
 
   WelcomeScreen({Key key, this.title}) : super(key: key);
 
@@ -22,7 +23,7 @@ class WelcomeScreen extends StatelessWidget {
     final logo = new GroupieLogo(() => {});
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: GroupieColours.white69,
       body: Center(
         child: ListView(
             shrinkWrap: true,

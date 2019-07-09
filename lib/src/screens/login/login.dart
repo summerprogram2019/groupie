@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:groupie/util.dart' show login, LoginResponse;
 import 'package:groupie/screens.dart' show HomePage, SignupPage, RecoveryPage;
+import 'package:groupie/widgets.dart' show LoadableScreen;
 
 class LoginScreen extends StatefulWidget {
   final String title;
 
-  static String tag = "login";
+  static String tag = "login🐢";
 
   LoginScreen({Key key, this.title}) : super(key: key);
 
@@ -115,21 +116,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Stack(
-//          fit: StackFit.passthrough,
-          children: [
-            ListView(
+        child: LoadableScreen(
+            visible: !_loggingIn,
+            child: ListView(
               shrinkWrap: true,
               padding: EdgeInsets.only(left: 24.0, right: 24.0),
               children: <Widget>[
-               //logo,
                 Center(
                   child: Text(
                     'Login',
                     style: TextStyle(color: Colors.black, fontSize: 30.0),
                   )
                 ),
-                // Sizedboxes are used for whitespace and padding on the screen
                 SizedBox(height: 48.0),
                 email,
                 SizedBox(height: 8.0),
@@ -143,18 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 24.0),
                 signupButton
               ],
-            ),
-            new Offstage(
-              // displays the loading icon while the user is logging in
-              offstage: !_loggingIn,
-              child: new Center(
-                child: _loggingIn ? new CircularProgressIndicator(
-                  value: null,
-                  strokeWidth: 7.0,
-                ) : null
-              )
             )
-          ]),
+          ),
       ),
     );
   }

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'profile.dart';
 
 //have to add in to link to the screen
-import 'preferences.dart';
+import 'settings/preferences.dart';
+import 'settings/profile.dart';
+
 import 'package:groupie/widgets.dart' show createCard;
 import 'package:groupie/model.dart' show HobbyCard;
 import 'package:groupie/util.dart' show GroupieColours, getUser, getUserId;
 
 class HomePage extends StatefulWidget {
   final String title;
-  static String tag = "homepage";
+  static String tag = "homepage🐢";
 
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text(widget.title, style: new TextStyle(
+            color: GroupieColours.grey69)),
         backgroundColor: GroupieColours.white69,
         actions: <Widget>[
            new IconButton(
@@ -80,6 +82,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: _openPreferences,
           )
         ],
+        iconTheme: new IconThemeData(color: GroupieColours.grey69),
         automaticallyImplyLeading: false,
       ),
       body: new Center(

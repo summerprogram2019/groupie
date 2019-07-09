@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show HomePage, DisclaimerScreen, LoginScreen;
+import 'package:groupie/screens.dart' show HomePage, LoginScreen;
 import 'package:groupie/util.dart' show signup, SignupResponse;
+import 'package:groupie/widgets.dart' show LoadableScreen;
 
 class SignupPage extends StatefulWidget {
   final String title;
 
-  static String tag = "signup";
+  static String tag = "signup🐢";
 
   SignupPage({Key key, this.title}) : super(key: key);
 
@@ -122,44 +123,34 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                children: <Widget>[
-                  //logo,
-                  Center(
-                      child: Text(
-                        'Create an Account',
-                        style: TextStyle(color: Colors.black, fontSize: 30.0),
-                      )
-                  ),
-                  SizedBox(height: 48.0),
-                  email,
-                  SizedBox(height: 8.0),
-                  password,
-                  SizedBox(height: 8.0),
-                  confirm,
-                  SizedBox(height: 24.0),
-                  Text(errors),
-                  SizedBox(height: 48.0),
-                  createButton,
-                  SizedBox(height: 24.0),
-                  loginButton
-                ],
-              ),
-              new Offstage(
-                  offstage: !_signingUp,
-                  child: new Center(
-                      child: _signingUp ? new CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 7.0,
-                      ) : null
-                  )
-              )
-            ]),
+        child: LoadableScreen(
+          visible: !_signingUp,
+          child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+              children: <Widget>[
+                //logo,
+                Center(
+                    child: Text(
+                      'Create an Account',
+                      style: TextStyle(color: Colors.black, fontSize: 30.0),
+                    )
+                ),
+                SizedBox(height: 48.0),
+                email,
+                SizedBox(height: 8.0),
+                password,
+                SizedBox(height: 8.0),
+                confirm,
+                SizedBox(height: 24.0),
+                Text(errors),
+                SizedBox(height: 48.0),
+                createButton,
+                SizedBox(height: 24.0),
+                loginButton
+              ],
+            )
+        ),
       ),
     );
   }
