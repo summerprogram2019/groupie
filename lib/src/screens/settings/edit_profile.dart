@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/util.dart' show GroupieColours;
+import 'package:groupie/model.dart' show User;
+import 'package:groupie/util.dart' show GroupieColours, getUser;
 import 'package:groupie/screens.dart' show HomePage;
 
 /*
@@ -8,259 +9,223 @@ import 'package:groupie/screens.dart' show HomePage;
         font set to default
  */
 
-/*
-  Initiates the edit profile screen
- */
-class EditProfile extends StatefulWidget {
-final String title;
 
-static String tag = "editprofile🐢";
-
-EditProfile({Key key, this.title}) : super(key: key);
-
-@override
-_EditProfileState createState() => new _EditProfileState();
+class TextPrompt extends Text {
+  TextPrompt(String text) : super(
+    text,
+    textAlign: TextAlign.left,
+    style: TextStyle(
+        color: GroupieColours.grey69,
+        fontSize: 30.0
+    )
+  );
 }
 
-/*
-  Initiates the state of the edit profile screen
- */
-class _EditProfileState extends State<EditProfile> {
-  _EditProfileState() : super();
+class TextInput extends TextFormField {
+  TextInput(String key, String text, {TextEditingController controller}) : super(
+    key: Key(key),
+    controller: controller,
+    keyboardType: TextInputType.text,
+    decoration: InputDecoration(
+      labelText: text,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1.0,
+        ),
+      ),
+    )
+  );
+}
 
-  /*
-    Button for changing the profile picture of the user
-   */
-  final changeProfileImage = (context) => RaisedButton(
-    key: Key('changeprofileimage_button'),
-    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-    color: Colors.white,
+class ApplyButton extends RaisedButton {
+  ApplyButton({String key, String text, Color textColor, Function onPressed}) : super(
+    key: Key(key),
+    shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(10.0)
+    ),
     child: Padding(
         padding: EdgeInsets.all(10.0),
         child: Text(
-          'Change Profile Picture',
-          style: TextStyle(color: GroupieColours.grey69,
-              fontSize: 26.0),
-        )),
-    onPressed: () {
-      Navigator.of(context).pushNamed(HomePage.tag);
-    },
-  );
-
-  /*
-    Button for changing the username
-   */
-  final setName = TextFormField(
-    key: Key('name_field'),
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      labelText: "Username",
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1.0,
-        ),
-      ),
-    ),
-  );
-
-  /*
-    Button for changing the user's bio
-   */
-  final setBio = TextFormField(
-    key: Key('bio_field'),
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      labelText: "User Bio",
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1.0,
-        ),
-      ),
-    ),
-  );
-
-  /*
-    Button for changing the user's location
-   */
-  final setLocation = TextFormField(
-    key: Key('location_field'),
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      labelText: "User location",
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1.0,
-        ),
-      ),
-    ),
-  );
-
-  /*
-    Button for changing the user's number
-   */
-  final setNumber = TextFormField(
-    key: Key('phNumber_field'),
-    keyboardType: TextInputType.number,
-    decoration: InputDecoration(
-      labelText: "User Telephone Number",
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1.0,
-        ),
-      ),
-    ),
-  );
-
-  /*
-    Button for changing the user's email
-   */
-  final setEmail = TextFormField(
-    key: Key('email_field'),
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      labelText: "User Email",
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1.0,
-        ),
-      ),
-    ),
-  );
-
-  /*
-    Button for saving any changes made to the profile
-   */
-  final saveChanges = (context) => RaisedButton(
-    key: Key('savechanges_button'),
-    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-    child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Text(
-          'Save Changes',
-          style: TextStyle(color: GroupieColours.logoColor,
+          text,
+          style: TextStyle(
+              color: textColor,
               fontSize: 30.0,
-              fontWeight: FontWeight.w300),
-        )),
+              fontWeight: FontWeight.w300
+          ),
+        )
+    ),
     color: Colors.white,
-    onPressed: () {
-      Navigator.of(context).pushNamed(EditProfile.tag);
-    },
+    onPressed: onPressed
   );
+}
 
-  /*
-    Button for discarding any changes the user may have begun to make
-   */
-  final discardChanges = (context) => RaisedButton(
-    key: Key('discard_changes_button'),
-    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-    child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Text(
-          'Discard Changes',
-          style: TextStyle(color: Colors.red,
-              fontSize: 30.0,
-              fontWeight: FontWeight.w300),
-        )),
-    color: Colors.white,
-    onPressed: () {
-      Navigator.of(context).pushNamed(HomePage.tag);
-    },
-  );
+/// Initiates the edit profile screen
+class EditProfile extends StatefulWidget {
+  final String title;
+
+  static String tag = "editprofile🐢";
+
+  EditProfile({Key key, this.title}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  _EditProfileState createState() => new _EditProfileState();
+}
+
+/// Initiates the state of the edit profile screen
+class _EditProfileState extends State<EditProfile> {
+  String name;
+  String biography;
+  String location;
+  String phone;
+  String email;
+
+  _EditProfileState() : super() {
+    getUser().then(setFields);
+  }
+
+  void setFields(User user) {
+    setState(() {
+      name = user.givenName + " " + user.familyName;
+      biography = "uh";
+      location = user.city + "," + user.country;
+      phone = ":O";
+      email = "🐢";
+    });
+  }
+
+  /// Button for changing the profile picture of the user
+  final changeProfileImage = (context) => RaisedButton(
+        key: Key('changeprofileimage_button'),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10.0)),
+        color: Colors.white,
+        child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              'Change Profile Picture',
+              style: TextStyle(color: GroupieColours.grey69, fontSize: 26.0),
+            )),
+        onPressed: () {
+          Navigator.of(context).pushNamed(HomePage.tag);
+        },
+      );
+
+  final TextEditingController _nameController = new TextEditingController();
+  final TextEditingController _bioController = new TextEditingController();
+  final TextEditingController _locationController = new TextEditingController();
+  final TextEditingController _phoneController = new TextEditingController();
+  final TextEditingController _emailController = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    /// Button for changing the username
+    final setName = TextInput("name_field", "Username", controller: _nameController);
+    _nameController.text = name;
+
+    /// Button for changing the user's bio
+    final setBio = TextInput("bio_field", "User Bio", controller: _bioController);
+    _bioController.text = biography;
+
+    /// Button for changing the user's location
+    final setLocation = TextInput("location_field", "User location",
+        controller: _locationController);
+    _locationController.text = location;
+
+    /// Button for changing the user's number
+    final setNumber = TextInput("phNumber_field", "User Telephone Number",
+        controller: _phoneController);
+    _phoneController.text = phone;
+
+    /// Button for changing the user's email
+    final setEmail = TextInput("email_field", "User Email",
+        controller: _emailController);
+    _emailController.text = email;
+
+    /// Button for saving any changes made to the profile
+    final saveChanges = (context) => ApplyButton(
+      key: 'savechanges_button',
+      text: 'Save Changes',
+      textColor: GroupieColours.logoColor,
+      onPressed: () {
+        Navigator.of(context).pushNamed(EditProfile.tag);
+      },
+    );
+
+    /// Button for discarding any changes the user may have begun to make
+    final discardChanges = (context) => ApplyButton(
+      key: 'discard_changes_button',
+      text: 'Discard Changes',
+      textColor: Colors.red,
+      onPressed: () {
+        Navigator.of(context).pushNamed(HomePage.tag);
+      },
+    );
+
     return new Scaffold(
         appBar: new AppBar(
-            title: new Text("Edit Profile",
-                style: new TextStyle(
-                  color: GroupieColours.grey69,
-                  fontSize: 20.0,)),
-            backgroundColor: GroupieColours.white69,
-            iconTheme: new IconThemeData(color: GroupieColours.grey69),
+          title: new Text("Edit Profile",
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 20.0,
+              )),
+          backgroundColor: GroupieColours.white69,
+          iconTheme: new IconThemeData(color: GroupieColours.grey69),
         ),
         backgroundColor: GroupieColours.white69,
         body: ListView(
-        children: <Widget>[
-          new Row(
-            children: <Widget>[
-              // Current profile picture is displayed
-              Expanded(
-                  child: Card(
-                      child: new Container(
-                          width: 80.0,
-                          height: 240.0,
-                          decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                alignment: FractionalOffset.topCenter,
-                                image: AssetImage('laura.jpg'),
-                              )
-                          )
-                      )
-                  )
-              ),
-            ],
-          ),
-          //Place button
-          changeProfileImage(context),
-          SizedBox(height: 12.0),
-          Center(
-            child: new Container(
+          children: <Widget>[
+            new Row(
+              children: <Widget>[
+                // Current profile picture is displayed
+                Expanded(
+                    child: Card(
+                        child: new Container(
+                            width: 80.0,
+                            height: 240.0,
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              alignment: FractionalOffset.topCenter,
+                              image: AssetImage('laura.jpg'),
+                            ))))),
+              ],
+            ),
+            //Place button
+            changeProfileImage(context),
+            SizedBox(height: 12.0),
+            Center(
+                child: new Container(
               width: 325.0,
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Change username
-                  Text("Set Profile Name",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: GroupieColours.grey69,
-                      fontSize: 30.0)),
+                  TextPrompt("Set Profile Name"),
                   setName,
                   SizedBox(height: 6.0),
                   // Change the user's bio
-                  Text("Set Bio",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: GroupieColours.grey69,
-                      fontSize: 30.0)),
+                  TextPrompt("Set Bio"),
                   setBio,
                   SizedBox(height: 6.0),
                   // Change user's set location
-                  Text("Set Location",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: GroupieColours.grey69,
-                      fontSize: 30.0)),
+                  TextPrompt("Set Location"),
                   setLocation,
                   SizedBox(height: 6.0),
                   // Change the user's phone number
-                  Text("Set Phone Number",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: GroupieColours.grey69,
-                      fontSize: 30.0)),
+                  TextPrompt("Set Phone Number"),
                   setNumber,
                   SizedBox(height: 6.0),
                   // Change the user's email address
-                  Text("Set Email",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: GroupieColours.grey69,
-                      fontSize: 30.0)),
+                  TextPrompt("Set Email"),
                   setEmail,
                   SizedBox(height: 6.0),
                 ],
-            ),
-          )
-          ),
-          saveChanges(context),
-          SizedBox(height: 12.0),
-          discardChanges(context)
-          /*Expanded(
-            child: new Row(
-              children: <Widget>[
-
-              ],
-            )
-          )*/
-        ],
-      )
-    );
+              ),
+            )),
+            saveChanges(context),
+            SizedBox(height: 12.0),
+            discardChanges(context)
+          ],
+        ));
   }
 }
