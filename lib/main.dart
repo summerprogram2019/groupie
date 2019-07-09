@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 // Import the home screen from the screens package
 import 'package:groupie/screens.dart'
@@ -16,7 +17,10 @@ import 'package:groupie/screens.dart'
     CreateNewEventPreviewPage,
     EditProfile;
 
-void main() => runApp(new MyApp());
+void main(){
+  //debugPaintSizeEnabled = false;
+  runApp(new MyApp());
+}
 
 // For removing glow effect everywhere
 class RemoveGlowEffectBehavior extends ScrollBehavior {
