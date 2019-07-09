@@ -28,22 +28,7 @@ Widget _createCard(HobbyCard card) {
       width: 360.0,
       height: 575.0,
       child: Row(
-        children: <Widget>[
-          Expanded(
-              child: Card(
-                  child: new Container(
-                      width: 80.0,
-                      height: 240.0,
-                      decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                            fit: BoxFit.fitWidth,
-                            alignment: FractionalOffset.topCenter,
-                            image: AssetImage('laura.jpg'),
-                          )
-                      )
-                  )
-              )
-          )
+        children: [
 
         ]
       ),
