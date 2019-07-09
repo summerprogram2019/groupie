@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:groupie/model.dart' show User;
-import 'package:groupie/widgets.dart' show GroupieProfile, ProfileCard, LoadingIcon;
+import 'package:groupie/widgets.dart' show ProfileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
-import 'package:groupie/util.dart' show GroupieColours, getUser;
+import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider;
 
 class ProfileScreen extends StatefulWidget {
   final String title;
@@ -25,6 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String contactDetails;
   String profileDetails;
 
+  ImageProvider profilePicture = AssetImage("laura.jpg");
+
   bool _loading = true;
 
   _ProfileScreenState(User profile) : super() {
@@ -44,6 +46,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       setupDisplay(profile);
     }
+
+    getProfileImageProvider().then((image) {
+      setState(() {
+        profilePicture = image;
+      });
+    });
   }
 
   void setupDisplay(User user) {
@@ -56,8 +64,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _loading = false;
     });
   }
-
-  final profile = new GroupieProfile();
 
   void _openEditScreen() {
     Navigator.pushNamed(context, EditProfile.tag);
@@ -114,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           image: new DecorationImage(
                             fit: BoxFit.fitWidth,
                             alignment: FractionalOffset.topCenter,
-                            image: AssetImage('laura.jpg'),
+                            image: profilePicture,
                           )
                         )
                       )

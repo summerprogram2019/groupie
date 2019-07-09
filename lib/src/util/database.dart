@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 import 'package:http/http.dart';
 import 'package:groupie/model.dart';
 
@@ -9,6 +11,8 @@ import 'login.dart' show getUserId;
 const String _ERROR_MESSAGE = "ERROR";
 const String _BASE_ENDPOINT = "https://brae.uqcloud.net/groupie";
 const String _USER_ENDPOINT = _BASE_ENDPOINT + "/profile_user.php";
+const String _PICTURE_ENDPOINT = _BASE_ENDPOINT + "/pictures.php";
+const String _PICTURE_DIR = _BASE_ENDPOINT + "/images/";
 
 class Reply {
   final bool hasError;
@@ -74,4 +78,42 @@ Future<User> getUser() async {
   }
 
   return User.fromJson(reply.result);
+}
+
+Future<String> _getImageUrl() async {
+  User user = await getUser();
+
+  Map<String, String> request = {
+    "id": user.pictureId.toString()
+  };
+
+  Reply reply = await makeGetRequest(_PICTURE_ENDPOINT, request);
+  if (reply.hasError) {
+    print(reply.request);
+    print(reply.error);
+    return null;
+  }
+
+  return _PICTURE_DIR + reply.result["image"];
+}
+
+Future<Image> getProfileImage() async {
+  String url = await _getImageUrl();
+
+  if (url == null) {
+    return Image.asset("sun.png");
+  }
+
+  return Image.network(url);
+}
+
+Future<ImageProvider> getProfileImageProvider() async {
+  String url = await _getImageUrl();
+
+  if (url == null) {
+    return AssetImage("sun.png");
+  }
+
+  print(url);
+  return NetworkImage(url);
 }
