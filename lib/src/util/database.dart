@@ -12,16 +12,18 @@ const String _ERROR_MESSAGE = "ERROR";
 const String _BASE_ENDPOINT = "https://brae.uqcloud.net/groupie";
 const String _USER_ENDPOINT = _BASE_ENDPOINT + "/profile_user.php";
 const String _PICTURE_ENDPOINT = _BASE_ENDPOINT + "/pictures.php";
+const String _PARTICIPANT_ENDPOINT = _BASE_ENDPOINT + "/participations.php";
 const String _PICTURE_DIR = _BASE_ENDPOINT + "/images/";
 
 class Reply {
   final bool hasError;
   final String error;
   final Map<String, dynamic> result;
+  final List<dynamic> listResult;
 
   final String request;
 
-  Reply({this.hasError, this.error, this.result, this.request});
+  Reply({this.hasError, this.error, this.result, this.request, this.listResult});
 }
 
 Reply _makeRequest(Response response) {
@@ -36,6 +38,10 @@ Reply _makeRequest(Response response) {
   }
 
   try {
+    if (response.body.startsWith("[")) {
+      List<dynamic> result = jsonDecode(response.body);
+      return Reply(hasError: false, listResult: result, request: response.request.toString());
+    }
     Map<String, dynamic> result = jsonDecode(response.body);
     return Reply(hasError: false, result: result, request: response.request.toString());
   } catch (exception) {
@@ -63,11 +69,9 @@ Future<Reply> makePostRequest(String endpoint, Map<String, String> request) asyn
   return _makeRequest(response);
 }
 
-Future<User> getUser() async {
-  int id = await getUserId();
-
+Future<User> _getUserDetails(int userId) async {
   Map<String, String> request = {
-    "account_id": id.toString()
+    "account_id": userId.toString()
   };
 
   Reply reply = await makeGetRequest(_USER_ENDPOINT, request);
@@ -80,11 +84,15 @@ Future<User> getUser() async {
   return User.fromJson(reply.result);
 }
 
-Future<String> _getImageUrl() async {
-  User user = await getUser();
+Future<User> getUser() async {
+  int id = await getUserId();
 
+  return _getUserDetails(id);
+}
+
+Future<String> getImageUrl(int pictureId) async {
   Map<String, String> request = {
-    "id": user.pictureId.toString()
+    "id": pictureId.toString()
   };
 
   Reply reply = await makeGetRequest(_PICTURE_ENDPOINT, request);
@@ -95,6 +103,12 @@ Future<String> _getImageUrl() async {
   }
 
   return _PICTURE_DIR + reply.result["image"];
+}
+
+Future<String> _getImageUrl() async {
+  User user = await getUser();
+
+  return getImageUrl(int.parse(user.pictureId));
 }
 
 Future<Image> getProfileImage() async {
@@ -116,4 +130,34 @@ Future<ImageProvider> getProfileImageProvider() async {
 
   print(url);
   return NetworkImage(url);
+}
+
+Future<List<User>> _getParticipants(int eventId, String role) async {
+  Map<String, String> request = {
+    "activity_id": eventId.toString()
+  };
+
+  Reply reply = await makeGetRequest(_PARTICIPANT_ENDPOINT, request);
+  if (reply.hasError) {
+    print(reply.request);
+    print(reply.error);
+    return null;
+  }
+
+  List<User> users = [];
+  for (var user in reply.listResult) {
+    if (user['role'] == role) {
+      users.add(await _getUserDetails(int.parse(user['account_id'])));
+    }
+  }
+
+  return users;
+}
+
+Future<List<User>> getApprovedParticipants(int eventId) async {
+  return _getParticipants(eventId, 'approved');
+}
+
+Future<List<User>> getPendingParticipants(int eventId) {
+  return _getParticipants(eventId, 'pending');
 }

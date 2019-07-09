@@ -3,6 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:groupie/model.dart' show HobbyCard;
 import 'package:groupie/util.dart' show GroupieColours;
 
+class ParticipantCard extends Expanded {
+  ParticipantCard({Widget child}) : super(
+    child: Card(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: child
+      )
+    )
+  );
+}
+
 class ProfileCard extends Row {
   ProfileCard(String title, String contents)
       : super(

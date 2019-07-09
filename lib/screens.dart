@@ -12,6 +12,7 @@ export 'src/screens/settings/edit_profile.dart';
 export 'src/screens/events/createNewEventMajor.dart';
 export 'src/screens/events/createEventSecond.dart';
 export 'src/screens/events/createEventPreview.dart';
+export 'src/screens/events/participants.dart';
 
 // Login related screens
 export 'src/screens/login/login.dart';
