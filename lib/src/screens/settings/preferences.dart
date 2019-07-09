@@ -5,7 +5,7 @@ import 'package:groupie/util.dart' show GroupieColours;
 
 class PreferencesScreen extends StatefulWidget {
   final String title;
-  static String tag = "preferences";
+  static String tag = "preferences🐢";
 
   PreferencesScreen({Key key, this.title}) : super(key: key);
 

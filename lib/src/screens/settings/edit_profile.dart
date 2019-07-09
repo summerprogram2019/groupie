@@ -14,7 +14,7 @@ import 'package:groupie/screens.dart' show HomePage;
 class EditProfile extends StatefulWidget {
 final String title;
 
-static String tag = "edit profile";
+static String tag = "editprofile🐢";
 
 EditProfile({Key key, this.title}) : super(key: key);
 
