@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:groupie/util.dart' show GroupieColours;
+
 
 // Import the home screen from the screens package
 import 'package:groupie/screens.dart'
@@ -69,6 +71,12 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Roboto',
           textTheme: TextTheme(
             headline: TextStyle(fontSize: 36.0, fontWeight: FontWeight.normal),
+            //normal text in cards e.g. Logout button, view your profile
+            subhead: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+            //confirmation text style
+            body1: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.logoColor),
+            //extreme text style e.g. delete account, reject changes
+            body2: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.extremeText),
           )
       ),
       home: new WelcomeScreen(title: title),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
-import 'package:groupie/util.dart' show GroupieColours;
+import 'package:groupie/screens.dart' show LoginScreen;
+import 'package:groupie/util.dart' show GroupieColours, logout;
+
 
 //for persist functionality
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,8 +79,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     });
   }
 
-
-
   @override
   void initState() {
     super.initState();
@@ -90,48 +90,40 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     Navigator.pushNamed(context, ProfileScreen.tag);
   }
 
-
-
+  //Logs the user out and returns them to the login screen
+  void _logoutOfAccount(){
+    Navigator.pushNamed(context, LoginScreen.tag);
+    logout();
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       //the universal background colour
-      //backgroundColor: Color.fromARGB(255, 112, 112, 112),
       backgroundColor: Theme.of(context).backgroundColor,
-
       appBar: new AppBar(
         title: new Text(widget.title),
-        backgroundColor: GroupieColours.white69,
+        backgroundColor: GroupieColours.logoColor,
         actions: <Widget>[
-           new IconButton(
-             icon: new Icon(Icons.person_outline),
-             tooltip: 'Open Profile',
-             onPressed: _openProfile,
-           ),
         ],
-          iconTheme: new IconThemeData(color: GroupieColours.grey69)
+          iconTheme: new IconThemeData(color: Colors.white)
       ),
-      body: new Column(
+      body: new ListView(
           children: <Widget>[
-
-
+            //View your profile
             Card(
                 child: InkWell(
                   onTap: _openProfile,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.all(10.0),
-                        child: Text('View your profile'),
-                      ),
-
-                      new IconButton(
-                        icon: new Icon(Icons.arrow_forward_ios),
-                        tooltip: 'Open Profile',
-                        onPressed: _openProfile,
-                      ),
-                    ],
+                  child: ListTile(
+                    title: Text(
+                        'View your profile',
+                        style: Theme.of(context).textTheme.subhead
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.arrow_forward_ios),
+                      tooltip: 'Open Profile',
+                      onPressed: _openProfile,
+                    ),
                   ),
                 )
             ),
@@ -148,13 +140,15 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                         padding: EdgeInsets.all(10.0),
                         child: Text(
                           //'Maximum Cost: \$ ${_maxCostString}',
-                            'Maximum Cost of Event:'
+                            'Maximum Cost of Event:',
+                            style: Theme.of(context).textTheme.subhead
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                            _maxCostString
+                            _maxCostString,
+                            style: Theme.of(context).textTheme.subhead
                         ),
                       ),
                     ],
@@ -201,14 +195,16 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                         padding: EdgeInsets.all(10.0),
                         child: Text(
                           //'Maximum Cost: \$ ${_maxCostString}',
-                            'Maximum Distance of Event:'
+                            'Maximum Distance of Event:',
+                            style: Theme.of(context).textTheme.subhead
                         ),
                       ),
 
                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                            _maxDistanceString
+                            _maxDistanceString,
+                            style: Theme.of(context).textTheme.subhead
                         ),
                       ),
                     ],
@@ -287,44 +283,60 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 )
             ),
 
+            //Privacy policy link
             Card(
-                child: Column(
-                  children: <Widget>[
-                    const ListTile(
-                        title: Text('Privacy Policy')
-                    )
-                  ],
+                child: InkWell(
+                  onTap: _openProfile,
+                  child: ListTile(
+                    title: Text(
+                        'Privacy Policy',
+                        style: Theme.of(context).textTheme.subhead
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.arrow_forward_ios),
+                      tooltip: 'Open Profile',
+                      onPressed: _openProfile,
+                    ),
+                  ),
+                )
+            ),
+
+            //to push the logout and delete account elements to the bottom of the page
+            //Spacer(),
+
+            Card(
+                child: InkWell(
+                  onTap: _logoutOfAccount,
+                  child: ListTile(
+                    title: Text(
+                        'Logout',
+                        style: Theme.of(context).textTheme.subhead
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.arrow_forward_ios),
+                      tooltip: 'Logout of Account',
+                    ),
+                  ),
                 )
             ),
 
             Card(
-                child: Column(
-                  children: <Widget>[
-                    const ListTile(
-                        title: Text('Logout')
-                    )
-                  ],
+                child: InkWell(
+                  onTap: (){print("Deleting account");},
+                  child: ListTile(
+                    title: Text(
+                        'Delete Account',
+                        style: Theme.of(context).textTheme.body2
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.arrow_forward_ios),
+                      tooltip: 'Delete Account',
+                    ),
+                  ),
                 )
             ),
 
-            FlatButton(
-              onPressed: () {
-            /*...*/
-            },
-              child: Text(
-                "Logout",
-              ),
-            ),
 
-            Card(
-                child: Column(
-                  children: <Widget>[
-                    const ListTile(
-                        title: Text('Delete Account')
-                    )
-                  ],
-                )
-            ),
 
           ],
         ),
