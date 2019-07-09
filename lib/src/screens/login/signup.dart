@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show LoginScreen, DisclaimerScreen;
-//import 'package:groupie/widgets.dart' show GroupieLogo;
+import 'package:groupie/screens.dart' show HomePage, LoginScreen;
+import 'package:groupie/util.dart' show signup, SignupResponse;
+import 'package:groupie/widgets.dart' show LoadableScreen;
 
 class SignupPage extends StatefulWidget {
   final String title;
 
-  static String tag = "sign up";
+  static String tag = "signup🐢";
 
   SignupPage({Key key, this.title}) : super(key: key);
 
@@ -21,16 +22,27 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController emailController = new TextEditingController();
   /// Retrieves the text in the password entry field
   final TextEditingController passwordController = new TextEditingController();
+  /// Retrieves the text in the password entry field
+  final TextEditingController confirmController = new TextEditingController();
 
-  bool _loggingIn = false;
+  bool _signingUp = false;
 
   String errors = "";
 
+  void _signup(SignupResponse response) {
+    if (response.hasError) {
+      setState(() {
+        errors = response.error;
+        _signingUp = false;
+      });
+    } else {
+      _signingUp = false;
+      Navigator.pushNamed(context, HomePage.tag);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    //final logo = new GroupieLogo(() => FocusScope.of(context).requestFocus(focus));
-
     // the email entry field
     final email = TextFormField(
       key: Key('email_field'),
@@ -68,7 +80,7 @@ class _SignupPageState extends State<SignupPage> {
       key: Key('confirmation_field'),
       autofocus: false,
       obscureText: true,
-      controller: passwordController,
+      controller: confirmController,
       decoration: InputDecoration(
         labelText: "Confirm Password",
         border: OutlineInputBorder(
@@ -87,7 +99,12 @@ class _SignupPageState extends State<SignupPage> {
       ),
       color: Colors.white,
       onPressed: () {
-        Navigator.of(context).pushNamed(DisclaimerScreen.tag);
+        setState(() {
+          _signingUp = true;
+        });
+        signup(emailController.text, passwordController.text).then((response) {
+          _signup(response);
+        });
       },
     );
 
@@ -99,61 +116,41 @@ class _SignupPageState extends State<SignupPage> {
       ),
       color: Colors.white,
       onPressed: () {
-        setState(() {
-          _loggingIn = true;
-        });
-        Navigator.of(context).pushNamed(LoginScreen.tag);
+        Navigator.of(context).pushReplacementNamed(LoginScreen.tag);
       },
     );
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                children: <Widget>[
-                  //logo,
-                  Center(
-                      child: Text(
-                        'Create an Account',
-                        style: TextStyle(color: Colors.black, fontSize: 30.0),
-                      )
-                  ),
-                  // Sizedboxes are used for whitespace and padding on the screen
-                  SizedBox(height: 48.0),
-                  email,
-                  SizedBox(height: 8.0),
-                  password,
-                  SizedBox(height: 8.0),
-                  confirm,
-                  SizedBox(height: 24.0),
-                  Text(errors),
-                  SizedBox(height: 48.0),
-                  createButton,
-                  SizedBox(height: 24.0),
-                  loginButton
-//                loginButton,
-//                SizedBox(height: 8.0),
-//                newUser,
-//                SizedBox(height: 4.0),
-//                forgotLabel
-                ],
-              ),
-              new Offstage(
-                // displays the loading icon while the user is logging in
-                  offstage: !_loggingIn,
-                  child: new Center(
-                      child: _loggingIn ? new CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 7.0,
-                      ) : null
-                  )
-              )
-            ]),
+        child: LoadableScreen(
+          visible: !_signingUp,
+          child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+              children: <Widget>[
+                //logo,
+                Center(
+                    child: Text(
+                      'Create an Account',
+                      style: TextStyle(color: Colors.black, fontSize: 30.0),
+                    )
+                ),
+                SizedBox(height: 48.0),
+                email,
+                SizedBox(height: 8.0),
+                password,
+                SizedBox(height: 8.0),
+                confirm,
+                SizedBox(height: 24.0),
+                Text(errors),
+                SizedBox(height: 48.0),
+                createButton,
+                SizedBox(height: 24.0),
+                loginButton
+              ],
+            )
+        ),
       ),
     );
   }

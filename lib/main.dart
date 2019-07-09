@@ -13,7 +13,8 @@ import 'package:groupie/screens.dart'
     DisclaimerScreen,
     CreateNewEventMajorPage,
     CreateNewEventMinorPage,
-    CreateNewEventPreviewPage;
+    CreateNewEventPreviewPage,
+    EditProfile;
 
 void main() => runApp(new MyApp());
 
@@ -29,7 +30,6 @@ class RemoveGlowEffectBehavior extends ScrollBehavior {
 // Main application, specifies the application to dispglay when first opening the app.
 class MyApp extends StatelessWidget {
   static final String title = 'Groupie';
-
   static final routes = <String, WidgetBuilder>{
     WelcomeScreen.tag: (context) => new WelcomeScreen(title: title),
     LoginScreen.tag: (context) => new LoginScreen(title: title),
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
     DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
     PreferencesScreen.tag: (context) => new PreferencesScreen(title: title),
+    EditProfile.tag: (context) => new EditProfile(title: title)
     CreateNewEventMajorPage.tag: (context) =>
     new CreateNewEventMajorPage(title: title),
     CreateNewEventMinorPage.tag: (context) =>
@@ -58,12 +59,17 @@ class MyApp extends StatelessWidget {
       },
       title: title,
       theme: new ThemeData(
-        //primarySwatch: Colors.white54,
+          //primarySwatch: Colors.white54,
           backgroundColor: Color.fromARGB(255, 247, 247, 247),
           //define the default font family
-          fontFamily: 'Roboto'),
+          fontFamily: 'Roboto',
+          textTheme: TextTheme(
+            headline: TextStyle(fontSize: 36.0, fontWeight: FontWeight.normal),
+          )
+      ),
       home: new WelcomeScreen(title: title),
       routes: routes,
     );
   }
 }
+

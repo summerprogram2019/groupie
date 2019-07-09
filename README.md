@@ -2,7 +2,7 @@
 
 Grab life by the hand. Create friendships and grow memories that span cultures and last lifetimes.
 
-![](assets/sun.png)
+v![](assets/sun.png)
 
 Groupie connects strangers - sign up now to share your hobby and join in local events.
 
@@ -12,6 +12,10 @@ After creating your profile, groupies can select their favourite activities and 
 
 ## Code Structure
 
+The code follows a simple structure. Each screen is initiated in our main file. Our themes are also initiated in the main file, followed by the initiated of the welcome screen. This is the first screen the user interracts with.
+
+
+
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
 
@@ -19,3 +23,9 @@ For help getting started with Flutter, view our online
 
 Android Studio/Intellij IDEA: Open pubspec.yaml and push the button "Packages get"
 Others: https://flutter.dev/docs/development/packages-and-plugins/using-packages
+
+
+## Useful for development links (temporary section)
+
+[Flutter layout](https://flutter.dev/docs/development/ui/layout)
+[Layout Widgets](https://flutter.dev/docs/development/ui/widgets/layout)
