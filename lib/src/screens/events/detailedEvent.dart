@@ -1,0 +1,1 @@
+//the screen shown when a user selects one of their chosen events
