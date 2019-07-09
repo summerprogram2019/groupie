@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 // Import the home screen from the screens package
-import 'package:groupie/screens.dart' show HomePage, EditProfile, ProfileScreen, LoginScreen, WelcomeScreen, PreferencesScreen, SignupPage, RecoveryPage, DisclaimerScreen, CreateNewEventMajorPage, CreateEventSecondScreen, CreateEventPreviewScreen;
+import 'package:groupie/screens.dart'
+    show
+    HomePage,
+    ProfileScreen,
+    LoginScreen,
+    WelcomeScreen,
+    PreferencesScreen,
+    SignupPage,
+    RecoveryPage,
+    DisclaimerScreen,
+    CreateNewEventMajorPage,
+    CreateNewEventMinorPage,
+    CreateNewEventPreviewPage,
+    EditProfile;
 
 void main(){
   //debugPaintSizeEnabled = false;
@@ -30,10 +43,13 @@ class MyApp extends StatelessWidget {
     RecoveryPage.tag: (context) => new RecoveryPage(title: title),
     DisclaimerScreen.tag: (context) => new DisclaimerScreen(title: title),
     PreferencesScreen.tag: (context) => new PreferencesScreen(title: title),
-    CreateNewEventMajorPage.tag: (context) => new CreateNewEventMajorPage(title: title),
-    CreateEventSecondScreen.tag: (context) => new CreateEventSecondScreen(title: title),
-    CreateEventPreviewScreen.tag: (context) => new CreateEventPreviewScreen(title: title),
-    EditProfile.tag: (context) => new EditProfile(title: title)
+    EditProfile.tag: (context) => new EditProfile(title: title),
+    CreateNewEventMajorPage.tag: (context) =>
+    new CreateNewEventMajorPage(title: title),
+    CreateNewEventMinorPage.tag: (context) =>
+    new CreateNewEventMinorPage(title: title),
+    CreateNewEventPreviewPage.tag: (context) =>
+    new CreateNewEventPreviewPage(title: title),
   };
 
   @override

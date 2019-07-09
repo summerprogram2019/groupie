@@ -16,14 +16,14 @@ class GroupieLogo extends Hero {
 }
 
 class GroupieProfile extends Hero {
-  GroupieProfile() : super(
+  GroupieProfile(Image image) : super(
     tag: 'profileimage',
     key: Key('profile_image'),
     child: GestureDetector(
       child: CircleAvatar(
         backgroundColor: Colors.white,
         radius: 40.0,
-        child: Image.asset('laura.jpg'),
+        child: image,
       ),
     )
   );

@@ -109,7 +109,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
              tooltip: 'Open Profile',
              onPressed: _openProfile,
            ),
-        ]
+        ],
+          iconTheme: new IconThemeData(color: GroupieColours.grey69)
       ),
       body: new Column(
           children: <Widget>[
