@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/screens.dart' show HomePage, LoginScreen;
-import 'package:groupie/util.dart' show signup, SignupResponse;
+import 'package:groupie/screens.dart' show HomePage, LoginScreen, DisclaimerScreen;
+import 'package:groupie/util.dart' show signup, SignupResponse, GroupieColours;
 import 'package:groupie/widgets.dart' show LoadableScreen;
+
 
 class SignupPage extends StatefulWidget {
   final String title;
@@ -120,6 +121,18 @@ class _SignupPageState extends State<SignupPage> {
       },
     );
 
+    final disclaimerTest = RaisedButton(
+      key: Key('disclaimer_test'),
+      child: Text(
+        'Disclaimer',
+        style: TextStyle(color: Colors.black),
+      ),
+      color: Colors.white,
+      onPressed: () {
+        Navigator.of(context).pushReplacementNamed(DisclaimerScreen.tag);
+      }
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -147,7 +160,9 @@ class _SignupPageState extends State<SignupPage> {
                 SizedBox(height: 48.0),
                 createButton,
                 SizedBox(height: 24.0),
-                loginButton
+                loginButton,
+                SizedBox(height: 24.0),
+                disclaimerTest
               ],
             )
         ),
