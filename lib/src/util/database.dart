@@ -121,6 +121,16 @@ Future<Image> getProfileImage() async {
   return Image.network(url);
 }
 
+Future<ImageProvider> getProfileImageProviderById(User user) async {
+  String url = await getImageUrl(int.parse(user.pictureId));
+
+  if (url == null) {
+    return AssetImage("sun.png");
+  }
+
+  return NetworkImage(url);
+}
+
 Future<ImageProvider> getProfileImageProvider() async {
   String url = await _getImageUrl();
 
@@ -128,7 +138,6 @@ Future<ImageProvider> getProfileImageProvider() async {
     return AssetImage("sun.png");
   }
 
-  print(url);
   return NetworkImage(url);
 }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:groupie/model.dart' show User;
 import 'package:groupie/widgets.dart' show ProfileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
-import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider;
+import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider, getProfileImageProviderById;
 
 class ScreenArguments {
   final User profile;
@@ -51,15 +51,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'picture_id': ""
         }));
       });
+      getProfileImageProvider().then((image) {
+        setState(() {
+          profilePicture = image;
+        });
+      });
     } else {
       setupDisplay(args.profile);
+      getProfileImageProviderById(args.profile).then((image) {
+        setState(() {
+          profilePicture = image;
+        });
+      });
     }
 
-    getProfileImageProvider().then((image) {
-      setState(() {
-        profilePicture = image;
-      });
-    });
+
   }
 
   void setupDisplay(User user) {
