@@ -152,9 +152,14 @@ class ProfileCard extends Row {
 }
 
 class EventCard extends Positioned {
-  EventCard(Event event) : super(
+  EventCard(Event event, {remove}) : super(
       top: 5.0,
       child: Draggable(
+        onDragEnd: (details) {
+          if (details.wasAccepted && remove != null) {
+            remove();
+          }
+        },
         childWhenDragging: Container(),
         feedback: _createEventCard(event),
         child: _createEventCard(event),
@@ -214,17 +219,17 @@ Widget _createEventCard(Event event) {
                       SizedBox(width: 130.0),
                     ]
                 ),
-                new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // When database is ready, update these to take directly from there:
-                      Text(event.location),
-                      Text(event.start.toString()),
-                      Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
-                      Text(event.cost.toString()),
-                      Text("HELP"),
-                    ]
-                ),
+//                new Column(
+//                    crossAxisAlignment: CrossAxisAlignment.start,
+//                    children: [
+//                      // When database is ready, update these to take directly from there:
+//                      Text(event.location),
+//                      Text(event.start.toString()),
+//                      Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
+//                      Text(event.cost.toString()),
+//                      Text("HELP"),
+//                    ]
+//                ),
               ],
             ),
           ]

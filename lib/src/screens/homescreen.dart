@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> cards = [];
+  Map<int, Widget> cards = {};
 
   bool _loading = true;
 
@@ -39,11 +39,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  List<Widget> buildCards(List<Event> events) {
-    List<Widget> eventWidgets = [];
+  Map<int, Widget> buildCards(List<Event> events) {
+    Map<int, Widget> eventWidgets = {};
 
     for (Event event in events) {
-      eventWidgets.add(EventCard(event));
+      eventWidgets[event.id] = EventCard(event,
+        remove: () {
+          setState(() {
+            eventWidgets.remove(event.id);
+          });
+        },
+      );
     }
 
     return eventWidgets;
@@ -55,11 +61,6 @@ class _HomePageState extends State<HomePage> {
   }
   void _openPreferences() {
     Navigator.pushNamed(context, PreferencesScreen.tag);
-  }
-
-  void _removeCard(int index) {
-    print("removing card at index: " + '$index');
-    cards.removeAt(index);
   }
 
   @override
@@ -86,12 +87,41 @@ class _HomePageState extends State<HomePage> {
       ),
       body: new LoadableScreen(
         visible: !_loading,
-        child: new Center(
-          child: new Stack(
-            alignment: Alignment.center,
-            children: cards
-          ),
-        ),
+        child: new Stack(
+          children: [
+            new Center(
+              child: new Stack(
+                alignment: Alignment.center,
+                children: cards.values.toList()
+              ),
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  child: DragTarget(
+                    builder: (a, b, c) => Container(width: 150),
+                    onAccept: (data) {
+                      print(data);
+                      print("FUCK NO");
+                    },
+                  )
+                ),
+                Spacer(),
+                Flexible(
+                  child: DragTarget(
+                    builder: (a, b, c) => Container(width: 150),
+                    onAccept: (data) {
+                      print(data);
+                      print("FUCK YES");
+                    },
+                  )
+                ),
+              ],
+            )
+          ]
+        )
       ),
       floatingActionButton: new FloatingActionButton(onPressed: () {
         Navigator.of(context).pushNamed(ParticipantsScreen.tag);
