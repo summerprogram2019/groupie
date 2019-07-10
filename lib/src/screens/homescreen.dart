@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> hobbyCards = [];
+  List<Widget> cards = [];
 
   bool _loading = true;
 
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
     getEvents().then((events) {
       setState(() {
-        hobbyCards = buildCards(events);
+        cards = buildCards(events);
         _loading = false;
       });
     });
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
 
   void _removeCard(int index) {
     print("removing card at index: " + '$index');
-    hobbyCards.removeAt(index);
+    cards.removeAt(index);
   }
 
   @override
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         child: new Center(
           child: new Stack(
             alignment: Alignment.center,
-            children: hobbyCards
+            children: cards
           ),
         ),
       ),

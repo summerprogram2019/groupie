@@ -220,7 +220,7 @@ Widget _createEventCard(Event event) {
                       // When database is ready, update these to take directly from there:
                       Text(event.location),
                       Text(event.start.toString()),
-                      Text("HELP"),
+                      Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
                       Text(event.cost.toString()),
                       Text("HELP"),
                     ]
