@@ -254,13 +254,13 @@ Widget createCard(HobbyCard card, VoidCallback remove) {
 Widget _createCard(HobbyCard card) {
   return Card(
     elevation: 12.0,
-    //color: Color.fromARGB(255, card.red, card.green, card.blue),
+    color: Color.fromARGB(255, card.red, card.green, card.blue),
     shape:
     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     child:
       Container(
           width: 360.0,
-          height: 600.0,
+          height: 550.0,
           child: Column(
             children: [
               Text(
@@ -301,9 +301,10 @@ Widget _createCard(HobbyCard card) {
                   ),
                   new Column(
                       children: [
-                        SizedBox(width: 130.0),
+                        SizedBox(width: 100.0),
                       ]
                   ),
+                  //TODO fix this alignment so that its not hardcoded in
                   new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
