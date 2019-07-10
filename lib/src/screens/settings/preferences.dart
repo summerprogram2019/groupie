@@ -108,7 +108,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         ],
           iconTheme: new IconThemeData(color: Colors.white)
       ),
-      body: new ListView(
+      body: new Column(
           children: <Widget>[
             //View your profile
             Card(
@@ -216,7 +216,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       //sets to 0 if null on first build to avoid null assert exception
                       value: _maxDistance ?? 5,
                       min: 5,
-                      max: 200,
+                      max: 205,
                       divisions: 20,
                       onChanged: (double value){
                         setState(() {
@@ -226,7 +226,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                           _maxDistance = value;
                           _maxDistanceString = value.toStringAsFixed(0) + ' km';
 
-                          if (value == 200){
+                          if (value == 205){
                             _maxDistanceString = 'No limit';
                           }
                         });
@@ -302,7 +302,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             ),
 
             //to push the logout and delete account elements to the bottom of the page
-            //Spacer(),
+            Spacer(),
 
             Card(
                 child: InkWell(
