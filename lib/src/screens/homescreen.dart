@@ -67,24 +67,56 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title, style: new TextStyle(
-            color: GroupieColours.grey69)),
-        backgroundColor: GroupieColours.white69,
-        actions: <Widget>[
-           new IconButton(
-             icon: new Icon(Icons.person_outline),
-             tooltip: 'Open Profile',
-             onPressed: _openProfile,
-           ),
-          new IconButton(
-              icon: new Icon(Icons.brightness_low),
-              tooltip: 'Open Preferences',
-              onPressed: _openPreferences,
-          )
-        ],
-        iconTheme: new IconThemeData(color: GroupieColours.grey69),
-        automaticallyImplyLeading: false,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(75.0), // here the desired height
+        child: new AppBar(
+  //            title: new Text(widget.title, style: new TextStyle(
+  //            color: GroupieColours.grey69)),
+          backgroundColor: GroupieColours.logoColor,
+          centerTitle: true,
+          actions: <Widget>[
+            new Center(
+              child:
+                new Row(
+                  children: [
+                    new Column(
+                      children: <Widget>[
+                        new IconButton(
+                          icon: new Icon(Icons.brightness_low),
+                          iconSize: 50.0,
+                          tooltip: 'Open Preferences',
+                          onPressed: _openPreferences,
+                        ),
+                      ]
+                    ),
+                    // TODO Update link to events page once the screen has been created
+                    new Column(
+                      children: <Widget>[
+                        new IconButton(
+                          icon: new Icon(Icons.calendar_today),
+                          iconSize: 50.0,
+                          tooltip: 'Open Preferences',
+                          onPressed: _openPreferences,
+                        ),
+                      ],
+                    ),
+                    new Column(
+                      children: <Widget>[
+                        new IconButton(
+                          icon: new Icon(Icons.person_outline),
+                          iconSize: 49.0,
+                          tooltip: 'Open Profile',
+                          onPressed: _openProfile,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+            ),
+          ],
+          iconTheme: new IconThemeData(color: GroupieColours.grey69),
+          automaticallyImplyLeading: false,
+        ),
       ),
       body: new Center(
         child: new Stack(

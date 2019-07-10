@@ -24,10 +24,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String name;
-  String biography;
   String location;
-  String contactDetails;
-  String profileDetails;
+  DateTime dob;
+  String sex;
+  String pictureId;
 
   ImageProvider profilePicture = AssetImage("laura.jpg");
 
@@ -64,10 +64,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void setupDisplay(User user) {
     setState(() {
       name = user.givenName + " " + user.familyName;
-      biography = "Loaded but not actually cause database doesn't support it";
       location = user.city + ", " + user.country;
-      contactDetails = "Also not supported";
-      profileDetails = "As above";
+      dob = user.dob;
+      sex = user.sex;
       _loading = false;
     });
   }
@@ -138,13 +137,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 18.0),
               ProfileCard("Profile Name", name),
               SizedBox(height: 8.0),
-              ProfileCard("Bio", biography),
-              SizedBox(height: 8.0),
               ProfileCard("Location", location),
               SizedBox(height: 8.0),
-              ProfileCard("Contact Details", contactDetails),
+              ProfileCard("Date of Birth", dob.toString()),
               SizedBox(height: 8.0),
-              ProfileCard("Profile Details", profileDetails),
+              ProfileCard("Sex", sex),
               viewEvents(context)
             ]
           ),
