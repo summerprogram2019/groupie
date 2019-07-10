@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String contactDetails;
   String profileDetails;
 
-  ImageProvider profilePicture = AssetImage("laura.jpg");
+  ImageProvider profilePicture = AssetImage("placeholderUser.png");
 
   bool _loading = true;
 

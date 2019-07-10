@@ -23,7 +23,8 @@ class TextPrompt extends Text {
 }
 
 class TextInput extends TextFormField {
-  TextInput(String key, String text, {TextEditingController controller}) : super(
+  TextInput(String key, String text,
+      {TextEditingController controller, String placeholder}) : super(
     key: Key(key),
     controller: controller,
     keyboardType: TextInputType.text,
@@ -35,7 +36,12 @@ class TextInput extends TextFormField {
         ),
       ),
     )
-  );
+  ) {
+    controller.text = placeholder;
+    controller.addListener(() {
+      placeholder = controller.text;
+    });
+  }
 }
 
 class ApplyButton extends RaisedButton {
@@ -82,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
 
   bool _loading = true;
 
-  ImageProvider profilePicture = AssetImage("laura.jpg");
+  ImageProvider profilePicture = AssetImage("placeholderUser.png");
 
   _EditProfileState() : super() {
     getUser().then(setFields);
@@ -130,27 +136,39 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     /// Button for changing the username
-    final setName = TextInput("name_field", "Username", controller: _nameController);
-    _nameController.text = name;
+    final setName = TextInput("name_field", "Username",
+        controller: _nameController, placeholder: name);
+    _nameController.addListener(() {
+      name = _nameController.text;
+    });
 
     /// Button for changing the user's bio
-    final setBio = TextInput("bio_field", "User Bio", controller: _bioController);
-    _bioController.text = biography;
+    final setBio = TextInput("bio_field", "User Bio",
+        controller: _bioController, placeholder: biography);
+    _bioController.addListener(() {
+      biography = _bioController.text;
+    });
 
     /// Button for changing the user's location
     final setLocation = TextInput("location_field", "User location",
-        controller: _locationController);
-    _locationController.text = location;
+        controller: _locationController, placeholder: location);
+    _locationController.addListener(() {
+      location = _locationController.text;
+    });
 
     /// Button for changing the user's number
     final setNumber = TextInput("phNumber_field", "User Telephone Number",
-        controller: _phoneController);
-    _phoneController.text = phone;
+        controller: _phoneController, placeholder: phone);
+    _phoneController.addListener(() {
+      phone = _phoneController.text;
+    });
 
     /// Button for changing the user's email
     final setEmail = TextInput("email_field", "User Email",
-        controller: _emailController);
-    _emailController.text = email;
+        controller: _emailController, placeholder: email);
+    _emailController.addListener(() {
+      email = _emailController.text;
+    });
 
     /// Button for saving any changes made to the profile
     final saveChanges = (context) => ApplyButton(
