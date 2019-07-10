@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:groupie/model.dart' show HobbyCard;
+import 'package:groupie/model.dart' show HobbyCard, Event;
 import 'package:groupie/util.dart' show GroupieColours;
-import 'package:groupie/widgets.dart' show GroupieProfile, ProfileCard, LoadingIcon;
 
 class ParticipantCard extends Expanded {
   ParticipantCard({Widget child}) : super(
@@ -50,6 +49,88 @@ class ProfileCard extends Row {
                     ],
                   ))))
     ],
+  );
+}
+
+class EventCard extends Positioned {
+  EventCard(Event event) : super(
+      top: 5.0,
+      child: Draggable(
+        childWhenDragging: Container(),
+        feedback: _createEventCard(event),
+        child: _createEventCard(event),
+      )
+  );
+}
+
+Widget _createEventCard(Event event) {
+  return Card(
+    elevation: 12.0,
+    shape:
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    child:
+    Container(
+      width: 360.0,
+      height: 600.0,
+      child: Column(
+          children: [
+            Text(
+              event.eventName, //Update to load from DB
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 20.0,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Image.asset("sun.png"), //Update to load from DB
+            SizedBox(height: 10.0),
+            Text(
+              "Short Description Here", //Update to load from DB
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 15.0,
+              ),
+            ),
+            SizedBox(height: 18.0),
+            new Row(
+              children: <Widget>[
+                new Column(
+                    children: [
+                      SizedBox(width: 10.0),
+                    ]
+                ),
+                new Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Location"),
+                      Text("Date"),
+                      Text("Participants"),
+                      Text("Estimated Cost"),
+                      Text("Age Restriction"),
+                    ]
+                ),
+                new Column(
+                    children: [
+                      SizedBox(width: 130.0),
+                    ]
+                ),
+                new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // When database is ready, update these to take directly from there:
+                      Text(event.location),
+                      Text(event.start.toString()),
+                      Text("HELP"),
+                      Text(event.cost.toString()),
+                      Text("HELP"),
+                    ]
+                ),
+              ],
+            ),
+          ]
+      ),
+    ),
   );
 }
 

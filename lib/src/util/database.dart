@@ -13,6 +13,7 @@ const String _BASE_ENDPOINT = "https://brae.uqcloud.net/groupie";
 const String _USER_ENDPOINT = _BASE_ENDPOINT + "/profile_user.php";
 const String _PICTURE_ENDPOINT = _BASE_ENDPOINT + "/pictures.php";
 const String _PARTICIPANT_ENDPOINT = _BASE_ENDPOINT + "/participations.php";
+const String _EVENT_LIST_ENDPOINT = _BASE_ENDPOINT + "/list_events.php";
 const String _PICTURE_DIR = _BASE_ENDPOINT + "/images/";
 
 class Reply {
@@ -169,4 +170,22 @@ Future<List<User>> getApprovedParticipants(int eventId) async {
 
 Future<List<User>> getPendingParticipants(int eventId) {
   return _getParticipants(eventId, 'pending');
+}
+
+Future<List<Event>> getEvents() async {
+  Reply reply = await makeGetRequest(_EVENT_LIST_ENDPOINT, {});
+
+  if (reply.hasError) {
+    print(reply.request);
+    print(reply.error);
+    return null;
+  }
+
+  List<Event> events = [];
+  for (var event in reply.listResult) {
+    print(event);
+    events.add(Event.fromJson(event));
+  }
+
+  return events;
 }
