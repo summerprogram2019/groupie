@@ -33,11 +33,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool _loading = true;
 
-  _ProfileScreenState() : super() {
-//    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
-    final ScreenArguments args = ScreenArguments(null);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-    if (args.profile == null) {
+    if (args == null || args.profile == null) {
       getUser().then(setupDisplay).catchError((error) {
         // TODO When I get internet connection, make this a snackbar popup instead of this hack
         setupDisplay(User.fromJson({
