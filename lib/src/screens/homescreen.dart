@@ -7,7 +7,7 @@ import 'settings/profile.dart';
 import 'events/participants.dart';
 import 'events/upcomingEvents.dart';
 
-import 'package:groupie/widgets.dart' show EventCard, LoadableScreen;
+import 'package:groupie/widgets.dart' show EventCard, LoadableScreen, CircleButton;
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show CreateNewEventMajorPage;
 import 'package:groupie/util.dart' show GroupieColours, getEvents;
@@ -74,41 +74,12 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    ClipOval(
-                      child: Container(
-                        color: GroupieColours.white69,
-                        child: IconButton(
-                          icon: new Icon(Icons.brightness_low),
-                          iconSize: 45.0,
-                          tooltip: 'Open Preferences',
-                          onPressed: _openPreferences,
-                        ),
-                      ),
-                    ),
 
-                    ClipOval(
-                      child: Container(
-                        color: GroupieColours.white69,
-                        child: IconButton(
-                          icon: new Icon(Icons.calendar_today),
-                          iconSize: 45.0,
-                          tooltip: 'Open Upcoming Events',
-                          onPressed: _openUpcomingEvents,
-                        ),
-                      ),
-                    ),
+                    CircleButton((){_openPreferences();},Icons.brightness_low, 'Open Preferences'),
 
-                    ClipOval(
-                      child: Container(
-                        color: GroupieColours.white69,
-                        child: IconButton(
-                          icon: new Icon(Icons.person_outline),
-                          iconSize: 45.0,
-                          tooltip: 'Open Profile',
-                          onPressed: _openProfile,
-                        ),
-                      ),
-                    ),
+                    CircleButton((){_openUpcomingEvents();},Icons.calendar_today, 'Open Upcoming Events'),
+
+                    CircleButton((){_openProfile();},Icons.person_outline, 'Open Profile'),
 
                   ],
                 ),
@@ -120,7 +91,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
 
-            backgroundColor: GroupieColours.logoColor,
+            backgroundColor: GroupieColours.white69,
             iconTheme: new IconThemeData(color: GroupieColours.grey69),
             automaticallyImplyLeading: false,
 
