@@ -85,15 +85,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final viewEvents = (context) => RaisedButton(
     key: Key('viewevents_button'),
-    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-    child: Padding(
-      padding: EdgeInsets.all(10.0),
-        child: Text(
-          'View Your Created Events',
-          style: TextStyle(color: GroupieColours.darkText,
-          fontSize: 26.0),
-        )),
-    color: Colors.white,
+    child: Text(
+      'View Your Created Events',
+      style: TextStyle(color: GroupieColours.white69),
+    ),
+    color: GroupieColours.logoColor,
     onPressed: () {
       Navigator.of(context).pushNamed(HomePage.tag);
     },
@@ -105,11 +101,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: new AppBar(
         title: new Text("My Profile",
             style: new TextStyle(
-              color: GroupieColours.grey69,
+              color: Colors.white,
               fontSize: 20.0,)),
-        backgroundColor: GroupieColours.white69,
+        backgroundColor: GroupieColours.logoColor,
 
-        iconTheme: new IconThemeData(color: GroupieColours.grey69),
+        iconTheme: new IconThemeData(color: Colors.white),
           actions: <Widget>[
             new IconButton(
               icon: new Icon(Icons.border_color),

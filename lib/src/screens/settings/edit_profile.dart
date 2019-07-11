@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
+import 'package:image_picker/image_picker.dart';
 
 import 'package:groupie/model.dart' show User;
 import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider;
@@ -80,15 +84,17 @@ class EditProfile extends StatefulWidget {
 
 /// Initiates the state of the edit profile screen
 class _EditProfileState extends State<EditProfile> {
-  String name;
-  String biography;
-  String location;
-  String phone;
-  String email;
+  String givenName;
+  String familyName;
+  String city;
+  String country;
+  String dob;
+  String sex;
 
   bool _loading = true;
 
   ImageProvider profilePicture = AssetImage("placeholderUser.png");
+  File imageFile;
 
   _EditProfileState() : super() {
     getUser().then(setFields);
@@ -99,75 +105,90 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
+  Future getImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      imageFile = image;
+      profilePicture = FileImage(image);
+    });
+  }
+
   void setFields(User user) {
     setState(() {
-      name = user.givenName + " " + user.familyName;
-      biography = "uh";
-      location = user.city + "," + user.country;
-      phone = ":O";
-      email = "🐢";
+      givenName = user.givenName;
+      familyName = user.familyName;
+      city = user.city;
+      country = user.country;
+      dob = user.dob.toString();
+      sex = user.sex;
       _loading = false;
     });
   }
 
-  /// Button for changing the profile picture of the user
-  final changeProfileImage = (context) => RaisedButton(
-        key: Key('changeprofileimage_button'),
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(10.0)),
-        color: Colors.white,
-        child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              'Change Profile Picture',
-              style: TextStyle(color: GroupieColours.grey69, fontSize: 26.0),
-            )),
-        onPressed: () {
-          Navigator.of(context).pushNamed(HomePage.tag);
-        },
-      );
-
-  final TextEditingController _nameController = new TextEditingController();
-  final TextEditingController _bioController = new TextEditingController();
-  final TextEditingController _locationController = new TextEditingController();
-  final TextEditingController _phoneController = new TextEditingController();
-  final TextEditingController _emailController = new TextEditingController();
+  final TextEditingController _givenNameController = new TextEditingController();
+  final TextEditingController _familyNameController = new TextEditingController();
+  final TextEditingController _cityController = new TextEditingController();
+  final TextEditingController _countryController = new TextEditingController();
+  final TextEditingController _dobController = new TextEditingController();
+  final TextEditingController _sexController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    /// Button for changing the profile picture of the user
+    final changeProfileImage = (context) => RaisedButton(
+      key: Key('changeprofileimage_button'),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(10.0)),
+      color: Colors.white,
+      child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Text(
+            'Change Profile Picture',
+            style: TextStyle(color: GroupieColours.grey69, fontSize: 26.0),
+          )),
+      onPressed: getImage,
+    );
+
     /// Button for changing the username
-    final setName = TextInput("name_field", "Username",
-        controller: _nameController, placeholder: name);
-    _nameController.addListener(() {
-      name = _nameController.text;
+    final setGivenName = TextInput("given_name_field", "Given Name",
+        controller: _givenNameController, placeholder: givenName);
+    _givenNameController.addListener(() {
+      givenName = _givenNameController.text;
     });
 
-    /// Button for changing the user's bio
-    final setBio = TextInput("bio_field", "User Bio",
-        controller: _bioController, placeholder: biography);
-    _bioController.addListener(() {
-      biography = _bioController.text;
+    final setFamilyName = TextInput("family_name_field", "Family Name",
+        controller: _familyNameController, placeholder: familyName);
+    _familyNameController.addListener(() {
+      familyName = _familyNameController.text;
     });
 
-    /// Button for changing the user's location
-    final setLocation = TextInput("location_field", "User location",
-        controller: _locationController, placeholder: location);
-    _locationController.addListener(() {
-      location = _locationController.text;
+    /// Button for changing the user's city
+    final setCity = TextInput("city_field", "City",
+        controller: _cityController, placeholder: city);
+    _cityController.addListener(() {
+      city = _cityController.text;
     });
 
-    /// Button for changing the user's number
-    final setNumber = TextInput("phNumber_field", "User Telephone Number",
-        controller: _phoneController, placeholder: phone);
-    _phoneController.addListener(() {
-      phone = _phoneController.text;
+    /// Button for changing the user's country
+    final setCountry = TextInput("country_field", "Country",
+        controller: _countryController, placeholder: country);
+    _countryController.addListener(() {
+      country = _countryController.text;
     });
 
-    /// Button for changing the user's email
-    final setEmail = TextInput("email_field", "User Email",
-        controller: _emailController, placeholder: email);
-    _emailController.addListener(() {
-      email = _emailController.text;
+    /// Button for changing the user's dob
+    final setDob = TextInput("dob_field", "Date of Birth",
+        controller: _dobController, placeholder: dob);
+    _dobController.addListener(() {
+      dob = _dobController.text;
+    });
+
+    /// Button for changing the user's sex
+    final setSex = TextInput("sex_field", "Sex",
+        controller: _sexController, placeholder: sex);
+    _sexController.addListener(() {
+      sex = _sexController.text;
     });
 
     /// Button for saving any changes made to the profile
@@ -194,11 +215,11 @@ class _EditProfileState extends State<EditProfile> {
         appBar: new AppBar(
           title: new Text("Edit Profile",
               style: new TextStyle(
-                color: GroupieColours.grey69,
+                color: Colors.white,
                 fontSize: 20.0,
               )),
-          backgroundColor: GroupieColours.white69,
-          iconTheme: new IconThemeData(color: GroupieColours.grey69),
+          backgroundColor: GroupieColours.logoColor,
+          iconTheme: new IconThemeData(color: Colors.white),
         ),
         backgroundColor: GroupieColours.white69,
         body: LoadableScreen(
@@ -230,25 +251,23 @@ class _EditProfileState extends State<EditProfile> {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //Change username
-                    TextPrompt("Set Profile Name"),
-                    setName,
+                    // Change given name
+                    setGivenName,
                     SizedBox(height: 6.0),
-                    // Change the user's bio
-                    TextPrompt("Set Bio"),
-                    setBio,
+                    // Change family name
+                    setFamilyName,
                     SizedBox(height: 6.0),
-                    // Change user's set location
-                    TextPrompt("Set Location"),
-                    setLocation,
+                    // Change city
+                    setCity,
                     SizedBox(height: 6.0),
-                    // Change the user's phone number
-                    TextPrompt("Set Phone Number"),
-                    setNumber,
+                    // Change country
+                    setCountry,
                     SizedBox(height: 6.0),
-                    // Change the user's email address
-                    TextPrompt("Set Email"),
-                    setEmail,
+                    // Change dob
+                    setDob,
+                    SizedBox(height: 6.0),
+                    // Change sex
+                    setSex,
                     SizedBox(height: 6.0),
                   ],
                 ),
