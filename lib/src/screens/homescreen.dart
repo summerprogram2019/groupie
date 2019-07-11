@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 //have to add in to link to the screen
 import 'settings/preferences.dart';
 import 'settings/profile.dart';
-import 'events/participants.dart';
 
 import 'package:groupie/widgets.dart' show EventCard, LoadableScreen;
 import 'package:groupie/model.dart' show Event;
+import 'package:groupie/screens.dart' show CreateNewEventMajorPage;
 import 'package:groupie/util.dart' show GroupieColours, getEvents;
 
 class HomePage extends StatefulWidget {
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         child: _cardScreen
       ),
       floatingActionButton: new FloatingActionButton(onPressed: () {
-        Navigator.of(context).pushNamed(ParticipantsScreen.tag);
+        Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
       }),
     );
   }
