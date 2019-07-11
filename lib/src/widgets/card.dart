@@ -163,6 +163,7 @@ class EventCard extends Positioned {
         childWhenDragging: Container(),
         feedback: _createEventCard(event),
         child: _createEventCard(event),
+//        data: event,
       )
   );
 }
@@ -188,11 +189,13 @@ Widget _createEventCard(Event event) {
             SizedBox(height: 10.0),
             Image.asset("sun.png"), //Update to load from DB
             SizedBox(height: 10.0),
-            Text(
-              "Short Description Here", //Update to load from DB
-              style: new TextStyle(
-                color: GroupieColours.grey69,
-                fontSize: 15.0,
+            Center(
+              child: Text(
+                event.description, //Update to load from DB
+                style: new TextStyle(
+                  color: GroupieColours.grey69,
+                  fontSize: 15.0,
+                ),
               ),
             ),
             SizedBox(height: 18.0),
@@ -219,17 +222,17 @@ Widget _createEventCard(Event event) {
                       SizedBox(width: 130.0),
                     ]
                 ),
-//                new Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: [
-//                      // When database is ready, update these to take directly from there:
-//                      Text(event.location),
-//                      Text(event.start.toString()),
-//                      Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
-//                      Text(event.cost.toString()),
-//                      Text("HELP"),
-//                    ]
-//                ),
+                new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // When database is ready, update these to take directly from there:
+                      Text(event.location),
+                      Text(event.start.toString()),
+                      Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
+                      Text(event.cost.toString()),
+                      Text(event.minimumAge.toString() + " - " + event.maximumAge.toString()),
+                    ]
+                ),
               ],
             ),
           ]
