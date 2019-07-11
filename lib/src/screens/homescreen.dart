@@ -5,9 +5,9 @@ import 'settings/preferences.dart';
 import 'settings/profile.dart';
 import 'events/participants.dart';
 
-import 'package:groupie/widgets.dart' show createCard;
-import 'package:groupie/model.dart' show HobbyCard;
-import 'package:groupie/util.dart' show GroupieColours, getUser, getUserId;
+import 'package:groupie/widgets.dart' show EventCard, LoadableScreen;
+import 'package:groupie/model.dart' show Event;
+import 'package:groupie/util.dart' show GroupieColours, getEvents;
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -23,32 +23,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> hobbyCards = [];
+  Map<int, Widget> cards = {};
 
-  _HomePageState() : super() {
-    hobbyCards = buildCards();
-    getUser().then((user) {
-      if (user == null) {
-        return;
-      }
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getEvents().then((events) {
       setState(() {
-        hobbyCards.add(createCard(new HobbyCard(text: user.toJson().toString(), red: 233, green: 10, blue: 12), () {}));
-      });
-    });
-    getUserId().then((id) {
-      setState(() {
-        hobbyCards.add(createCard(new HobbyCard(text: id.toString(), red: 233, green: 10, blue: 12), () {}));
+        cards = buildCards(events);
+        _loading = false;
       });
     });
   }
 
-  List<Widget> buildCards() {
-    return <Widget>[
-      createCard(new HobbyCard(red: 233, green: 10, blue: 12), () => _removeCard(0)),
-      createCard(new HobbyCard(red: 50, green: 12, blue: 11), () => _removeCard(1)),
-      createCard(new HobbyCard(red: 10, green: 234, blue: 23), () => _removeCard(2)),
-      createCard(new HobbyCard(red: 0, green: 192, blue: 237), () => _removeCard(3)),
-    ];
+  Map<int, Widget> buildCards(List<Event> events) {
+    Map<int, Widget> eventWidgets = {};
+
+    for (Event event in events) {
+      eventWidgets[event.id] = EventCard(event,
+        remove: () {
+          setState(() {
+            eventWidgets.remove(event.id);
+          });
+        },
+      );
+    }
+
+    return eventWidgets;
   }
 
   //navigator functions to change the screen
@@ -57,11 +61,6 @@ class _HomePageState extends State<HomePage> {
   }
   void _openPreferences() {
     Navigator.pushNamed(context, PreferencesScreen.tag);
-  }
-
-  void _removeCard(int index) {
-    print("removing card at index: " + '$index');
-    hobbyCards.removeAt(index);
   }
 
   @override
@@ -102,11 +101,43 @@ class _HomePageState extends State<HomePage> {
         iconTheme: new IconThemeData(color: GroupieColours.grey69),
         automaticallyImplyLeading: false,
       ),
-      body: new Center(
+      body: new LoadableScreen(
+        visible: !_loading,
         child: new Stack(
-            alignment: Alignment.center,
-            children: hobbyCards
-        ),
+          children: [
+            new Center(
+              child: new Stack(
+                alignment: Alignment.center,
+                children: cards.values.toList()
+              ),
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  child: DragTarget(
+                    builder: (a, b, c) => Container(width: 150),
+                    onAccept: (data) {
+                      print(data);
+                      print("FUCK NO");
+                    },
+                  )
+                ),
+                Spacer(),
+                Flexible(
+                  child: DragTarget(
+                    builder: (a, b, c) => Container(width: 150),
+                    onAccept: (data) {
+                      print(data);
+                      print("FUCK YES");
+                    },
+                  )
+                ),
+              ],
+            )
+          ]
+        )
       ),
       floatingActionButton: new FloatingActionButton(onPressed: () {
         Navigator.of(context).pushNamed(ParticipantsScreen.tag);
