@@ -1,131 +1,114 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:groupie/src/util/createNewEvent.dart';
 import 'package:groupie/src/util/dateFunctions.dart';
+import 'package:groupie/src/util/event.dart';
 import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
-import 'package:groupie/screens.dart' show HomePage, CreateNewEventPreviewPage;
-import 'package:groupie/model.dart' show Event;
+import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/src/model/card.dart';
+import 'package:intl/intl.dart';
 
 class CreateNewEventPreviewPage extends StatefulWidget {
   final String title;
+  final Event newEvent;
 
-  final Event event;
+  static String tag = "createNewEventPreview";
 
-  static String tag = "createNewEventMPreview";
-
-  CreateNewEventPreviewPage({Key key, this.title, this.event}) : super(key: key);
+  CreateNewEventPreviewPage({Key key, this.title, this.newEvent})
+      : super(key: key);
 
   @override
   _CreateNewEventPreviewPageState createState() =>
-      new _CreateNewEventPreviewPageState(event);
+      new _CreateNewEventPreviewPageState();
 }
 
 class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
   final FocusNode focus = FocusNode();
 
-  final Event event;
+  bool _creatingNewEvent = false;
 
-  /// Retrieves the text in the event's name entry field
-  final TextEditingController eventNameController = new TextEditingController();
+  String errors = "";
 
-  /// Retrieves the text in the event's location entry field
-  final TextEditingController eventLocationController =
-  new TextEditingController();
-
-  /// Retrieves the text in the event's start-time entry field
-  final TextEditingController eventStartTimeController =
-  new TextEditingController();
-
-  /// Retrieves the text in the event's finish-time entry field
-  final TextEditingController eventFinishTimeController =
-  new TextEditingController();
-
-  /// Retrieves the text in the event's description entry field
-  final TextEditingController eventDescriptionController =
-  new TextEditingController();
-
-  List<String> _ages = new List<String>();
-
-  List<DropdownMenuItem<String>> _dropDownMenuMinimumAge =
-  new List<DropdownMenuItem<String>>();
-  String _selectedMinimumAge;
-
-  List<DropdownMenuItem<String>> _dropDownMenuMaximumAge =
-  new List<DropdownMenuItem<String>>();
-  String _selectedMaximumAge;
-
-  List<String> _participantsNumbers = new List<String>();
-
-  List<DropdownMenuItem<String>> _dropDownMenuMinimumParticipantsNumber =
-  new List<DropdownMenuItem<String>>();
-  String _selectedMinimumParticipantsNumber;
-
-  List<DropdownMenuItem<String>> _dropDownMenuMaximumParticipantsNumber =
-  new List<DropdownMenuItem<String>>();
-  String _selectedMaximumParticipantsNumber;
-
-  _CreateNewEventPreviewPageState(this.event) : super() {
-    eventNameController.text = event.eventName;
-  }
-
-  @override
-  void initState() {
-    _ages.add('no matter');
-    for (int i = 14; i < 100; ++i) {
-      _ages.add(i.toString());
+  void _createnewevent(CreateNewEventResponse response) {
+    if (response.hasError) {
+      setState(() {
+        errors = response.error;
+        _creatingNewEvent = false;
+      });
+    } else {
+      _creatingNewEvent = false;
+      Navigator.pushNamed(context, HomePage.tag);
     }
-    _dropDownMenuMinimumAge = buildAndGetDropDownMenuItems(_ages);
-    _selectedMinimumAge = _dropDownMenuMinimumAge[0].value;
-    _dropDownMenuMaximumAge = buildAndGetDropDownMenuItems(_ages);
-    _selectedMaximumAge = _dropDownMenuMaximumAge[0].value;
-
-    _participantsNumbers.add('no matter');
-    for (int i = 0; i < 31; ++i) {
-      _participantsNumbers.add(i.toString());
-    }
-    _dropDownMenuMinimumParticipantsNumber =
-        buildAndGetDropDownMenuItems(_participantsNumbers);
-    _selectedMinimumParticipantsNumber = _dropDownMenuMinimumAge[0].value;
-    _dropDownMenuMaximumParticipantsNumber =
-        buildAndGetDropDownMenuItems(_participantsNumbers);
-    _selectedMaximumParticipantsNumber = _dropDownMenuMaximumAge[0].value;
-    super.initState();
   }
 
-  List<DropdownMenuItem<String>> buildAndGetDropDownMenuItems(List fruits) {
-    List<DropdownMenuItem<String>> items = new List();
-    for (String fruit in fruits) {
-      items.add(new DropdownMenuItem(value: fruit, child: new Text(fruit)));
-    }
-    return items;
-  }
-
-  void changedDropMenuMinimumAge(String selectedAge) {
-    setState(() {
-      _selectedMinimumAge = selectedAge;
-    });
-  }
-
-  void changedDropMenuMaximumAge(String selectedAge) {
-    setState(() {
-      _selectedMaximumAge = selectedAge;
-    });
-  }
-
-  void changedDropMenuMinimumParticipantsNumber(
-      String selectedParticipantsNumber) {
-    setState(() {
-      _selectedMinimumParticipantsNumber = selectedParticipantsNumber;
-    });
-  }
-
-  void changedDropMenuMaximumParticipantsNumber(
-      String selectedParticipantsNumber) {
-    setState(() {
-      _selectedMaximumParticipantsNumber = selectedParticipantsNumber;
-    });
+  Widget _createEventCard(Event event) {
+    return Card(
+      elevation: 12.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+        width: 360.0,
+        height: 600.0,
+        child: Column(children: [
+          Text(
+            event.name, //Update to load from DB
+            style: new TextStyle(
+              color: GroupieColours.grey69,
+              fontSize: 20.0,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Image.asset("sun.png"), //Update to load from DB
+          SizedBox(height: 10.0),
+          Center(
+            child: Text(
+              event.description, //Update to load from DB
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+          SizedBox(height: 18.0),
+          new Row(
+            children: <Widget>[
+              new Column(children: [
+                SizedBox(width: 10.0),
+              ]),
+              new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Location"),
+                    Text("Date"),
+                    Text("Participants"),
+                    Text("Estimated Cost"),
+                    Text("Age Restriction"),
+                  ]),
+              new Column(children: [
+                SizedBox(width: 50.0),
+              ]),
+              new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // When database is ready, update these to take directly from there:
+                    Text(event.location),
+                    Text(DateFormat('dd-MM-yyyy - kk:mm')
+                        .format(event.startTime)),
+                    Text(event.minimumParticipantsNumber.toString() +
+                        " - " +
+                        event.maximumParticipantsNumber.toString()),
+                    Text(event.price.toString()),
+                    Text(event.minimumAge.toString() +
+                        " - " +
+                        event.maximumAge.toString()),
+                  ]),
+            ],
+          ),
+        ]),
+      ),
+    );
   }
 
   Widget buildRow(String text, IconData icon, {style}) {
@@ -143,7 +126,7 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
             child: new Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                new Text(text, textAlign: TextAlign.center, style: style)),
+                    new Text(text, textAlign: TextAlign.center, style: style)),
             key: Key('expanded'))
       ],
     );
@@ -157,101 +140,8 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
     return new Padding(padding: EdgeInsets.only(bottom: 20.0));
   }
 
-  final editButton = (context) => RaisedButton(
-    key: Key('edit_button'),
-    child: Text(
-      'Edit',
-      style: TextStyle(color: Colors.grey),
-    ),
-    color: Colors.white,
-    shape: new CircleBorder(),
-    onPressed: () {
-      Navigator.of(context).pushNamed(HomePage.tag);
-    },
-  );
-
-  String _joiningFinishTimeString = "Tap to choose";
-  bool _joiningFinishTimeChosen = false;
-  DateTime _joiningFinishTime = DateTime.now();
-
-  void changeTextJoiningFinishTimeButton(DateTime date) {
-    setState(() {
-      _joiningFinishTimeString = DateFunctions.getDateString(date);
-      _joiningFinishTimeChosen = true;
-      _joiningFinishTime = date;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // the event's description entry field
-    final eventDescription = TextFormField(
-      key: Key('eventDescription_field'),
-      keyboardType: TextInputType.multiline,
-      autofocus: false,
-      maxLines: 5,
-      maxLength: 150,
-      // it'll have problems on different devices (screen sizes), but it seems hard for fixing
-//      expands: true,
-      controller: eventDescriptionController,
-      decoration: InputDecoration(
-        hintText: "All true guys are going to be here!",
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 1.0,
-          ),
-        ),
-      ),
-    );
-
-    DateTime getStartTime() {
-      if (!_joiningFinishTimeChosen) {
-        _joiningFinishTime = DateTime.now();
-      }
-      return _joiningFinishTime;
-    }
-
-    final joiningFinishTimePicker = RaisedButton(
-        onPressed: () {
-          DatePicker.showDateTimePicker(context, onChanged: (date) {
-            print('change $date');
-          }, onConfirm: (date) {
-            changeTextJoiningFinishTimeButton(date);
-            print('confirm $date.');
-          },
-              currentTime: getStartTime() /*DateTime.now()*/,
-              locale: LocaleType.en);
-        },
-        child: Text(
-          _joiningFinishTimeString,
-          style: TextStyle(color: GroupieColours.white69),
-        ),
-        color: GroupieColours.logoColor);
-
-    final minimumAgeSelectionButton = DropdownButton(
-      value: _selectedMinimumAge,
-      items: _dropDownMenuMinimumAge,
-      onChanged: changedDropMenuMinimumAge,
-    );
-
-    final maximumAgeSelectionButton = DropdownButton(
-      value: _selectedMaximumAge,
-      items: _dropDownMenuMaximumAge,
-      onChanged: changedDropMenuMaximumAge,
-    );
-
-    final minimumParticipantsNumberSelectionButton = DropdownButton(
-      value: _selectedMinimumParticipantsNumber,
-      items: _dropDownMenuMinimumParticipantsNumber,
-      onChanged: changedDropMenuMinimumParticipantsNumber,
-    );
-
-    final maximumParticipantsNumberSelectionButton = DropdownButton(
-      value: _selectedMaximumParticipantsNumber,
-      items: _dropDownMenuMaximumParticipantsNumber,
-      onChanged: changedDropMenuMaximumParticipantsNumber,
-    );
-
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Create Event. Preview"),
@@ -266,10 +156,75 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
             shrinkWrap: true,
             children: <Widget>[
               // Sizedboxes are used for whitespace and padding on the screen
-              Text(
-                  'Waiting for Leon\'s event profile page with short information',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: Sizes.titleFontSize)),
+              Card(
+                elevation: 12.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Container(
+                  width: 360.0,
+                  height: 600.0,
+                  child: Column(children: [
+                    Text(
+                      widget.newEvent.name, //Update to load from DB
+                      style: new TextStyle(
+                        color: GroupieColours.grey69,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Image.asset("sun.png"), //Update to load from DB
+                    SizedBox(height: 10.0),
+                    Center(
+                      child: Text(
+                        widget.newEvent.description, //Update to load from DB
+                        style: new TextStyle(
+                          color: GroupieColours.grey69,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 18.0),
+                    new Row(
+                      children: <Widget>[
+                        new Column(children: [
+                          SizedBox(width: 10.0),
+                        ]),
+                        new Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Location"),
+                              Text("Date"),
+                              Text("Participants"),
+                              Text("Estimated Cost"),
+                              Text("Age Restriction"),
+                            ]),
+                        new Column(children: [
+                          SizedBox(width: 50.0),
+                        ]),
+                        new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // When database is ready, update these to take directly from there:
+                              Text(widget.newEvent.location),
+//                              Text(DateFormat('dd-MM-yyyy - kk:mm').format(widget.newEvent.startTime)),
+                              Text(DateFunctions.getDateString(widget.newEvent.startTime)),
+                              Text(widget.newEvent.minimumParticipantsNumber
+                                      .toString() +
+                                  " - " +
+                                  widget.newEvent.maximumParticipantsNumber
+                                      .toString()),
+                              Text(widget.newEvent.price.toString()),
+                              Text(widget.newEvent.minimumAge.toString() +
+                                  " - " +
+                                  widget.newEvent.maximumAge.toString()),
+                            ]),
+                      ],
+                    ),
+                  ]),
+                ),
+              ),
+              Text(errors),
             ],
           ),
         ]),
@@ -282,7 +237,14 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
           style: TextStyle(color: GroupieColours.white69),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(HomePage.tag);
+          setState(() {
+            _creatingNewEvent = true;
+          });
+          createNewEvent(widget.newEvent).then((response) {
+            _createnewevent(response);
+          });
+
+//          Navigator.of(context).pushNamed(HomePage.tag);
         },
         backgroundColor: GroupieColours.logoColor,
       ),
