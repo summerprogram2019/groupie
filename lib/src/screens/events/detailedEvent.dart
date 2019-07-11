@@ -87,7 +87,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   _DetailedEventScreenState(this.event) : super() {
     _eventDescription = event.description;
     _eventLocation = event.location;
-    _eventStart = event.start.toString();
+    _eventStart = DateFormat('dd-MM-yyyy - kk:mm').format(event.start);
     _eventParticipants = event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString();
     _eventCost = event.cost.toString();
     _eventAge = event.minimumAge.toString() + " - " + event.maximumAge.toString();
@@ -143,7 +143,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
               'Details',
               'Location:', (){return _eventLocation;},
               'Time:', (){return _eventStart;},
-              'Countdown: ', (){return futureEventTime.difference(DateTime.now()).toString() + ' days';},
+              'Countdown: ', (){return futureEventTime.difference(DateTime.now()).inDays.toString() + ' days';},
               Theme.of(context).textTheme.subhead
           ),
 

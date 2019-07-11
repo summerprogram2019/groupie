@@ -31,12 +31,11 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
   new TextEditingController();
 
   List _activities = [
-    "Mixed",
-    "Play sport",
+    "Other",
+    "Sport",
     "Bar",
     "Karaoke",
     "Cafe/restaurant",
-    "Watch sport-events",
     "Cinema"
   ];
 
