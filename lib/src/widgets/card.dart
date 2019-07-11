@@ -181,6 +181,47 @@ class LinkCard extends Card{
   );
 }
 
+//Similar to link card but includes a preceding string and icon - primarily for view participants link
+class IconLinkCard extends Card{
+  //text style is an optional parameter
+  IconLinkCard(String cardText, String iconText, TextStyle iconTextStyle, IconData iconImage, Function action, [TextStyle chosenStyle])
+      : super(
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+
+          Padding(
+            padding: EdgeInsets.only(left: 250),
+            child: Row(
+              children: <Widget>[
+                Icon(iconImage),
+                Text(
+                    iconText,
+                    style: iconTextStyle
+                ),
+              ],
+            ),
+          ),
+
+          InkWell(
+              onTap: action,
+              child: ListTile(
+                title: Text(
+                    cardText,
+                    style: chosenStyle
+                ),
+                trailing: new IconButton(
+                  icon: new Icon(Icons.arrow_forward_ios),
+                  tooltip: 'Open Profile',
+                  onPressed: action,
+                ),
+              )
+          )
+        ],
+      )
+  );
+}
+
 /* used when the card links to another page or performs an action on press e.g.
 'view your profile' or 'logout'.
  */

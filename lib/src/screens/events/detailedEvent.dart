@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen;
 import 'package:groupie/util.dart' show GroupieColours, logout;
-import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard;
+import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard, IconLinkCard;
 
 //for persist functionality
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,27 +27,35 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
 
   var futureEventTime = new DateTime(2019, 7, 11);
 
-  //the values for the switches and sliders
-  bool _silenceNotificationToggle = false;
-  bool _pushNotificationToggle = false;
-
-  double _maxCost;
-  var _maxCostString = '';
-
-  double _maxDistance;
-  var _maxDistanceString = '';
+  int numOfParticipantsRequired;
+  int currentNumOfParticipants;
+  int minimumAge;
+  int maximumAge;
+  int estimatedCost;
 
   //load the values for preferences from persist
   _loadPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _maxCost = (prefs.getDouble('maxCost') ?? 50);
-      _maxDistance = (prefs.getDouble('maxDistance') ?? 10);
-      _maxCostString = '\$' + _maxCost.toStringAsFixed(0);
-      _maxDistanceString = _maxDistance.toStringAsFixed(0) + ' km';
-      _silenceNotificationToggle = (prefs.getBool('NOTIFICATION_TOGGLE') ?? false);
-      _pushNotificationToggle = (prefs.getBool('PUSH_TOGGLE') ?? false);
+
     });
+  }
+
+  //todo make live updating
+  _getParticipantNumbers(){
+    numOfParticipantsRequired = 5;
+    currentNumOfParticipants = 3;
+
+    return '(' + currentNumOfParticipants.toString() + '/' + numOfParticipantsRequired.toString() + ')';
+  }
+
+  _chooseTextColour(){
+    if (currentNumOfParticipants < numOfParticipantsRequired){
+      //there are less participants than the event requires, therefore red text
+      return Theme.of(context).textTheme.body2;
+    } else {
+      return Theme.of(context).textTheme.body1;
+    }
   }
 
   @override
@@ -89,11 +97,10 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
 
           //todo replace with loaded image based on event
           //Photo with curved border
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-            //use Image.network to load images from webpages
-            child: Image.asset('sun.png'),
+          Card(
+            child: Image.asset('assets/hiking.jpg'),
           ),
+
 
           //Description of event
           //todo fetch event description based on selected event
@@ -126,7 +133,8 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
               Theme.of(context).textTheme.subhead
           ),
 
-          LinkCard('View Participants', _goToParticipants),
+          //todo add in live update to participant number based on event
+          IconLinkCard('View Participants', _getParticipantNumbers(), _chooseTextColour(), Icons.perm_identity,  _goToParticipants),
 
           LinkCard('Leave Event', _leaveEvent, Theme.of(context).textTheme.body2),
 
