@@ -344,10 +344,10 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
           }
 
           double _priceEvent = _priceNewEvent < -50 ? -1 : _priceNewEvent <= 0 ? 0 : _priceNewEvent == 1000 ? 100500 : _priceNewEvent;
-          int _minimumAge = _selectedMinimumAge == 'no matter' ? 0 : int.parse(_selectedMinimumAge);
-          int _maximumAge = _selectedMaximumAge == 'no matter' ? 0 : int.parse(_selectedMaximumAge);
-          int _minimumParticipantsNumber = _selectedMinimumParticipantsNumber == 'no matter' ? 0 : int.parse(_selectedMinimumParticipantsNumber);
-          int _maximumParticipantsNumber = _selectedMaximumParticipantsNumber == 'no matter' ? 0 : int.parse(_selectedMaximumParticipantsNumber);
+          int _minimumAge = _selectedMinimumAge == 'None' ? 0 : int.parse(_selectedMinimumAge);
+          int _maximumAge = _selectedMaximumAge == 'None' ? 0 : int.parse(_selectedMaximumAge);
+          int _minimumParticipantsNumber = _selectedMinimumParticipantsNumber == 'None' ? 0 : int.parse(_selectedMinimumParticipantsNumber);
+          int _maximumParticipantsNumber = _selectedMaximumParticipantsNumber == 'None' ? 0 : int.parse(_selectedMaximumParticipantsNumber);
 
           // don't change value-variables of dropDownButtons like following!!!
 //          if (_selectedMinimumAge == 'no matter') {
