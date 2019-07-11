@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:groupie/model.dart' show HobbyCard, Event;
 import 'package:groupie/util.dart' show GroupieColours;
+import 'package:intl/intl.dart';
+
 
 //for persist functionality
 import 'package:shared_preferences/shared_preferences.dart';
@@ -514,7 +516,7 @@ Widget _createEventCard(Event event) {
                 ),
                 new Column(
                     children: [
-                      SizedBox(width: 130.0),
+                      SizedBox(width: 50.0),
                     ]
                 ),
                 new Column(
@@ -522,7 +524,7 @@ Widget _createEventCard(Event event) {
                     children: [
                       // When database is ready, update these to take directly from there:
                       Text(event.location),
-                      Text(event.start.toString()),
+                      Text(DateFormat('dd-MM-yyyy - kk:mm').format(event.start)),
                       Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
                       Text(event.cost.toString()),
                       Text(event.minimumAge.toString() + " - " + event.maximumAge.toString()),

@@ -55,7 +55,7 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
             child: new Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                    new Text(text, textAlign: TextAlign.center, style: style)),
+                new Text(text, textAlign: TextAlign.center, style: style)),
             key: Key('expanded'))
       ],
     );
