@@ -1,12 +1,17 @@
 class DateFunctions {
+
+  static String addZero(int number){
+    return number < 10 ? "0" + number.toString() : number.toString();
+  }
+
   static String getDateString(DateTime date) {
     return date.day.toString() +
         " " +
         DateFunctions.getMonthName(date) +
         " " +
-        date.hour.toString() +
+        addZero(date.hour) +
         ":" +
-        date.minute.toString();
+        addZero(date.minute);
   }
 
   static String getMonthName(DateTime tm) {

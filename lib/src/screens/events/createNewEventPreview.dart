@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:groupie/src/util/createNewEvent.dart';
+import 'package:groupie/src/util/dateFunctions.dart';
 import 'package:groupie/src/util/event.dart';
 import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
 import 'package:groupie/screens.dart' show HomePage;
+import 'package:groupie/src/model/card.dart';
+import 'package:intl/intl.dart';
 
 class CreateNewEventPreviewPage extends StatefulWidget {
   final String title;
@@ -40,6 +43,74 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
     }
   }
 
+  Widget _createEventCard(Event event) {
+    return Card(
+      elevation: 12.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+        width: 360.0,
+        height: 600.0,
+        child: Column(children: [
+          Text(
+            event.name, //Update to load from DB
+            style: new TextStyle(
+              color: GroupieColours.grey69,
+              fontSize: 20.0,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Image.asset("sun.png"), //Update to load from DB
+          SizedBox(height: 10.0),
+          Center(
+            child: Text(
+              event.description, //Update to load from DB
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+          SizedBox(height: 18.0),
+          new Row(
+            children: <Widget>[
+              new Column(children: [
+                SizedBox(width: 10.0),
+              ]),
+              new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Location"),
+                    Text("Date"),
+                    Text("Participants"),
+                    Text("Estimated Cost"),
+                    Text("Age Restriction"),
+                  ]),
+              new Column(children: [
+                SizedBox(width: 50.0),
+              ]),
+              new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // When database is ready, update these to take directly from there:
+                    Text(event.location),
+                    Text(DateFormat('dd-MM-yyyy - kk:mm')
+                        .format(event.startTime)),
+                    Text(event.minimumParticipantsNumber.toString() +
+                        " - " +
+                        event.maximumParticipantsNumber.toString()),
+                    Text(event.price.toString()),
+                    Text(event.minimumAge.toString() +
+                        " - " +
+                        event.maximumAge.toString()),
+                  ]),
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+
   Widget buildRow(String text, IconData icon, {style}) {
     if (text == null) {
       return new Padding(padding: EdgeInsets.all(0.0));
@@ -55,7 +126,7 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
             child: new Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                new Text(text, textAlign: TextAlign.center, style: style)),
+                    new Text(text, textAlign: TextAlign.center, style: style)),
             key: Key('expanded'))
       ],
     );
@@ -85,10 +156,74 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
             shrinkWrap: true,
             children: <Widget>[
               // Sizedboxes are used for whitespace and padding on the screen
-              Text(
-                  'Waiting for Eliza\'s event profile page including a short information (which is for the tinder-like swipe-page)',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: Sizes.titleFontSize)),
+              Card(
+                elevation: 12.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Container(
+                  width: 360.0,
+                  height: 600.0,
+                  child: Column(children: [
+                    Text(
+                      widget.newEvent.name, //Update to load from DB
+                      style: new TextStyle(
+                        color: GroupieColours.grey69,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Image.asset("sun.png"), //Update to load from DB
+                    SizedBox(height: 10.0),
+                    Center(
+                      child: Text(
+                        widget.newEvent.description, //Update to load from DB
+                        style: new TextStyle(
+                          color: GroupieColours.grey69,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 18.0),
+                    new Row(
+                      children: <Widget>[
+                        new Column(children: [
+                          SizedBox(width: 10.0),
+                        ]),
+                        new Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Location"),
+                              Text("Date"),
+                              Text("Participants"),
+                              Text("Estimated Cost"),
+                              Text("Age Restriction"),
+                            ]),
+                        new Column(children: [
+                          SizedBox(width: 50.0),
+                        ]),
+                        new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // When database is ready, update these to take directly from there:
+                              Text(widget.newEvent.location),
+//                              Text(DateFormat('dd-MM-yyyy - kk:mm').format(widget.newEvent.startTime)),
+                              Text(DateFunctions.getDateString(widget.newEvent.startTime)),
+                              Text(widget.newEvent.minimumParticipantsNumber
+                                      .toString() +
+                                  " - " +
+                                  widget.newEvent.maximumParticipantsNumber
+                                      .toString()),
+                              Text(widget.newEvent.price.toString()),
+                              Text(widget.newEvent.minimumAge.toString() +
+                                  " - " +
+                                  widget.newEvent.maximumAge.toString()),
+                            ]),
+                      ],
+                    ),
+                  ]),
+                ),
+              ),
               Text(errors),
             ],
           ),
