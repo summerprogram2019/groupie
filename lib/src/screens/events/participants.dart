@@ -26,51 +26,35 @@ class _ParticipantsScreenState extends State<ParticipantsScreen> {
   List<User> pending = [];
 
   List<Widget> approvedWidgets = [];
-
-  bool _loading = true;
+  List<Widget> pendingWidgets = [];
 
   bool _approvedLoaded = false;
   bool _pendingLoaded = false;
 
   _ParticipantsScreenState() : super() {
     getApprovedParticipants(2).then((participants) {
-      buildApproved(participants).then((widgets) {
+      buildUserList(participants).then((widgets) {
         setState(() {
           approvedWidgets = widgets;
           _approvedLoaded = true;
-          if (_pendingLoaded) {
-            _loading = false;
-          }
         });
       });
     });
     getPendingParticipants(2).then((participants) {
-      setState(() {
-        pending = participants;
-        _pendingLoaded = true;
-        if (_approvedLoaded) {
-          _loading = false;
-        }
+      buildUserList(participants).then((widgets) {
+        setState(() {
+          pendingWidgets = widgets;
+          _pendingLoaded = true;
+        });
       });
     });
   }
 
-  Future<List<Widget>> buildApproved(List<User> users) async {
+  Future<List<Widget>> buildUserList(List<User> users) async {
     List<Widget> cards = [];
 
     for (User user in users) {
-//      Image image = Image.network(
-//        await getImageUrl(int.parse(user.pictureId)),
-//        width: 150,
-//        height: 150,
-//      );
-//      Image image = Image.asset(
-//        "laura.jpg",
-//        width: 150,
-//        height: 150
-//      );
       ImageProvider image = NetworkImage(await getImageUrl(int.parse(user.pictureId)));
-//      ImageProvider image = AssetImage("laura.jpg");
       cards.add(GestureDetector(
           onTap: () => Navigator.of(context).pushNamed(ProfileScreen.tag, arguments: ScreenArguments(user)),
           child: Card(
@@ -119,9 +103,7 @@ class _ParticipantsScreenState extends State<ParticipantsScreen> {
           iconTheme: new IconThemeData(color: GroupieColours.grey69),
         ),
         backgroundColor: GroupieColours.white69,
-        body: LoadableScreen(
-          visible: !_loading,
-          child: Column(children: [
+        body: Column(children: [
             SizedBox(height: 20),
             Text("Approved",
                 style: new TextStyle(
@@ -129,9 +111,12 @@ class _ParticipantsScreenState extends State<ParticipantsScreen> {
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500
                 )),
-            ListView(
-              children: approvedWidgets,
-              shrinkWrap: true,
+            LoadableScreen(
+              visible: _approvedLoaded,
+              child: ListView(
+                children: approvedWidgets,
+                shrinkWrap: true,
+              )
             ),
             Text("Pending",
                 style: new TextStyle(
@@ -139,12 +124,14 @@ class _ParticipantsScreenState extends State<ParticipantsScreen> {
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500
                 )),
-            ListView.builder(
-              itemBuilder: buildPending,
-              itemCount: pending.length,
-              shrinkWrap: true,
+            LoadableScreen(
+                visible: _pendingLoaded,
+                child: ListView(
+                  children: pendingWidgets,
+                  shrinkWrap: true,
+                )
             ),
           ]),
-        ));
+        );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:groupie/model.dart' show User;
 import 'package:groupie/widgets.dart' show ProfileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
-import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider;
+import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider, getProfileImageProviderById;
 
 class ScreenArguments {
   final User profile;
@@ -24,20 +24,21 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String name;
-  String biography;
   String location;
-  String contactDetails;
-  String profileDetails;
+  DateTime dob;
+  String sex;
+  String pictureId;
 
-  ImageProvider profilePicture = AssetImage("laura.jpg");
+  ImageProvider profilePicture = AssetImage("placeholderUser.png");
 
   bool _loading = true;
 
-  _ProfileScreenState() : super() {
-//    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
-    final ScreenArguments args = ScreenArguments(null);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-    if (args.profile == null) {
+    if (args == null || args.profile == null) {
       getUser().then(setupDisplay).catchError((error) {
         // TODO When I get internet connection, make this a snackbar popup instead of this hack
         setupDisplay(User.fromJson({
@@ -50,24 +51,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'picture_id': ""
         }));
       });
+      getProfileImageProvider().then((image) {
+        setState(() {
+          profilePicture = image;
+        });
+      });
     } else {
       setupDisplay(args.profile);
+      getProfileImageProviderById(args.profile).then((image) {
+        setState(() {
+          profilePicture = image;
+        });
+      });
     }
 
-    getProfileImageProvider().then((image) {
-      setState(() {
-        profilePicture = image;
-      });
-    });
+
   }
 
   void setupDisplay(User user) {
     setState(() {
       name = user.givenName + " " + user.familyName;
-      biography = "Loaded but not actually cause database doesn't support it";
       location = user.city + ", " + user.country;
-      contactDetails = "Also not supported";
-      profileDetails = "As above";
+      dob = user.dob;
+      sex = user.sex;
       _loading = false;
     });
   }
@@ -138,13 +144,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 18.0),
               ProfileCard("Profile Name", name),
               SizedBox(height: 8.0),
-              ProfileCard("Bio", biography),
-              SizedBox(height: 8.0),
               ProfileCard("Location", location),
               SizedBox(height: 8.0),
-              ProfileCard("Contact Details", contactDetails),
+              ProfileCard("Date of Birth", dob.toString()),
               SizedBox(height: 8.0),
-              ProfileCard("Profile Details", profileDetails),
+              ProfileCard("Sex", sex),
               viewEvents(context)
             ]
           ),
