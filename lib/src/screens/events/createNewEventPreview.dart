@@ -6,21 +6,26 @@ import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
 import 'package:groupie/screens.dart' show HomePage, CreateNewEventPreviewPage;
+import 'package:groupie/model.dart' show Event;
 
 class CreateNewEventPreviewPage extends StatefulWidget {
   final String title;
 
+  final Event event;
+
   static String tag = "createNewEventMPreview";
 
-  CreateNewEventPreviewPage({Key key, this.title}) : super(key: key);
+  CreateNewEventPreviewPage({Key key, this.title, this.event}) : super(key: key);
 
   @override
   _CreateNewEventPreviewPageState createState() =>
-      new _CreateNewEventPreviewPageState();
+      new _CreateNewEventPreviewPageState(event);
 }
 
 class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
   final FocusNode focus = FocusNode();
+
+  final Event event;
 
   /// Retrieves the text in the event's name entry field
   final TextEditingController eventNameController = new TextEditingController();
@@ -60,6 +65,10 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
   List<DropdownMenuItem<String>> _dropDownMenuMaximumParticipantsNumber =
   new List<DropdownMenuItem<String>>();
   String _selectedMaximumParticipantsNumber;
+
+  _CreateNewEventPreviewPageState(this.event) : super() {
+    eventNameController.text = event.eventName;
+  }
 
   @override
   void initState() {

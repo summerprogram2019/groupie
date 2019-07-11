@@ -6,6 +6,7 @@ import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
 import 'package:groupie/screens.dart' show HomePage, CreateNewEventMinorPage;
+import 'package:groupie/model.dart' show Event;
 
 class CreateNewEventMajorPage extends StatefulWidget {
   final String title;
@@ -127,6 +128,15 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       _finishTimeChosen = true;
       _finishTime = date;
     });
+  }
+
+  Event buildEvent() {
+    Event event = new Event(-1);
+    event.eventName = _eventNameController.text;
+    event.location = _eventLocationController.text;
+    event.start = _startTime;
+    event.finish = _finishTime;
+    return event;
   }
 
   @override
@@ -275,7 +285,10 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
           style: TextStyle(color: GroupieColours.white69),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(CreateNewEventMinorPage.tag);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) => CreateNewEventMinorPage(event: buildEvent())
+            ));
         },
         backgroundColor: GroupieColours.logoColor,
       ),
