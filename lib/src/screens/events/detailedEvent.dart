@@ -5,6 +5,8 @@ import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen;
 import 'package:groupie/util.dart' show GroupieColours, logout;
 import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard, IconLinkCard;
+import 'package:intl/intl.dart';
+
 
 //for persist functionality
 import 'package:shared_preferences/shared_preferences.dart';
