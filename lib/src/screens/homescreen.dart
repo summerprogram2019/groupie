@@ -52,8 +52,8 @@ class _HomePageState extends State<HomePage> {
 
 
   //navigator functions to change the screen
-  void _openProfile() {
-    Navigator.pushNamed(context, ProfileScreen.tag);
+  void _openAddEvent() {
+    Navigator.pushNamed(context, CreateNewEventMajorPage.tag);
   }
   void _openPreferences() {
     Navigator.pushNamed(context, PreferencesScreen.tag);
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
 
                     CircleButton((){_openUpcomingEvents();},Icons.calendar_today, 'Open Upcoming Events'),
 
-                    CircleButton((){_openProfile();},Icons.person_outline, 'Open Profile'),
+                    CircleButton((){_openAddEvent();},Icons.add, 'Create Event'),
 
                   ],
                 ),
@@ -104,9 +104,6 @@ class _HomePageState extends State<HomePage> {
         visible: !_loading,
         child: _cardScreen
       ),
-      floatingActionButton: new FloatingActionButton(onPressed: () {
-        Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
-      }),
     );
   }
 }
