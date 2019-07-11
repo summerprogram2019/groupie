@@ -24,9 +24,30 @@ Shown in a list with other MiniEventCards
 Has a title, number of participants, image, small description, location and time
  */
 class MiniEventCard extends Card{
+  //outputs a string in the form "( currentNoOfParticipants / requiredNoOfParticipants )'
+  static _getParticipantString(int currentNoOfParticipants, int requiredNoOfParticipants){
+    return '(' + currentNoOfParticipants.toString() + '/' + requiredNoOfParticipants.toString() + ')';
+  }
 
-  MiniEventCard(String titleText, String eventDescription, String imageName, String locationText,
-      DateTime eventTime, String iconText, TextStyle iconTextStyle, BuildContext context, [TextStyle chosenStyle])
+  static _chooseTextColour(int currentNoOfParticipants, int requiredNoOfParticipants, BuildContext context){
+    if (currentNoOfParticipants < requiredNoOfParticipants){
+      //there are less participants than the event requires, therefore red text
+      return Theme.of(context).textTheme.body2;
+    } else {
+      return Theme.of(context).textTheme.body1;
+    }
+  }
+
+  MiniEventCard(
+      String titleText,
+      String eventDescription,
+      Image eventImage,
+      String locationText,
+      DateTime eventTime,
+      int currentNoOfParticipants,
+      int requiredNoOfParticipants,
+      BuildContext context,
+      [TextStyle chosenStyle])
       : super(
     child: Column(
       children: <Widget>[
@@ -44,8 +65,8 @@ class MiniEventCard extends Card{
                 children: <Widget>[
                   Icon(Icons.perm_identity,),
                   Text(
-                      iconText,
-                      style: iconTextStyle
+                      _getParticipantString(currentNoOfParticipants, requiredNoOfParticipants),
+                      style: _chooseTextColour(currentNoOfParticipants, requiredNoOfParticipants, context)
                   ),
                 ],
               ),
@@ -58,9 +79,10 @@ class MiniEventCard extends Card{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
+              height: 100,
               width: MediaQuery.of(context).size.width*0.5,
               child:ClipRRect(
-                child: Image.asset(imageName),
+                child: eventImage,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
             ),

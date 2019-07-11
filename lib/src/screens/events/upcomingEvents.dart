@@ -1,14 +1,14 @@
 //This page shows a list of all of the events a user has
 // added to their list of events. (Events are added by swiping right on the main page)
 import 'package:flutter/material.dart';
-import 'package:groupie/model.dart' show User;
+import 'package:groupie/model.dart' show User, Event;
 import 'package:groupie/widgets.dart' show GroupieProfile, LoadableScreen, MiniEventCard;
-import 'package:groupie/screens.dart' show ProfileScreen, ScreenArguments;
+import 'package:groupie/screens.dart' show DetailedEventScreen, EventScreenArguments;
 import 'package:groupie/util.dart'
     show
     GroupieColours,
     getApprovedParticipants,
-    getPendingParticipants,
+    getUpcomingEventsForUser,
     getImageUrl;
 
 class UpcomingEvents extends StatefulWidget {
@@ -23,14 +23,11 @@ class UpcomingEvents extends StatefulWidget {
 }
 
 class _UpcomingEventsState extends State<UpcomingEvents> {
-  List<User> approved = [];
-  List<User> pending = [];
+  List<User> events = [];
 
-  List<Widget> approvedWidgets = [];
-  List<Widget> pendingWidgets = [];
+  List<Widget> eventWidgets = [];
 
-  bool _approvedLoaded = false;
-  bool _pendingLoaded = false;
+  bool _eventsLoaded = false;
 
   int numOfParticipantsRequired;
   int currentNumOfParticipants;
@@ -52,62 +49,43 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   }
 
   _UpcomingEventsState() : super() {
-    getApprovedParticipants(2).then((participants) {
-      buildUserList(participants).then((widgets) {
+    getUpcomingEventsForUser(4).then((participants) {
+      print(participants);
+      buildEventList(participants).then((widgets) {
         setState(() {
-          approvedWidgets = widgets;
-          _approvedLoaded = true;
-        });
-      });
-    });
-    getPendingParticipants(2).then((participants) {
-      buildUserList(participants).then((widgets) {
-        setState(() {
-          pendingWidgets = widgets;
-          _pendingLoaded = true;
+          eventWidgets = widgets;
+          _eventsLoaded = true;
         });
       });
     });
   }
 
-  Future<List<Widget>> buildUserList(List<User> users) async {
-    List<Widget> cards = [];
+  Future<List<Widget>> buildEventList(List<Event> events) async {
+    List<Widget> eventCards = [];
 
-    for (User user in users) {
-      ImageProvider image = NetworkImage(await getImageUrl(int.parse(user.pictureId)));
-      cards.add(GestureDetector(
-          onTap: () => Navigator.of(context).pushNamed(ProfileScreen.tag, arguments: ScreenArguments(user)),
-          child: Card(
-              child: new Row(
-                children: <Widget>[
-                  GroupieProfile(image),
-                  Expanded(
-                    child: Center(
-                        child: Column(
-                            children: [
-                              Text(user.givenName + " " + user.familyName,
-                                  style: new TextStyle(
-                                    color: GroupieColours.grey69,
-                                    fontSize: 12.0,
-                                  )
-                              ),
-                              Text(user.city + ", " + user.country),
-                            ]
-                        )
-                    ),
-                  )
-                ],
-              )
-          )
+    for (Event event in events) {
+      //todo add an image for each event
+      getImageUrl(event.pictureId).then((image) {
+        print(image);
+      });
+      Image eventImage = Image.network(await getImageUrl(event.pictureId));
+      //todo add current number of participants calculator - could do a nice way with sql
+      int noOfParticipants = (await getApprovedParticipants(event.activityId)).length;
+
+      print(eventImage);
+
+      eventCards.add(GestureDetector(
+        //todo change the push screen to a generated detailedEvent page
+          onTap: () => Navigator.of(context).pushNamed(DetailedEventScreen.tag, arguments: EventScreenArguments(event)),
+          child: new MiniEventCard(event.eventName, event.description,
+              eventImage, event.location, event.start, noOfParticipants,
+              event.minimumParticipants, context,
+              Theme.of(context).textTheme.subhead)
       )
       );
     }
 
-    return cards;
-  }
-
-  Widget buildPending(BuildContext context, int index) {
-    return Text(pending[index].givenName);
+    return eventCards;
   }
 
   @override
@@ -123,47 +101,15 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
         iconTheme: new IconThemeData(color: GroupieColours.grey69),
       ),
       backgroundColor: GroupieColours.white69,
-      body: Column(children: [
-        MiniEventCard('Hiking',
-          'The Jindamurry mountain range east of the big smoke has large '
-              'campsites available. The range is called Jindamurry and we\'ll '
-              'be staying at West Chemer Parklands site 6. Looking to set up a '
-              'campfire but there should be some amenities available around the '
-              'campsite.',
-          'assets/hiking.jpg',
-          'Royal on the Park, Brisbane',
-            DateTime.now(),
-            _getParticipantNumbers(),
-            _chooseTextColour(),
-            context,
-            Theme.of(context).textTheme.subhead
-      ),
+      body: ListView(children: [
+        MiniEventCard('Test', 'This is the description of the event',
+          Image.asset('sun.png'), 'this is the event location', DateTime.now(), 4,
+          3, context, Theme.of(context).textTheme.subhead),
 
-
-        SizedBox(height: 20),
-        Text("Approved",
-            style: new TextStyle(
-                color: GroupieColours.grey69,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500
-            )),
         LoadableScreen(
-            visible: _approvedLoaded,
+            visible: _eventsLoaded,
             child: ListView(
-              children: approvedWidgets,
-              shrinkWrap: true,
-            )
-        ),
-        Text("Pending",
-            style: new TextStyle(
-                color: GroupieColours.grey69,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500
-            )),
-        LoadableScreen(
-            visible: _pendingLoaded,
-            child: ListView(
-              children: pendingWidgets,
+              children: eventWidgets,
               shrinkWrap: true,
             )
         ),

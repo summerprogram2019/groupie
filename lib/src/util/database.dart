@@ -189,3 +189,71 @@ Future<List<Event>> getEvents() async {
 
   return events;
 }
+
+//fetches the list of upcoming user events (the ones a user has 'swiped' to agree to)
+Future<List<Event>> getUpcomingEventsForUser(int userID) async {
+  Reply reply = await makeGetRequest(_EVENT_LIST_ENDPOINT, {
+    "user": userID.toString()
+  });
+
+  if (reply.hasError) {
+    print(reply.request);
+    print(reply.error);
+    return null;
+  }
+
+  List<Event> events = [];
+  for (var event in reply.listResult) {
+    print(event);
+    events.add(Event.fromJson(event));
+  }
+
+  return events;
+}
+
+//fetches the details for a given event Id
+Future<Event> getEventDetails(int activityId) async {
+  Map<String, String> request = {
+    "activity_id": activityId.toString()
+  };
+
+  Reply reply = await makeGetRequest(_USER_ENDPOINT, request);
+  if (reply.hasError) {
+    print(reply.request);
+    print(reply.error);
+    return null;
+  }
+
+  return Event.fromJson(reply.result);
+}
+
+//fetching the event image
+Future<Image> getEventImage() async {
+  String url = await _getImageUrl();
+
+  if (url == null) {
+    return Image.asset("sun.png");
+  }
+
+  return Image.network(url);
+}
+
+Future<ImageProvider> getEventImageProviderById(Event event) async {
+  String url = await getImageUrl(event.pictureId);
+
+  if (url == null) {
+    return AssetImage("sun.png");
+  }
+
+  return NetworkImage(url);
+}
+
+Future<ImageProvider> getEventImageProvider() async {
+  String url = await _getImageUrl();
+
+  if (url == null) {
+    return AssetImage("sun.png");
+  }
+
+  return NetworkImage(url);
+}

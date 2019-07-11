@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen;
-import 'package:groupie/util.dart' show GroupieColours, logout;
+import 'package:groupie/util.dart' show GroupieColours, logout, getEventDetails, getEventImageProvider, getEventImageProviderById;
 import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard, IconLinkCard;
 
 //for persist functionality
 import 'package:shared_preferences/shared_preferences.dart';
 
 //look into using a 'hero' to animate from the events list to the detailedEvent screen
+class EventScreenArguments {
+  final Event currentEvent;
+  EventScreenArguments(this.currentEvent);
+}
 
 class DetailedEventScreen extends StatefulWidget {
   final String title;
@@ -26,34 +30,101 @@ class DetailedEventScreen extends StatefulWidget {
 }
 
 class _DetailedEventScreenState extends State<DetailedEventScreen> {
-  final Event event;
-
-  var futureEventTime = new DateTime(2019, 7, 11);
-  
-  int numOfParticipantsRequired;
-  int currentNumOfParticipants;
+  //int activityId;
+  //int initiatorId;
+  //DateTime creationTime;
+  String eventName;
+  String description;
+  String location;
+  DateTime start;
+  //DateTime finish;
+  //String rsvpTime;
+  int pictureId;
   int minimumAge;
   int maximumAge;
-  int estimatedCost;
+  //bool verified;
 
-  //load the values for preferences from persist
-  _loadPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  int minimumParticipants;
+  int maximumParticipants;
+  int cost;
+
+  String participantRange = '? - ?';
+  String ageRange = '? - ?';
+
+  ImageProvider eventPicture = AssetImage("placeholderUser.png");
+
+  bool _loading = true;
+
+
+  final Event event;
+  var futureEventTime = new DateTime(2019, 7, 11);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final EventScreenArguments args = ModalRoute.of(context).settings.arguments;
+
+    if (args == null || args.currentEvent == null) {
+        setupDisplay(Event.fromJson({
+          'eventName' : "",
+          'description' : "",
+          'location' : DateTime.now().toIso8601String(),
+          'start' : "",
+          'minimumAge' : "?",
+          'maximumAge' : "?",
+          'minimumParticipants' : 1,
+          'maximumParticipants' : 99,
+          'cost' : 999,
+          'pictureId' : ''
+
+        }));
+
+      getEventImageProvider().then((image) {
+        setState(() {
+          eventPicture = image;
+        });
+      });
+    } else {
+      getEventDetails(args.currentEvent.id).then(setupDisplay);
+      setupDisplay(args.currentEvent);
+      getEventImageProviderById(args.currentEvent).then((image) {
+        setState(() {
+          eventPicture = image;
+        });
+      });
+    }
+  }
+
+  void setupDisplay(Event event) {
     setState(() {
+      pictureId = event.pictureId;
+      minimumAge = event.minimumAge;
+      maximumAge = event.maximumAge;
+      eventName = event.eventName;
+      location = event.location;
+      description = event.description;
+      start = event.start;
+      minimumParticipants = event.minimumParticipants;
+      maximumParticipants = event.maximumParticipants;
+      cost = event.cost;
 
+      participantRange = minimumParticipants.toString() + ' - ' + maximumParticipants.toString();
+      ageRange = minimumAge.toString() + " - " + maximumAge.toString();
+
+      _loading = false;
     });
   }
 
   //todo make live updating
   _getParticipantNumbers(){
-    numOfParticipantsRequired = 5;
-    currentNumOfParticipants = 3;
+    minimumParticipants = 5;
+    maximumParticipants = 3;
 
-    return '(' + currentNumOfParticipants.toString() + '/' + numOfParticipantsRequired.toString() + ')';
+    return '(' + maximumParticipants.toString() + '/' + minimumParticipants.toString() + ')';
   }
 
   _chooseTextColour(){
-    if (currentNumOfParticipants < numOfParticipantsRequired){
+    if (maximumParticipants < minimumParticipants){
       //there are less participants than the event requires, therefore red text
       return Theme.of(context).textTheme.body2;
     } else {
@@ -65,7 +136,6 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   void initState() {
     super.initState();
     //todo change what is loaded
-    _loadPreferences();
   }
 
   //the values for the switches and sliders
@@ -82,14 +152,15 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   double _maxDistance;
   var _maxDistanceString = '';
 
+  //who wrote this ? todo
   _DetailedEventScreenState(this.event) : super() {
-    _eventDescription = event.description;
-    _eventLocation = event.location;
-    _eventStart = event.start.toString();
-    _eventParticipants = event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString();
-    _eventCost = event.cost.toString();
-    _eventAge = event.minimumAge.toString() + " - " + event.maximumAge.toString();
-    futureEventTime = event.start;
+//    _eventDescription = event.description;
+//    _eventLocation = event.location;
+//    _eventStart = event.start.toString();
+//    _eventParticipants = event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString();
+//    _eventCost = event.cost.toString();
+//    _eventAge = event.minimumAge.toString() + " - " + event.maximumAge.toString();
+//    futureEventTime = event.start;
   }
 
 
@@ -131,16 +202,15 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
 
 
           //Description of event
-          //todo fetch event description based on selected event
-          DescriptionCard('Description', _eventDescription,
+          DescriptionCard('Description', description,
               Theme.of(context).textTheme.subhead
           ),
 
           //Details of Event
           DetailsCard(
               'Details',
-              'Location:', (){return _eventLocation;},
-              'Time:', (){return _eventStart;},
+              'Location:', (){return location;},
+              'Time:', (){return start.toIso8601String();},
               'Countdown: ', (){return futureEventTime.difference(DateTime.now()).toString() + ' days';},
               Theme.of(context).textTheme.subhead
           ),
@@ -150,9 +220,9 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
           //Requirements of event
           DetailsCard(
               'Requirements',
-              'Participants:', (){return _eventParticipants;},
-              'Estimated Cost:', (){return _eventCost;},
-              'Age Restriction: ', (){return _eventAge;},
+              'Participants:', (){return participantRange;},
+              'Estimated Cost:', (){return cost.toString();},
+              'Age Restriction: ', (){return ageRange;},
               Theme.of(context).textTheme.subhead
           ),
 
