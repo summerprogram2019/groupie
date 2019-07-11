@@ -2,7 +2,7 @@
 // added to their list of events. (Events are added by swiping right on the main page)
 import 'package:flutter/material.dart';
 import 'package:groupie/model.dart' show User;
-import 'package:groupie/widgets.dart' show GroupieProfile, LoadableScreen;
+import 'package:groupie/widgets.dart' show GroupieProfile, LoadableScreen, MiniEventCard;
 import 'package:groupie/screens.dart' show ProfileScreen, ScreenArguments;
 import 'package:groupie/util.dart'
     show
@@ -31,6 +31,25 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
 
   bool _approvedLoaded = false;
   bool _pendingLoaded = false;
+
+  int numOfParticipantsRequired;
+  int currentNumOfParticipants;
+
+  _getParticipantNumbers(){
+    numOfParticipantsRequired = 5;
+    currentNumOfParticipants = 7;
+
+    return '(' + currentNumOfParticipants.toString() + '/' + numOfParticipantsRequired.toString() + ')';
+  }
+
+  _chooseTextColour(){
+    if (currentNumOfParticipants < numOfParticipantsRequired){
+      //there are less participants than the event requires, therefore red text
+      return Theme.of(context).textTheme.body2;
+    } else {
+      return Theme.of(context).textTheme.body1;
+    }
+  }
 
   _UpcomingEventsState() : super() {
     getApprovedParticipants(2).then((participants) {
@@ -105,6 +124,22 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       ),
       backgroundColor: GroupieColours.white69,
       body: Column(children: [
+        MiniEventCard('Hiking',
+          'The Jindamurry mountain range east of the big smoke has large '
+              'campsites available. The range is called Jindamurry and we\'ll '
+              'be staying at West Chemer Parklands site 6. Looking to set up a '
+              'campfire but there should be some amenities available around the '
+              'campsite.',
+          'assets/hiking.jpg',
+          'Royal on the Park, Brisbane',
+            DateTime.now(),
+            _getParticipantNumbers(),
+            _chooseTextColour(),
+            context,
+            Theme.of(context).textTheme.subhead
+      ),
+
+
         SizedBox(height: 20),
         Text("Approved",
             style: new TextStyle(
