@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 //have to add in to link to the screen
 import 'settings/preferences.dart';
 import 'settings/profile.dart';
-import 'events/participants.dart';
 
-import 'package:groupie/widgets.dart' show EventCard, LoadableScreen;
+import 'events/participants.dart';
+import 'events/upcomingEvents.dart';
+
+import 'package:groupie/widgets.dart' show EventCard, LoadableScreen, CircleButton;
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show CreateNewEventMajorPage;
 import 'package:groupie/util.dart' show GroupieColours, getEvents;
@@ -24,7 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Map<int, Widget> cards = {};
+  Widget _cardScreen = new Container();
 
   bool _loading = true;
 
@@ -34,14 +36,103 @@ class _HomePageState extends State<HomePage> {
 
     getEvents().then((events) {
       setState(() {
-        cards = buildCards(events);
+        _cardScreen = new CardsScreen(events);
+        _loading = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        _cardScreen = new Center(
+          child: Text("Error loading events"),
+        );
         _loading = false;
       });
     });
   }
 
-  Map<int, Widget> buildCards(List<Event> events) {
-    Map<int, Widget> eventWidgets = {};
+
+
+  //navigator functions to change the screen
+  void _openProfile() {
+    Navigator.pushNamed(context, ProfileScreen.tag);
+  }
+  void _openPreferences() {
+    Navigator.pushNamed(context, PreferencesScreen.tag);
+  }
+  void _openUpcomingEvents(){
+    Navigator.pushNamed(context, UpcomingEvents.tag);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: PreferredSize(
+          child: AppBar(
+            //a widget which has the same height as the app bar
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+
+                    CircleButton((){_openPreferences();},Icons.brightness_low, 'Open Preferences'),
+
+                    CircleButton((){_openUpcomingEvents();},Icons.calendar_today, 'Open Upcoming Events'),
+
+                    CircleButton((){_openProfile();},Icons.person_outline, 'Open Profile'),
+
+                  ],
+                ),
+                //to add some spacing from between the links and the bottom of the appbar
+                Container(
+                  height: 10,
+                )
+              ],
+            ),
+
+
+            backgroundColor: GroupieColours.white69,
+            iconTheme: new IconThemeData(color: GroupieColours.grey69),
+            automaticallyImplyLeading: false,
+
+          ),
+          //sets the height of the appbar
+          preferredSize: Size.fromHeight(80)
+      ),
+
+      body: new LoadableScreen(
+        visible: !_loading,
+        child: _cardScreen
+      ),
+      floatingActionButton: new FloatingActionButton(onPressed: () {
+        Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
+      }),
+    );
+  }
+}
+
+
+class CardsScreen extends StatefulWidget {
+  final List<Event> events;
+
+  CardsScreen(this.events) : super();
+
+  @override
+  _CardsScreenState createState() {
+    return new _CardsScreenState(events);
+  }
+}
+
+class _CardsScreenState extends State<CardsScreen> {
+  Map<int, Widget> _cards;
+
+  final acceptSnack = SnackBar(content: Text('Event accepted!'));
+  final rejectSnack = SnackBar(content: Text('Event rejected!'));
+
+  _CardsScreenState(List<Event> events) : super() {
+    Map<int, Widget> eventWidgets = {
+      -1: new Center(child: new Text("Nothing to display"))
+    };
 
     for (Event event in events) {
       eventWidgets[event.id] = EventCard(event,
@@ -53,96 +144,43 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return eventWidgets;
-  }
-
-  //navigator functions to change the screen
-  void _openProfile() {
-    Navigator.pushNamed(context, ProfileScreen.tag);
-  }
-  void _openPreferences() {
-    Navigator.pushNamed(context, PreferencesScreen.tag);
+    _cards = eventWidgets;
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-//            title: new Text(widget.title, style: new TextStyle(
-//            color: GroupieColours.grey69)),
-        backgroundColor: GroupieColours.logoColor,
-        centerTitle: true,
-        actions: <Widget>[
-          Center(
-            child:
-              new Row(
-                children: [
-                  new IconButton(
-                    icon: new Icon(Icons.brightness_low),
-                    iconSize: 45.0,
-                    tooltip: 'Open Preferences',
-                    onPressed: _openPreferences,
-                  ),
-                  new IconButton(
-                    icon: new Icon(Icons.calendar_today),
-                    iconSize: 43.0,
-                    tooltip: 'Open Preferences',
-                    onPressed: _openPreferences,
-                  ),
-                   new IconButton(
-                     icon: new Icon(Icons.person_outline),
-                     iconSize: 49.0,
-                     tooltip: 'Open Profile',
-                     onPressed: _openProfile,
-                   ),
-                ],
-              ),
-          ),
-        ],
-        iconTheme: new IconThemeData(color: GroupieColours.grey69),
-        automaticallyImplyLeading: false,
-      ),
-      body: new LoadableScreen(
-        visible: !_loading,
-        child: new Stack(
-          children: [
-            new Center(
-              child: new Stack(
+    return new Stack(
+        children: [
+          new Center(
+            child: new Stack(
                 alignment: Alignment.center,
-                children: cards.values.toList()
-              ),
+                children: _cards.values.toList()
             ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Flexible(
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Flexible(
                   child: DragTarget(
                     builder: (a, b, c) => Container(width: 150),
                     onAccept: (data) {
-                      print(data);
-                      print("FUCK NO");
+                      Scaffold.of(context).showSnackBar(rejectSnack);
                     },
                   )
-                ),
-                Spacer(),
-                Flexible(
+              ),
+              Spacer(),
+              Flexible(
                   child: DragTarget(
                     builder: (a, b, c) => Container(width: 150),
                     onAccept: (data) {
-                      print(data);
-                      print("FUCK YES");
+                      Scaffold.of(context).showSnackBar(acceptSnack);
                     },
                   )
-                ),
-              ],
-            )
-          ]
-        )
-      ),
-      floatingActionButton: new FloatingActionButton(onPressed: () {
-        Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
-      }),
+              ),
+            ],
+          )
+        ]
     );
   }
 }

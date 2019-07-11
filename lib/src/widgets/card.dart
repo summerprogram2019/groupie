@@ -21,6 +21,122 @@ class ParticipantCard extends Expanded {
 }
 
 /*
+A card used on the upcoming events and my 'view your created events' pages.
+Shown in a list with other MiniEventCards
+Has a title, number of participants, image, small description, location and time
+ */
+class MiniEventCard extends Card{
+
+  MiniEventCard(String titleText, String eventDescription, String imageName, String locationText,
+      DateTime eventTime, String iconText, TextStyle iconTextStyle, BuildContext context, [TextStyle chosenStyle])
+      : super(
+    child: Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                  titleText,
+                  style: chosenStyle
+              ),
+
+              Row(
+                children: <Widget>[
+                  Icon(Icons.perm_identity,),
+                  Text(
+                      iconText,
+                      style: iconTextStyle
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width*0.5,
+              child:ClipRRect(
+                child: Image.asset(imageName),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
+
+            Container(
+              width: MediaQuery.of(context).size.width*0.4,
+              child: Text(
+                eventDescription,
+                style: TextStyle(fontSize: 14, color: GroupieColours.grey69),
+                maxLines:  6,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+
+          ],
+        ),
+
+        Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      'Location:',
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      locationText,
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      'Time:',
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      eventTime.toIso8601String(),
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+              ],
+            ),
+
+
+          ],
+        )
+
+      ],
+    ),
+  );
+}
+
+
+
+/*
 Takes a card title, three detail labels and three functions to fetch the values for the details.
  */
 class DetailsCard extends Card {
