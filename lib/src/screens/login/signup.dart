@@ -92,6 +92,10 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
 
+    /**
+     * Allows user to sign up with a new account
+     * TODO send user to disclaimer page once they have correctly signed up
+     */
     final createButton = RaisedButton(
       key: Key('create_button'),
       child: Text(
