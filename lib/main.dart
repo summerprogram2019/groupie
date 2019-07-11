@@ -20,7 +20,7 @@ class RemoveGlowEffectBehavior extends ScrollBehavior {
   }
 }
 
-// Main application, specifies the application to dispglay when first opening the app.
+// Main application, specifies the application to display when first opening the app.
 class MyApp extends StatelessWidget {
   static final String title = 'Groupie';
   static final routes = <String, WidgetBuilder>{
@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
     CreateNewEventMajorPage.tag: (context) => new CreateNewEventMajorPage(title: title),
     CreateNewEventMinorPage.tag: (context) => new CreateNewEventMinorPage(title: title),
     CreateNewEventPreviewPage.tag: (context) => new CreateNewEventPreviewPage(title: title),
-    DetailedEventScreen.tag: (context) => new DetailedEventScreen(title: title)
+    DetailedEventScreen.tag: (context) => new DetailedEventScreen(title: title),
+    UpcomingEvents.tag: (context) => new UpcomingEvents(title: 'Upcoming Events')
   };
 
   @override

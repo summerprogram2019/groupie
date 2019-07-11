@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'settings/preferences.dart';
 import 'settings/profile.dart';
 import 'events/participants.dart';
+import 'events/upcomingEvents.dart';
 
 import 'package:groupie/widgets.dart' show EventCard, LoadableScreen;
 import 'package:groupie/model.dart' show Event;
@@ -62,6 +63,9 @@ class _HomePageState extends State<HomePage> {
   void _openPreferences() {
     Navigator.pushNamed(context, PreferencesScreen.tag);
   }
+  void _openUpcomingEvents(){
+    Navigator.pushNamed(context, UpcomingEvents.tag);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +89,8 @@ class _HomePageState extends State<HomePage> {
                   new IconButton(
                     icon: new Icon(Icons.calendar_today),
                     iconSize: 43.0,
-                    tooltip: 'Open Preferences',
-                    onPressed: _openPreferences,
+                    tooltip: 'Open Upcoming Events',
+                    onPressed: _openUpcomingEvents,
                   ),
                    new IconButton(
                      icon: new Icon(Icons.person_outline),
