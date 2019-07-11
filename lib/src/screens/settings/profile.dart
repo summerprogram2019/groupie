@@ -4,6 +4,7 @@ import 'package:groupie/model.dart' show User;
 import 'package:groupie/widgets.dart' show ProfileCard, LoadingIcon;
 import 'package:groupie/screens.dart' show HomePage, EditProfile;
 import 'package:groupie/util.dart' show GroupieColours, getUser, getProfileImageProvider, getProfileImageProviderById;
+import 'package:intl/intl.dart';
 
 class ScreenArguments {
   final User profile;
@@ -25,7 +26,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String name;
   String location;
-  DateTime dob;
+  String dob;
   String sex;
   String pictureId;
 
@@ -72,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       name = user.givenName + " " + user.familyName;
       location = user.city + ", " + user.country;
-      dob = user.dob;
+      dob = DateFormat('dd-MM-yyyy').format(user.dob);
       sex = user.sex;
       _loading = false;
     });
@@ -146,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 8.0),
               ProfileCard("Location", location),
               SizedBox(height: 8.0),
-              ProfileCard("Date of Birth", dob.toString()),
+              ProfileCard("Date of Birth", dob),
               SizedBox(height: 8.0),
               ProfileCard("Sex", sex),
               viewEvents(context)

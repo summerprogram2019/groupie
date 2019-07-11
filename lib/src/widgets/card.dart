@@ -331,12 +331,18 @@ class ProfileCard extends Row {
 }
 
 class EventCard extends Positioned {
-  EventCard(Event event) : super(
+  EventCard(Event event, {remove}) : super(
       top: 5.0,
       child: Draggable(
+        onDragEnd: (details) {
+          if (details.wasAccepted && remove != null) {
+            remove();
+          }
+        },
         childWhenDragging: Container(),
         feedback: _createEventCard(event),
         child: _createEventCard(event),
+//        data: event,
       )
   );
 }
@@ -362,11 +368,13 @@ Widget _createEventCard(Event event) {
             SizedBox(height: 10.0),
             Image.asset("sun.png"), //Update to load from DB
             SizedBox(height: 10.0),
-            Text(
-              "Short Description Here", //Update to load from DB
-              style: new TextStyle(
-                color: GroupieColours.grey69,
-                fontSize: 15.0,
+            Center(
+              child: Text(
+                event.description, //Update to load from DB
+                style: new TextStyle(
+                  color: GroupieColours.grey69,
+                  fontSize: 15.0,
+                ),
               ),
             ),
             SizedBox(height: 18.0),
@@ -401,7 +409,7 @@ Widget _createEventCard(Event event) {
                       Text(event.start.toString()),
                       Text(event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString()),
                       Text(event.cost.toString()),
-                      Text("HELP"),
+                      Text(event.minimumAge.toString() + " - " + event.maximumAge.toString()),
                     ]
                 ),
               ],

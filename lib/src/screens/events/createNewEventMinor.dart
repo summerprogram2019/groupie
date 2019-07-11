@@ -5,22 +5,27 @@ import 'package:groupie/src/util/dateFunctions.dart';
 import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
-import 'package:groupie/screens.dart' show HomePage, CreateNewEventPreviewPage;
+import 'package:groupie/screens.dart' show HomePage, DetailedEventScreen;
+import 'package:groupie/model.dart' show Event;
 
 class CreateNewEventMinorPage extends StatefulWidget {
   final String title;
 
+  final Event event;
+
   static String tag = "createNewEventMinor";
 
-  CreateNewEventMinorPage({Key key, this.title}) : super(key: key);
+  CreateNewEventMinorPage({Key key, this.title, this.event}) : super(key: key);
 
   @override
   _CreateNewEventMinorPageState createState() =>
-      new _CreateNewEventMinorPageState();
+      new _CreateNewEventMinorPageState(event);
 }
 
 class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
   final FocusNode focus = FocusNode();
+
+  final Event event;
 
   /// Retrieves the text in the event's description entry field
   final TextEditingController _eventDescriptionController =
@@ -48,6 +53,8 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
   List<DropdownMenuItem<String>> _dropDownMenuMaximumParticipantsNumber =
   new List<DropdownMenuItem<String>>();
   String _selectedMaximumParticipantsNumber;
+
+  _CreateNewEventMinorPageState(this.event) : super();
 
   @override
   void initState() {
@@ -159,6 +166,17 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
       _joiningFinishTimeChosen = true;
       _joiningFinishTime = date;
     });
+  }
+
+  Event buildEvent(Event event) {
+    event.cost = _priceNewEvent.floor();
+    event.minimumAge = int.tryParse(_selectedMinimumAge);
+    event.maximumAge = int.tryParse(_selectedMaximumAge);
+    event.minimumParticipants = int.tryParse(_selectedMinimumParticipantsNumber);
+    event.maximumParticipants = int.tryParse(_selectedMaximumParticipantsNumber);
+    event.rsvpTime = _joiningFinishTime.toString();
+    event.description = _eventDescriptionController.text;
+    return event;
   }
 
   @override
@@ -329,7 +347,10 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
           style: TextStyle(color: GroupieColours.white69),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(CreateNewEventPreviewPage.tag);
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => DetailedEventScreen(title: event.eventName, event: buildEvent(event))
+              ));
         },
         backgroundColor: GroupieColours.logoColor,
       ),

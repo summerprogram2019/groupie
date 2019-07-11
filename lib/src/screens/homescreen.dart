@@ -11,7 +11,7 @@ import 'package:groupie/util.dart' show GroupieColours, getEvents;
 
 class HomePage extends StatefulWidget {
   final String title;
-  static String tag = "homepage🐢";
+  static String tag = "homepage??";
 
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> cards = [];
+  Map<int, Widget> cards = {};
 
   bool _loading = true;
 
@@ -39,11 +39,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  List<Widget> buildCards(List<Event> events) {
-    List<Widget> eventWidgets = [];
+  Map<int, Widget> buildCards(List<Event> events) {
+    Map<int, Widget> eventWidgets = {};
 
     for (Event event in events) {
-      eventWidgets.add(EventCard(event));
+      eventWidgets[event.id] = EventCard(event,
+        remove: () {
+          setState(() {
+            eventWidgets.remove(event.id);
+          });
+        },
+      );
     }
 
     return eventWidgets;
@@ -57,73 +63,81 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushNamed(context, PreferencesScreen.tag);
   }
 
-  void _removeCard(int index) {
-    print("removing card at index: " + '$index');
-    cards.removeAt(index);
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(75.0), // here the desired height
-        child: new AppBar(
-  //            title: new Text(widget.title, style: new TextStyle(
-  //            color: GroupieColours.grey69)),
-          backgroundColor: GroupieColours.logoColor,
-          centerTitle: true,
-          actions: <Widget>[
-            new Center(
-              child:
-                new Row(
-                  children: [
-                    new Column(
-                      children: <Widget>[
-                        new IconButton(
-                          icon: new Icon(Icons.brightness_low),
-                          iconSize: 50.0,
-                          tooltip: 'Open Preferences',
-                          onPressed: _openPreferences,
-                        ),
-                      ]
-                    ),
-                    // TODO Update link to events page once the screen has been created
-                    new Column(
-                      children: <Widget>[
-                        new IconButton(
-                          icon: new Icon(Icons.calendar_today),
-                          iconSize: 50.0,
-                          tooltip: 'Open Preferences',
-                          onPressed: _openPreferences,
-                        ),
-                      ],
-                    ),
-                    new Column(
-                      children: <Widget>[
-                        new IconButton(
-                          icon: new Icon(Icons.person_outline),
-                          iconSize: 49.0,
-                          tooltip: 'Open Profile',
-                          onPressed: _openProfile,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-            ),
-          ],
-          iconTheme: new IconThemeData(color: GroupieColours.grey69),
-          automaticallyImplyLeading: false,
-        ),
+      appBar: new AppBar(
+//            title: new Text(widget.title, style: new TextStyle(
+//            color: GroupieColours.grey69)),
+        backgroundColor: GroupieColours.logoColor,
+        centerTitle: true,
+        actions: <Widget>[
+          Center(
+            child:
+              new Row(
+                children: [
+                  new IconButton(
+                    icon: new Icon(Icons.brightness_low),
+                    iconSize: 45.0,
+                    tooltip: 'Open Preferences',
+                    onPressed: _openPreferences,
+                  ),
+                  new IconButton(
+                    icon: new Icon(Icons.calendar_today),
+                    iconSize: 43.0,
+                    tooltip: 'Open Preferences',
+                    onPressed: _openPreferences,
+                  ),
+                   new IconButton(
+                     icon: new Icon(Icons.person_outline),
+                     iconSize: 49.0,
+                     tooltip: 'Open Profile',
+                     onPressed: _openProfile,
+                   ),
+                ],
+              ),
+          ),
+        ],
+        iconTheme: new IconThemeData(color: GroupieColours.grey69),
+        automaticallyImplyLeading: false,
       ),
       body: new LoadableScreen(
         visible: !_loading,
-        child: new Center(
-          child: new Stack(
-            alignment: Alignment.center,
-            children: cards
-          ),
-        ),
+        child: new Stack(
+          children: [
+            new Center(
+              child: new Stack(
+                alignment: Alignment.center,
+                children: cards.values.toList()
+              ),
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  child: DragTarget(
+                    builder: (a, b, c) => Container(width: 150),
+                    onAccept: (data) {
+                      print(data);
+                      print("FUCK NO");
+                    },
+                  )
+                ),
+                Spacer(),
+                Flexible(
+                  child: DragTarget(
+                    builder: (a, b, c) => Container(width: 150),
+                    onAccept: (data) {
+                      print(data);
+                      print("FUCK YES");
+                    },
+                  )
+                ),
+              ],
+            )
+          ]
+        )
       ),
       floatingActionButton: new FloatingActionButton(onPressed: () {
         Navigator.of(context).pushNamed(ParticipantsScreen.tag);
