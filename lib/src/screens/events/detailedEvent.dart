@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen;
+import 'package:groupie/src/util/dateFunctions.dart';
 import 'package:groupie/util.dart' show GroupieColours, logout;
 import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard, IconLinkCard;
-import 'package:intl/intl.dart';
-
 
 //for persist functionality
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,7 +80,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   _DetailedEventScreenState(this.event) : super() {
     _eventDescription = event.description;
     _eventLocation = event.location;
-    _eventStart = DateFormat('dd-MM-yyyy - kk:mm').format(event.start);
+    _eventStart = DateFunctions.getDateString(event.start);
 
     if (event.minimumParticipants == null && event.maximumParticipants == null){
       _eventParticipants = "No limit";

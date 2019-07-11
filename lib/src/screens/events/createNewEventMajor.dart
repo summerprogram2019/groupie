@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:groupie/src/util/dateFunctions.dart';
+import 'package:groupie/src/util/event.dart';
 import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
 import 'package:groupie/screens.dart' show HomePage, CreateNewEventMinorPage;
-import 'package:groupie/model.dart' show Event;
 
 class CreateNewEventMajorPage extends StatefulWidget {
   final String title;
@@ -24,18 +24,20 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
   final FocusNode focus = FocusNode();
 
   /// Retrieves the text in the event's name entry field
-  final TextEditingController _eventNameController = new TextEditingController();
+  final TextEditingController _eventNameController =
+      new TextEditingController();
 
   /// Retrieves the text in the event's location entry field
   final TextEditingController _eventLocationController =
-  new TextEditingController();
+      new TextEditingController();
 
   List _activities = [
-    "Other",
-    "Sport",
+    "Mixed",
+    "Play sport",
     "Bar",
     "Karaoke",
     "Cafe/restaurant",
+    "Watch sport-events",
     "Cinema"
   ];
 
@@ -49,10 +51,11 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
     super.initState();
   }
 
-  List<DropdownMenuItem<String>> buildAndGetDropDownMenuItems(List fruits) {
+  List<DropdownMenuItem<String>> buildAndGetDropDownMenuItems(List activities) {
     List<DropdownMenuItem<String>> items = new List();
-    for (String fruit in fruits) {
-      items.add(new DropdownMenuItem(value: fruit, child: new Text(fruit)));
+    for (String activity in activities) {
+      items.add(
+          new DropdownMenuItem(value: activity, child: new Text(activity)));
     }
     return items;
   }
@@ -78,7 +81,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
             child: new Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                new Text(text, textAlign: TextAlign.center, style: style)),
+                    new Text(text, textAlign: TextAlign.center, style: style)),
             key: Key('expanded'))
       ],
     );
@@ -93,17 +96,17 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
   }
 
   final editButton = (context) => RaisedButton(
-    key: Key('edit_button'),
-    child: Text(
-      'Edit',
-      style: TextStyle(color: Colors.grey),
-    ),
-    color: Colors.white,
-    shape: new CircleBorder(),
-    onPressed: () {
-      Navigator.of(context).pushNamed(HomePage.tag);
-    },
-  );
+        key: Key('edit_button'),
+        child: Text(
+          'Edit',
+          style: TextStyle(color: Colors.grey),
+        ),
+        color: Colors.white,
+        shape: new CircleBorder(),
+        onPressed: () {
+          Navigator.of(context).pushNamed(HomePage.tag);
+        },
+      );
 
   String _startTimeString = "Tap to choose";
   bool _startTimeChosen = false;
@@ -127,15 +130,6 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       _finishTimeChosen = true;
       _finishTime = date;
     });
-  }
-
-  Event buildEvent() {
-    Event event = new Event(-1);
-    event.eventName = _eventNameController.text;
-    event.location = _eventLocationController.text;
-    event.start = _startTime;
-    event.finish = _finishTime;
-    return event;
   }
 
   @override
@@ -284,10 +278,16 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
           style: TextStyle(color: GroupieColours.white69),
         ),
         onPressed: () {
-          Navigator.of(context).push(
+          Event newEvent = new Event();
+          newEvent.addMajor(_selectedActivity, _eventNameController.text, _eventLocationController.text,
+              _startTime, _finishTime);
+          Navigator.push(
+            context,
             MaterialPageRoute(
-                builder: (context) => CreateNewEventMinorPage(event: buildEvent())
-            ));
+              builder: (context) =>
+                  CreateNewEventMinorPage(newEventMinor: newEvent),
+            ),
+          );
         },
         backgroundColor: GroupieColours.logoColor,
       ),
