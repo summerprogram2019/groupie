@@ -2,34 +2,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:groupie/src/util/dateFunctions.dart';
+import 'package:groupie/src/util/event.dart';
 import 'package:groupie/src/util/sizes.dart';
 import 'package:groupie/src/util/colours.dart';
 
-import 'package:groupie/screens.dart' show HomePage, DetailedEventScreen;
-import 'package:groupie/model.dart' show Event;
+import 'package:groupie/screens.dart' show HomePage, CreateNewEventPreviewPage;
 
 class CreateNewEventMinorPage extends StatefulWidget {
   final String title;
-
-  final Event event;
+  final Event newEventMinor;
 
   static String tag = "createNewEventMinor";
 
-  CreateNewEventMinorPage({Key key, this.title, this.event}) : super(key: key);
+  CreateNewEventMinorPage({Key key, this.title, @required this.newEventMinor})
+      : super(key: key);
 
   @override
   _CreateNewEventMinorPageState createState() =>
-      new _CreateNewEventMinorPageState(event);
+      new _CreateNewEventMinorPageState();
 }
 
 class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
   final FocusNode focus = FocusNode();
 
-  final Event event;
-
   /// Retrieves the text in the event's description entry field
   final TextEditingController _eventDescriptionController =
-  new TextEditingController();
+      new TextEditingController();
 
   double _priceNewEvent = -100;
   var _priceNewEventString = 'Unknown';
@@ -37,24 +35,22 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
   List<String> _agesNewEvent = new List<String>();
 
   List<DropdownMenuItem<String>> _dropDownMenuMinimumAge =
-  new List<DropdownMenuItem<String>>();
-  String _selectedMinimumAge;
+      new List<DropdownMenuItem<String>>();
+  String _selectedMinimumAge = 'no matter';
 
   List<DropdownMenuItem<String>> _dropDownMenuMaximumAge =
-  new List<DropdownMenuItem<String>>();
-  String _selectedMaximumAge;
+      new List<DropdownMenuItem<String>>();
+  String _selectedMaximumAge = 'no matter';
 
   List<String> _participantsNumbers = new List<String>();
 
   List<DropdownMenuItem<String>> _dropDownMenuMinimumParticipantsNumber =
-  new List<DropdownMenuItem<String>>();
+      new List<DropdownMenuItem<String>>();
   String _selectedMinimumParticipantsNumber;
 
   List<DropdownMenuItem<String>> _dropDownMenuMaximumParticipantsNumber =
-  new List<DropdownMenuItem<String>>();
+      new List<DropdownMenuItem<String>>();
   String _selectedMaximumParticipantsNumber;
-
-  _CreateNewEventMinorPageState(this.event) : super();
 
   @override
   void initState() {
@@ -80,10 +76,10 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
     super.initState();
   }
 
-  List<DropdownMenuItem<String>> buildAndGetDropDownMenuItems(List fruits) {
+  List<DropdownMenuItem<String>> buildAndGetDropDownMenuItems(List elements) {
     List<DropdownMenuItem<String>> items = new List();
-    for (String fruit in fruits) {
-      items.add(new DropdownMenuItem(value: fruit, child: new Text(fruit)));
+    for (String element in elements) {
+      items.add(new DropdownMenuItem(value: element, child: new Text(element)));
     }
     return items;
   }
@@ -129,7 +125,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
             child: new Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                new Text(text, textAlign: TextAlign.center, style: style)),
+                    new Text(text, textAlign: TextAlign.center, style: style)),
             key: Key('expanded'))
       ],
     );
@@ -144,39 +140,28 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
   }
 
   final editButton = (context) => RaisedButton(
-    key: Key('edit_button'),
-    child: Text(
-      'Edit',
-      style: TextStyle(color: Colors.grey),
-    ),
-    color: Colors.white,
-    shape: new CircleBorder(),
-    onPressed: () {
-      Navigator.of(context).pushNamed(HomePage.tag);
-    },
-  );
+        key: Key('edit_button'),
+        child: Text(
+          'Edit',
+          style: TextStyle(color: Colors.grey),
+        ),
+        color: Colors.white,
+        shape: new CircleBorder(),
+        onPressed: () {
+          Navigator.of(context).pushNamed(HomePage.tag);
+        },
+      );
 
-  String _joiningFinishTimeString = "Tap to choose";
-  bool _joiningFinishTimeChosen = false;
-  DateTime _joiningFinishTime = DateTime.now();
+  String _rsvpTimeString = "Tap to choose";
+  bool _rsvpTimeChosen = false;
+  DateTime _rsvpTime = DateTime.now();
 
-  void changeTextJoiningFinishTimeButton(DateTime date) {
+  void changeTextrsvpTimeButton(DateTime date) {
     setState(() {
-      _joiningFinishTimeString = DateFunctions.getDateString(date);
-      _joiningFinishTimeChosen = true;
-      _joiningFinishTime = date;
+      _rsvpTimeString = DateFunctions.getDateString(date);
+      _rsvpTimeChosen = true;
+      _rsvpTime = date;
     });
-  }
-
-  Event buildEvent(Event event) {
-    event.cost = _priceNewEvent.floor();
-    event.minimumAge = int.tryParse(_selectedMinimumAge);
-    event.maximumAge = int.tryParse(_selectedMaximumAge);
-    event.minimumParticipants = int.tryParse(_selectedMinimumParticipantsNumber);
-    event.maximumParticipants = int.tryParse(_selectedMaximumParticipantsNumber);
-    event.rsvpTime = _joiningFinishTime.toString();
-    event.description = _eventDescriptionController.text;
-    return event;
   }
 
   @override
@@ -201,26 +186,26 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
       ),
     );
 
-    DateTime getStartTime() {
-      if (!_joiningFinishTimeChosen) {
-        _joiningFinishTime = DateTime.now();
+    DateTime getrsvpTime() {
+      if (!_rsvpTimeChosen) {
+        _rsvpTime = DateTime.now();
       }
-      return _joiningFinishTime;
+      return _rsvpTime;
     }
 
-    final joiningFinishTimePicker = RaisedButton(
+    final rsvpTimePicker = RaisedButton(
         onPressed: () {
           DatePicker.showDateTimePicker(context, onChanged: (date) {
             print('change $date');
           }, onConfirm: (date) {
-            changeTextJoiningFinishTimeButton(date);
+            changeTextrsvpTimeButton(date);
             print('confirm $date.');
           },
-              currentTime: getStartTime() /*DateTime.now()*/,
+              currentTime: getrsvpTime() /*DateTime.now()*/,
               locale: LocaleType.en);
         },
         child: Text(
-          _joiningFinishTimeString,
+          _rsvpTimeString,
           style: TextStyle(color: GroupieColours.white69),
         ),
         color: GroupieColours.logoColor);
@@ -267,7 +252,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    //'Maximum Cost: \$ ${_maxCostString}',
+                      //'Maximum Cost: \$ ${_maxCostString}',
                       'Event Price Estimate:'),
                   Text(
                     _priceNewEventString,
@@ -323,11 +308,11 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
                 ],
               ),
               SizedBox(height: Sizes.bigGap),
-              Text('Set Joining Finish-Time',
+              Text('Set RSVP Time',
                   style: TextStyle(
                       color: Colors.black, fontSize: Sizes.titleFontSize)),
               SizedBox(height: Sizes.smallGap),
-              joiningFinishTimePicker,
+              rsvpTimePicker,
               SizedBox(height: Sizes.bigGap),
               Text('Type Event\'s Description',
                   style: TextStyle(
@@ -347,10 +332,53 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
           style: TextStyle(color: GroupieColours.white69),
         ),
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => DetailedEventScreen(title: event.eventName, event: buildEvent(event))
-              ));
+
+          if (_priceNewEvent < -50) {
+            _priceNewEvent = -1;
+          }
+          if (_priceNewEvent > -50 && _priceNewEvent <= 0) {
+            _priceNewEvent = 0;
+          }
+          if (_priceNewEvent == 1000) {
+            _priceNewEvent = 100500;
+          }
+
+          double _priceEvent = _priceNewEvent < -50 ? -1 : _priceNewEvent <= 0 ? 0 : _priceNewEvent == 1000 ? 100500 : _priceNewEvent;
+          int _minimumAge = _selectedMinimumAge == 'no matter' ? 0 : int.parse(_selectedMinimumAge);
+          int _maximumAge = _selectedMaximumAge == 'no matter' ? 0 : int.parse(_selectedMaximumAge);
+          int _minimumParticipantsNumber = _selectedMinimumParticipantsNumber == 'no matter' ? 0 : int.parse(_selectedMinimumParticipantsNumber);
+          int _maximumParticipantsNumber = _selectedMaximumParticipantsNumber == 'no matter' ? 0 : int.parse(_selectedMaximumParticipantsNumber);
+
+          // don't change value-variables of dropDownButtons like following!!!
+//          if (_selectedMinimumAge == 'no matter') {
+//            _selectedMinimumAge = '0';
+//          }
+//          if (_selectedMaximumAge == 'no matter') {
+//            _selectedMaximumAge = '0';
+//          }
+//          if (_selectedMinimumParticipantsNumber == 'no matter') {
+//            _selectedMinimumParticipantsNumber = '0';
+//          }
+//          if (_selectedMaximumParticipantsNumber == 'no matter') {
+//            _selectedMaximumParticipantsNumber = '0';
+//          }
+
+          widget.newEventMinor.addMinor(
+              _priceEvent,
+              _minimumAge,
+              _maximumAge,
+              _minimumParticipantsNumber,
+              _maximumParticipantsNumber,
+              _rsvpTime,
+              _eventDescriptionController.text);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CreateNewEventPreviewPage(newEvent: widget.newEventMinor),
+            ),
+          );
+//          Navigator.of(context).pushNamed(CreateNewEventPreviewPage.tag);
         },
         backgroundColor: GroupieColours.logoColor,
       ),
