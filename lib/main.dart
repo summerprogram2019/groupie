@@ -36,7 +36,8 @@ class MyApp extends StatelessWidget {
     EditProfile.tag: (context) => new EditProfile(title: title),
     CreateNewEventMajorPage.tag: (context) => new CreateNewEventMajorPage(title: title),
     CreateNewEventMinorPage.tag: (context) => new CreateNewEventMinorPage(title: title),
-    CreateNewEventPreviewPage.tag: (context) => new CreateNewEventPreviewPage(title: title)
+    CreateNewEventPreviewPage.tag: (context) => new CreateNewEventPreviewPage(title: title),
+    DetailedEventScreen.tag: (context) => new DetailedEventScreen(title: title)
   };
 
   @override

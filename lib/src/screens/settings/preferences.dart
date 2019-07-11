@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
-import 'package:groupie/screens.dart' show LoginScreen;
+import 'package:groupie/screens.dart' show LoginScreen, DetailedEventScreen;
 import 'package:groupie/util.dart' show GroupieColours, logout;
 import 'package:groupie/widgets.dart' show LinkCard, ToggleCard, SliderCard;
 
@@ -90,6 +90,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     Navigator.pushNamed(context, ProfileScreen.tag);
   }
 
+  void _openDetailedEventScreen() {
+    Navigator.pushNamed(context, DetailedEventScreen.tag);
+  }
+
   //Logs the user out and returns them to the login screen
   void _logoutOfAccount(){
     Navigator.pushNamed(context, LoginScreen.tag);
@@ -164,7 +168,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             ),
 
             //Privacy policy link (currently opens profile)
-            LinkCard('Privacy Policy', _openProfile),
+            LinkCard('Privacy Policy', _openDetailedEventScreen),
 
             //to push the logout and delete account elements to the bottom of the page
             Spacer(),

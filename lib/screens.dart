@@ -13,6 +13,7 @@ export 'src/screens/events/createNewEventMajor.dart';
 export 'src/screens/events/createNewEventMinor.dart';
 export 'src/screens/events/createNewEventPreview.dart';
 export 'src/screens/events/participants.dart';
+export 'src/screens/events/detailedEvent.dart';
 
 // Login related screens
 export 'src/screens/login/login.dart';

@@ -19,7 +19,144 @@ class ParticipantCard extends Expanded {
   );
 }
 
-//defining the standard card used on the preferences screens
+/*
+Takes a card title, three detail labels and three functions to fetch the values for the details.
+ */
+class DetailsCard extends Card {
+  DetailsCard(String cardTitle, String detailOneLabel, Function getDetailOne,
+      String detailTwoLabel, Function getDetailTwo, String detailThreeLabel, Function getDetailThree, [TextStyle chosenStyle]) : super(
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                    cardTitle,
+                    style: chosenStyle
+                ),
+              ),
+            ],
+          ),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                        detailOneLabel,
+                        style: chosenStyle
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                        getDetailOne(),
+                        style: chosenStyle
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                        detailTwoLabel,
+                        style: chosenStyle
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                        getDetailTwo(),
+                        style: chosenStyle
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                        detailThreeLabel,
+                        style: chosenStyle
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                        getDetailThree(),
+                        style: chosenStyle
+                    ),
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+
+        ],
+      )
+  );
+}
+
+/*
+A card with a title and a body
+ */
+class DescriptionCard extends Card{
+  DescriptionCard(String titleText, String bodyText, [TextStyle chosenStyle])
+      : super(
+    child: Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                  titleText,
+                  style: chosenStyle
+              ),
+            ),
+          ],
+        ),
+
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                  bodyText,
+                  style: chosenStyle
+              ),
+            ),
+          ],
+        ),
+
+      ],
+    ),
+  );
+}
+
+
+
+
+//defining the standard cards used on the preferences screens
 
 /* used when the card links to another page or performs an action on press e.g.
 'view your profile' or 'logout'.
@@ -71,6 +208,7 @@ class ToggleCard extends Card{
   );
 }
 
+//A card which has a slider on it, a description and a live value
 class SliderCard extends Card{
   SliderCard(String cardText, valueToSlide, String valueString, int noOfDivisions, double minValue, double maxValue, onChanged, [TextStyle chosenStyle])
       : super(
