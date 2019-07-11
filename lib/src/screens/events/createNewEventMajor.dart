@@ -279,7 +279,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
         ),
         onPressed: () {
           Event newEvent = new Event();
-          newEvent.addMajor(_selectedActivity, _eventLocationController.text,
+          newEvent.addMajor(_selectedActivity, _eventNameController.text, _eventLocationController.text,
               _startTime, _finishTime);
           Navigator.push(
             context,

@@ -26,7 +26,7 @@ if (mysqli_num_rows($res)) {
     exit;
 }
 
-$sql1 = "insert into events(activity_id, initiator_id, \name, activity_name, location, description, start_time, finish_time, picture_id, minimum_age, maximum_age, minimum_participants_number, maximum_participants_number, price, verified, creation_time)
+$sql1 = "insert into events(activity_id, initiator_id, name, activity_name, location, description, start_time, finish_time, picture_id, minimum_age, maximum_age, minimum_participants_number, maximum_participants_number, price, verified, creation_time)
 values('$activity_id','$initiator_id','$name','$activity_name','$location','$description','$start_time','$finish_time','$picture_id','$minimum_age','$maximum_age','$minimum_participants_number','$maximum_participants_number','$price','$verified','$creation_time')";
 
 if (mysqli_query($con, $sql1)) {

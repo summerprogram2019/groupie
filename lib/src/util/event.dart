@@ -1,7 +1,7 @@
 class Event {
   int eventId;
 
-  int activityId;
+  int activityId = 0;
   int initiatorId;
 
   String eventType;
@@ -14,7 +14,7 @@ class Event {
   DateTime finishTime;
   DateTime rsvpTime;
 
-  int pictureId;
+  int pictureId = 4;
 
   double price;
 
@@ -26,9 +26,10 @@ class Event {
 
   int verified = 1;
 
-  void addMajor(String activity_name, String location, DateTime startTime,
+  void addMajor(String activity_name, String name, String location, DateTime startTime,
       DateTime finishTime) {
     this.activity_name = activity_name;
+    this.name = name;
     this.location = location;
     this.startTime = startTime;
     this.finishTime = finishTime;
@@ -66,8 +67,8 @@ class Event {
       "picture_id": pictureId.toString(),
       "minimum_age": minimumAge.toString(),
       "maximum_age": maximumAge.toString(),
-      "minimum_number_participants": minimumParticipantsNumber.toString(),
-      "maximum_number_participants": maximumParticipantsNumber.toString(),
+      "minimum_participants_number": minimumParticipantsNumber.toString(),
+      "maximum_participants_number": maximumParticipantsNumber.toString(),
       "price": price.toString(),
       "verified": verified.toString(),
     };

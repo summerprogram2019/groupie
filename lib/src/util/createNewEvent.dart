@@ -24,6 +24,8 @@ Future<CreateNewEventResponse> createNewEvent(Event event) async {
 
 //  return CreateNewEventResponse(error: event.getField(), hasError: true, eventId: 0);
 
+  print(request);
+  
   Response response = await post(_CREATENEWEVENT_ENDPOINT, body: request);
 
   if (response.statusCode != 200) {
