@@ -78,19 +78,39 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   String _eventCost = "";
   String _eventAge = "";
 
-  double _maxCost;
-  var _maxCostString = '';
-
-  double _maxDistance;
-  var _maxDistanceString = '';
-
   _DetailedEventScreenState(this.event) : super() {
     _eventDescription = event.description;
     _eventLocation = event.location;
     _eventStart = DateFormat('dd-MM-yyyy - kk:mm').format(event.start);
-    _eventParticipants = event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString();
-    _eventCost = event.cost.toString();
-    _eventAge = event.minimumAge.toString() + " - " + event.maximumAge.toString();
+
+    if (event.minimumParticipants == null && event.maximumParticipants == null){
+      _eventParticipants = "No limit";
+    } else if (event.minimumParticipants == null){
+      _eventParticipants = "1 - " + event.maximumParticipants.toString();
+    } else if (event.maximumParticipants == null){
+      _eventParticipants = event.minimumParticipants.toString() + " +";
+    } else{
+      _eventParticipants = event.minimumParticipants.toString() + " - " + event.maximumParticipants.toString();
+    }
+
+    if (event.cost == -20){
+      _eventCost = "Free";
+    } else if (event.cost == -100){
+      _eventCost = "Unknown";
+    } else {
+      _eventCost = event.cost.toString();
+    }
+
+    if (event.minimumAge == null && event.maximumAge == null){
+      _eventAge = "No limit";
+    } else if (event.minimumAge == null){
+      _eventAge = "13 - " + event.maximumAge.toString();
+    } else if (event.maximumAge == null){
+      _eventAge = event.minimumAge.toString() + " +";
+    } else{
+      _eventAge = event.minimumAge.toString() + " - " + event.maximumAge.toString();
+    }
+
     futureEventTime = event.start;
   }
 
