@@ -66,37 +66,34 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-//            title: new Text(widget.title, style: new TextStyle(
-//            color: GroupieColours.grey69)),
-        backgroundColor: GroupieColours.logoColor,
-        centerTitle: true,
-        actions: <Widget>[
-          Center(
-            child:
-              new Row(
-                children: [
-                  new IconButton(
-                    icon: new Icon(Icons.brightness_low),
-                    iconSize: 45.0,
-                    tooltip: 'Open Preferences',
-                    onPressed: _openPreferences,
-                  ),
-                  new IconButton(
-                    icon: new Icon(Icons.calendar_today),
-                    iconSize: 43.0,
-                    tooltip: 'Open Upcoming Events',
-                    onPressed: _openUpcomingEvents,
-                  ),
-                   new IconButton(
-                     icon: new Icon(Icons.person_outline),
-                     iconSize: 49.0,
-                     tooltip: 'Open Profile',
-                     onPressed: _openProfile,
-                   ),
-                ],
+
+        title: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new IconButton(
+                icon: new Icon(Icons.brightness_low),
+                iconSize: 45.0,
+                tooltip: 'Open Preferences',
+                onPressed: _openPreferences,
               ),
+              new IconButton(
+                icon: new Icon(Icons.calendar_today),
+                iconSize: 43.0,
+                tooltip: 'Open Upcoming Events',
+                onPressed: _openUpcomingEvents,
+              ),
+              new IconButton(
+                icon: new Icon(Icons.person_outline),
+                iconSize: 49.0,
+                tooltip: 'Open Profile',
+                onPressed: _openProfile,
+              ),
+            ],
           ),
-        ],
+        ),
+        backgroundColor: GroupieColours.white69,
         iconTheme: new IconThemeData(color: GroupieColours.grey69),
         automaticallyImplyLeading: false,
       ),
