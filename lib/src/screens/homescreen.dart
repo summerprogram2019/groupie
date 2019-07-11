@@ -65,38 +65,70 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: PreferredSize(
+          child: AppBar(
+            //a widget which has the same height as the app bar
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ClipOval(
+                      child: Container(
+                        color: GroupieColours.white69,
+                        child: IconButton(
+                          icon: new Icon(Icons.brightness_low),
+                          iconSize: 45.0,
+                          tooltip: 'Open Preferences',
+                          onPressed: _openPreferences,
+                        ),
+                      ),
+                    ),
 
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              new IconButton(
-                icon: new Icon(Icons.brightness_low),
-                iconSize: 45.0,
-                tooltip: 'Open Preferences',
-                onPressed: _openPreferences,
-              ),
-              new IconButton(
-                icon: new Icon(Icons.calendar_today),
-                iconSize: 43.0,
-                tooltip: 'Open Upcoming Events',
-                onPressed: _openUpcomingEvents,
-              ),
-              new IconButton(
-                icon: new Icon(Icons.person_outline),
-                iconSize: 49.0,
-                tooltip: 'Open Profile',
-                onPressed: _openProfile,
-              ),
-            ],
+                    ClipOval(
+                      child: Container(
+                        color: GroupieColours.white69,
+                        child: IconButton(
+                          icon: new Icon(Icons.calendar_today),
+                          iconSize: 45.0,
+                          tooltip: 'Open Upcoming Events',
+                          onPressed: _openUpcomingEvents,
+                        ),
+                      ),
+                    ),
+
+                    ClipOval(
+                      child: Container(
+                        color: GroupieColours.white69,
+                        child: IconButton(
+                          icon: new Icon(Icons.person_outline),
+                          iconSize: 45.0,
+                          tooltip: 'Open Profile',
+                          onPressed: _openProfile,
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+                //to add some spacing from between the links and the bottom of the appbar
+                Container(
+                  height: 10,
+                )
+              ],
+            ),
+
+
+            backgroundColor: GroupieColours.logoColor,
+            iconTheme: new IconThemeData(color: GroupieColours.grey69),
+            automaticallyImplyLeading: false,
+
           ),
-        ),
-        backgroundColor: GroupieColours.white69,
-        iconTheme: new IconThemeData(color: GroupieColours.grey69),
-        automaticallyImplyLeading: false,
+          //sets the height of the appbar
+          preferredSize: Size.fromHeight(80)
       ),
+
       body: new LoadableScreen(
         visible: !_loading,
         child: _cardScreen
