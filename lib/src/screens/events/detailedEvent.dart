@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen;
 import 'package:groupie/src/util/dateFunctions.dart';
-import 'package:groupie/util.dart' show GroupieColours, logout, getEventDetails, getEventImageProvider, getEventImageProviderById;
+import 'package:groupie/util.dart' show GroupieColours, logout, getEventDetails, getEventImageProvider, getEventImageProviderById, getApprovedParticipants;
 import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard, IconLinkCard;
 
 //for persist functionality
@@ -45,7 +45,9 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   int maximumAge;
   //bool verified;
 
-  int minimumParticipants;
+  int numParticipants = 1;
+
+  int minimumParticipants = 1;
   int maximumParticipants;
   int cost;
 
@@ -76,8 +78,8 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
           'minimumParticipants' : 1,
           'maximumParticipants' : 99,
           'cost' : 999,
-          'pictureId' : ''
-
+          'pictureId' : '',
+          'numParticipants' : 0
         }));
 
       getEventImageProvider().then((image) {
@@ -91,6 +93,11 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
       getEventImageProviderById(args.currentEvent).then((image) {
         setState(() {
           eventPicture = image;
+        });
+      });
+      getApprovedParticipants(args.currentEvent.activityId).then((participants) {
+        setState(() {
+          numParticipants = participants.length;
         });
       });
     }
@@ -154,14 +161,11 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
 
   //todo make live updating
   _getParticipantNumbers(){
-    minimumParticipants = 5;
-    maximumParticipants = 3;
-
-    return '(' + maximumParticipants.toString() + '/' + minimumParticipants.toString() + ')';
+    return '(' + numParticipants.toString() + '/' + minimumParticipants.toString() + ')';
   }
 
   _chooseTextColour(){
-    if (maximumParticipants < minimumParticipants){
+    if (numParticipants < minimumParticipants){
       //there are less participants than the event requires, therefore red text
       return Theme.of(context).textTheme.body2;
     } else {
