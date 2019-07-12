@@ -144,7 +144,7 @@ class _CreateNewEventPreviewPageState extends State<CreateNewEventPreviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Create Event. Preview"),
+        title: new Text("Event Preview"),
         backgroundColor: GroupieColours.logoColor,
       ),
       backgroundColor: Colors.white,

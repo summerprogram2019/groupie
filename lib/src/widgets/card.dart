@@ -16,106 +16,145 @@ class ParticipantCard extends Expanded {
                 child: Padding(padding: EdgeInsets.all(10.0), child: child)));
 }
 
+
 /*
 A card used on the upcoming events and my 'view your created events' pages.
 Shown in a list with other MiniEventCards
 Has a title, number of participants, image, small description, location and time
  */
-class MiniEventCard extends Card {
+class MiniEventCard extends Card{
+  //outputs a string in the form "( currentNoOfParticipants / requiredNoOfParticipants )'
+  static _getParticipantString(int currentNoOfParticipants, int requiredNoOfParticipants){
+    return '(' + currentNoOfParticipants.toString() + '/' + requiredNoOfParticipants.toString() + ')';
+  }
+
+  static _chooseTextColour(int currentNoOfParticipants, int requiredNoOfParticipants, BuildContext context){
+    if (currentNoOfParticipants < requiredNoOfParticipants){
+      //there are less participants than the event requires, therefore red text
+      return Theme.of(context).textTheme.body2;
+    } else {
+      return Theme.of(context).textTheme.body1;
+    }
+  }
+
   MiniEventCard(
       String titleText,
       String eventDescription,
-      String imageName,
+      Image eventImage,
       String locationText,
       DateTime eventTime,
-      String iconText,
-      TextStyle iconTextStyle,
+      int currentNoOfParticipants,
+      int requiredNoOfParticipants,
       BuildContext context,
       [TextStyle chosenStyle])
       : super(
-          child: Column(
+    child: Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(titleText, style: chosenStyle),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.perm_identity,
-                        ),
-                        Text(iconText, style: iconTextStyle),
-                      ],
-                    ),
-                  ],
-                ),
+              Text(
+                  titleText,
+                  style: chosenStyle
               ),
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: ClipRRect(
-                      child: Image.asset(imageName),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: Text(
-                      eventDescription,
-                      style:
-                          TextStyle(fontSize: 14, color: GroupieColours.grey69),
-                      maxLines: 6,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  Icon(Icons.perm_identity,),
+                  Text(
+                      _getParticipantString(currentNoOfParticipants, requiredNoOfParticipants),
+                      style: _chooseTextColour(currentNoOfParticipants, requiredNoOfParticipants, context)
                   ),
                 ],
               ),
-              Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Location:',
-                            style: TextStyle(
-                                fontSize: 14, color: GroupieColours.grey69)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(locationText,
-                            style: TextStyle(
-                                fontSize: 14, color: GroupieColours.grey69)),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Time:',
-                            style: TextStyle(
-                                fontSize: 14, color: GroupieColours.grey69)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(DateFunctions.getDateString(eventTime),
-                            style: TextStyle(
-                                fontSize: 14, color: GroupieColours.grey69)),
-                      ),
-                    ],
-                  ),
-                ],
-              )
+
             ],
           ),
-        );
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width*0.5,
+              child:ClipRRect(
+                child: eventImage,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
+
+            Container(
+              width: MediaQuery.of(context).size.width*0.4,
+              child: Text(
+                eventDescription,
+                style: TextStyle(fontSize: 14, color: GroupieColours.grey69),
+                maxLines:  6,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+
+          ],
+        ),
+
+        Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      'Location:',
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      locationText,
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      'Time:',
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                      eventTime.toIso8601String(),
+                      style: TextStyle(fontSize: 14, color: GroupieColours.grey69)
+                  ),
+                ),
+              ],
+            ),
+
+
+          ],
+        )
+
+      ],
+    ),
+  );
 }
+
+
+
 
 /*
 Takes a card title, three detail labels and three functions to fetch the values for the details.

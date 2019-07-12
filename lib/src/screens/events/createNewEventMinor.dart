@@ -54,7 +54,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
 
   @override
   void initState() {
-    _agesNewEvent.add('no matter');
+    _agesNewEvent.add('None');
     for (int i = 14; i < 100; ++i) {
       _agesNewEvent.add(i.toString());
     }
@@ -63,7 +63,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
     _dropDownMenuMaximumAge = buildAndGetDropDownMenuItems(_agesNewEvent);
     _selectedMaximumAge = _dropDownMenuMaximumAge[0].value;
 
-    _participantsNumbers.add('no matter');
+    _participantsNumbers.add('None');
     for (int i = 0; i < 31; ++i) {
       _participantsNumbers.add(i.toString());
     }
@@ -177,7 +177,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
 //      expands: true,
       controller: _eventDescriptionController,
       decoration: InputDecoration(
-        hintText: "All true guys are going to be here!",
+       hintText: "Enter event description here",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.0,
@@ -236,7 +236,7 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
 
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Create Event. Minor Details"),
+        title: new Text("Create Event"),
         backgroundColor: GroupieColours.logoColor,
       ),
       backgroundColor: Colors.white,
@@ -344,10 +344,10 @@ class _CreateNewEventMinorPageState extends State<CreateNewEventMinorPage> {
           }
 
           double _priceEvent = _priceNewEvent < -50 ? -1 : _priceNewEvent <= 0 ? 0 : _priceNewEvent == 1000 ? 100500 : _priceNewEvent;
-          int _minimumAge = _selectedMinimumAge == 'no matter' ? 0 : int.parse(_selectedMinimumAge);
-          int _maximumAge = _selectedMaximumAge == 'no matter' ? 0 : int.parse(_selectedMaximumAge);
-          int _minimumParticipantsNumber = _selectedMinimumParticipantsNumber == 'no matter' ? 0 : int.parse(_selectedMinimumParticipantsNumber);
-          int _maximumParticipantsNumber = _selectedMaximumParticipantsNumber == 'no matter' ? 0 : int.parse(_selectedMaximumParticipantsNumber);
+          int _minimumAge = _selectedMinimumAge == 'None' ? 0 : int.parse(_selectedMinimumAge);
+          int _maximumAge = _selectedMaximumAge == 'None' ? 0 : int.parse(_selectedMaximumAge);
+          int _minimumParticipantsNumber = _selectedMinimumParticipantsNumber == 'None' ? 0 : int.parse(_selectedMinimumParticipantsNumber);
+          int _maximumParticipantsNumber = _selectedMaximumParticipantsNumber == 'None' ? 0 : int.parse(_selectedMaximumParticipantsNumber);
 
           // don't change value-variables of dropDownButtons like following!!!
 //          if (_selectedMinimumAge == 'no matter') {

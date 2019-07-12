@@ -141,7 +141,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       focusNode: focus,
       controller: _eventNameController,
       decoration: InputDecoration(
-        hintText: "THE BEST PARTY IN EVER!!!",
+        hintText: "Enter name of event here",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.0,
@@ -157,7 +157,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
       autofocus: false,
       controller: _eventLocationController,
       decoration: InputDecoration(
-        hintText: "Leon's villa, Dalian",
+        hintText: "Enter event location here",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.0,
@@ -223,7 +223,7 @@ class _CreateNewEventMajorPageState extends State<CreateNewEventMajorPage> {
 
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Create Event. Major Details"),
+        title: new Text("Create Event"),
         backgroundColor: GroupieColours.logoColor,
       ),
       backgroundColor: Colors.white,
