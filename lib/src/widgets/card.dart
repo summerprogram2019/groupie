@@ -420,7 +420,7 @@ class ProfileCard extends Row {
 }
 
 class EventCard extends Positioned {
-  EventCard(Event event, {remove})
+  EventCard(Event event, Image image, {remove})
       : super(
             top: 5.0,
             child: Draggable(
@@ -430,13 +430,13 @@ class EventCard extends Positioned {
                 }
               },
               childWhenDragging: Container(),
-              feedback: _createEventCard(event),
-              child: _createEventCard(event),
+              feedback: _createEventCard(event, image),
+              child: _createEventCard(event, image),
               data: event,
             ));
 }
 
-Widget _createEventCard(Event event) {
+Widget _createEventCard(Event event, Image image) {
   return Card(
     elevation: 12.0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -452,7 +452,7 @@ Widget _createEventCard(Event event) {
           ),
         ),
         SizedBox(height: 10.0),
-        Image.asset("sun.png"), //Update to load from DB
+        image, //Update to load from DB
         SizedBox(height: 10.0),
         Center(
           child: Padding(

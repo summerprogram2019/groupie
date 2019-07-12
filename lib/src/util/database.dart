@@ -240,6 +240,16 @@ Future<Image> getEventImage() async {
   return Image.network(url);
 }
 
+Future<Image> getEventImageById(Event event) async {
+  String url = await getImageUrl(event.pictureId);
+
+  if (url == null) {
+    return Image.asset("sun.png");
+  }
+
+  return Image.network(url);
+}
+
 Future<ImageProvider> getEventImageProviderById(Event event) async {
   String url = await getImageUrl(event.pictureId);
 

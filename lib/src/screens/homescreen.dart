@@ -10,7 +10,7 @@ import 'events/upcomingEvents.dart';
 import 'package:groupie/widgets.dart' show EventCard, LoadableScreen, CircleButton;
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show CreateNewEventMajorPage;
-import 'package:groupie/util.dart' show GroupieColours, getEvents, acceptEvent;
+import 'package:groupie/util.dart' show GroupieColours, getEvents, acceptEvent, getEventImageById;
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -132,13 +132,17 @@ class _CardsScreenState extends State<CardsScreen> {
     };
 
     for (Event event in events) {
-      eventWidgets[event.id] = EventCard(event,
-        remove: () {
-          setState(() {
-            eventWidgets.remove(event.id);
-          });
-        },
-      );
+      getEventImageById(event).then((image) {
+        setState(() {
+          eventWidgets[event.id] = EventCard(event, image,
+            remove: () {
+              setState(() {
+                eventWidgets.remove(event.id);
+              });
+            },
+          );
+        });
+      });
     }
 
     _cards = eventWidgets;
