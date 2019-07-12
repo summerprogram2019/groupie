@@ -452,7 +452,13 @@ Widget _createEventCard(Event event, Image image) {
           ),
         ),
         SizedBox(height: 10.0),
-        image, //Update to load from DB
+        Container(
+          height: 200,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: image, //Update to load from DB
+          ),
+        ),
         SizedBox(height: 10.0),
         Center(
           child: Padding(

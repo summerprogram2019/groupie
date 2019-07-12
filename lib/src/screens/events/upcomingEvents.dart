@@ -106,9 +106,9 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       ),
       backgroundColor: GroupieColours.white69,
       body: ListView(children: [
-        MiniEventCard('Test', 'This is the description of the event',
-          Image.asset('sun.png'), 'this is the event location', DateTime.now(), 4,
-          3, context, Theme.of(context).textTheme.subhead),
+//        MiniEventCard('Test', 'This is the description of the event',
+//          Image.asset('sun.png'), 'this is the event location', DateTime.now(), 4,
+//          3, context, Theme.of(context).textTheme.subhead),
 
         LoadableScreen(
             visible: _eventsLoaded,
