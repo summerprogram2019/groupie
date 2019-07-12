@@ -57,7 +57,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   String participantRange = '? - ?';
   String ageRange = '? - ?';
 
-  ImageProvider eventPicture = AssetImage("placeholderUser.png");
+  Image eventPicture = Image.asset("placeholderUser.png");
 
   bool _loading = true;
 
@@ -84,16 +84,10 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
           'pictureId' : '',
           'numParticipants' : 0
         }));
-
-      getEventImageProvider().then((image) {
-        setState(() {
-          eventPicture = image;
-        });
-      });
     } else {
       setupDisplay(args.currentEvent);
       setState(() {
-        eventPicture = args.eventImage.image;
+        eventPicture = args.eventImage;
       });
       getApprovedParticipants(args.currentEvent.id).then((participants) {
         setState(() {
@@ -236,7 +230,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
             child:  Hero(
               tag: "event_id_" + eventName,
               child: ClipRRect(
-                  child: Image.asset("assets/hiking.jpg"),
+                  child: eventPicture,
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
             ),
