@@ -18,40 +18,40 @@ class DateFunctions {
     String month;
     switch (tm.month) {
       case 1:
-        month = "january";
+        month = "January";
         break;
       case 2:
-        month = "february";
+        month = "February";
         break;
       case 3:
-        month = "march";
+        month = "March";
         break;
       case 4:
-        month = "april";
+        month = "April";
         break;
       case 5:
-        month = "may";
+        month = "May";
         break;
       case 6:
-        month = "june";
+        month = "June";
         break;
       case 7:
-        month = "july";
+        month = "July";
         break;
       case 8:
-        month = "august";
+        month = "August";
         break;
       case 9:
-        month = "september";
+        month = "September";
         break;
       case 10:
-        month = "october";
+        month = "October";
         break;
       case 11:
-        month = "november";
+        month = "November";
         break;
       case 12:
-        month = "december";
+        month = "December";
         break;
     }
     return month;
