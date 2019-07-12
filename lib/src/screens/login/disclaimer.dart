@@ -34,20 +34,6 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final email = TextFormField(
-      key: Key('email_field'),
-      keyboardType: TextInputType.emailAddress,
-      focusNode: focus,
-      controller: emailController,
-      decoration: InputDecoration(
-        labelText: "Email",
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 1.0,
-          ),
-        ),
-      ),
-    );
 
     final confirm = CheckboxListTile(
         key: Key('checkbox'),
@@ -125,10 +111,8 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                     )
                 ),
                 SizedBox(height: 24.0),
-                email,
-                SizedBox(height: 24.0),
                 disclaimerText,
-                SizedBox(height: 24.0),
+                SizedBox(height: 100.0),
                 Text(errors),
                 SizedBox(height: 48.0),
                 confirm,

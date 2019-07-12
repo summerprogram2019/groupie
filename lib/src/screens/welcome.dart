@@ -40,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                       'Login',
                       style: TextStyle(color: Colors.white, fontSize: 32.0),
                     ),
-                    color: Colors.amber,
+                    color: GroupieColours.logoColor,
                     padding: EdgeInsets.symmetric(vertical: 12.0),
                     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                     onPressed: () {
@@ -61,18 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 16.0),
-                  RaisedButton(
-                    key: Key('createNewEvent'),
-                    child: Text(
-                      'Create new event \r\n For dev. purp.',
-                      style: TextStyle(color: Colors.black54, fontSize: 32.0),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(CreateNewEventMajorPage.tag);
-                    },
-                  ),
+
                   SizedBox(height: 32.0),
                 ]
               )

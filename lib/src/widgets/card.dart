@@ -455,13 +455,16 @@ Widget _createEventCard(Event event) {
         Image.asset("sun.png"), //Update to load from DB
         SizedBox(height: 10.0),
         Center(
-          child: Text(
-            event.description, //Update to load from DB
-            style: new TextStyle(
-              color: GroupieColours.grey69,
-              fontSize: 15.0,
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              event.description, //Update to load from DB
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 15.0,
+              ),
             ),
-          ),
+          )
         ),
         SizedBox(height: 18.0),
         new Row(
@@ -473,104 +476,87 @@ Widget _createEventCard(Event event) {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Location"),
-                  Text("Date"),
-                  Text("Participants"),
-                  Text("Estimated Cost"),
-                  Text("Age Restriction"),
+                  Text("Location",
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GroupieColours.grey69),
+                  ),
+                  Text("Date",
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GroupieColours.grey69),
+                  ),
+                  Text("Participants",
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GroupieColours.grey69),
+                  ),
+                  Text("Estimated Cost",
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GroupieColours.grey69),
+                  ),
+                  Text("Age Restriction",
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GroupieColours.grey69),
+                  ),
                 ]),
             new Column(children: [
               SizedBox(width: 50.0),
             ]),
             new Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // When database is ready, update these to take directly from there:
-              Text(event.location),
-              Text(DateFunctions.getDateString(event.start)),
-              Text(event.minimumParticipants.toString() +
-                  " - " +
-                  event.maximumParticipants.toString()),
-              Text(event.cost.toString()),
-              Text(event.minimumAge.toString() +
-                  " - " +
-                  event.maximumAge.toString()),
-            ]),
-          ],
-        ),
-      ]),
-    ),
-  );
-}
 
-Widget createCard(HobbyCard card, VoidCallback remove) {
-  return new Positioned(
-      top: 5.0,
-      child: Draggable(
-        onDragCompleted: () {
-          remove();
-        },
-        childWhenDragging: Container(),
-        feedback: _createCard(card),
-        child: _createCard(card),
-      ));
-}
+              Container(
+                width: 120,
+                child: Text(
+                  event.location,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+                ),
+              ),
 
-/*
- * Activity Card Template for the homescreen
- * TODO update this when database is ready to go
- */
-Widget _createCard(HobbyCard card) {
-  return Card(
-    elevation: 12.0,
-    color: Color.fromARGB(255, card.red, card.green, card.blue),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-    child: Container(
-      width: 360.0,
-      height: 550.0,
-      child: Column(children: [
-        Text(
-          "This is the Event Name", //Update to load from DB
-          style: new TextStyle(
-            color: GroupieColours.grey69,
-            fontSize: 20.0,
-          ),
-        ),
-        SizedBox(height: 10.0),
-        Image.asset("sun.png"), //Update to load from DB
-        SizedBox(height: 10.0),
-        Text(
-          "Short Description Here", //Update to load from DB
-          style: new TextStyle(
-            color: GroupieColours.grey69,
-            fontSize: 15.0,
-          ),
-        ),
-        SizedBox(height: 18.0),
-        new Row(
-          children: <Widget>[
-            new Column(children: [
-              SizedBox(width: 10.0),
-            ]),
-            new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Location"),
-                  Text("Date"),
-                  Text("Participants"),
-                  Text("Estimated Cost"),
-                  Text("Age Restriction"),
-                ]),
-            new Column(children: [
-              SizedBox(width: 100.0),
-            ]),
-            //TODO fix this alignment so that its not hardcoded in
-            new Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              // When database is ready, update these to take directly from there:
-              Text("Location"),
-              Text("Date"),
-              Text("Participants"),
-              Text("Estimated Cost"),
-              Text("Age Restriction"),
+              Container(
+                width: 120,
+                child: Text(
+                  DateFormat('d MMMM').format(event.start),
+                    //DateFunctions.getDateString(event.start),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.minimumParticipants.toString() +
+                      " - " +
+                      event.maximumParticipants.toString(),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.cost.toString(),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.minimumAge.toString() +
+                      " - " +
+                      event.maximumAge.toString(),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: GroupieColours.grey69),
+                ),
+              ),
             ]),
           ],
         ),
