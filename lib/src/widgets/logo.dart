@@ -24,7 +24,7 @@ class GroupieProfile extends Container {
     decoration: new BoxDecoration(
       shape: BoxShape.circle,
       image: new DecorationImage(
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
         image: image
       )
     )

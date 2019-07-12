@@ -80,9 +80,12 @@ class MiniEventCard extends Card{
             Container(
               height: 100,
               width: MediaQuery.of(context).size.width*0.5,
-              child:ClipRRect(
-                child: eventImage,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+              child: Hero(
+                tag: "event_id_" + titleText,
+                child: ClipRRect(
+                  child: eventImage,
+                  borderRadius: BorderRadius.all(Radius.circular(10))
+                ),
               ),
             ),
 

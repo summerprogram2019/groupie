@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groupie/model.dart' show Event;
-import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen;
+import 'package:groupie/screens.dart' show LoginScreen, ParticipantsScreen, ParticipantsScreenArguments;
 import 'package:groupie/src/util/dateFunctions.dart';
 import 'package:groupie/util.dart' show GroupieColours, logout, getEventDetails, getEventImageProvider, getEventImageProviderById, getApprovedParticipants;
 import 'package:groupie/widgets.dart' show DescriptionCard, DetailsCard, LinkCard, IconLinkCard;
@@ -13,7 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 //look into using a 'hero' to animate from the events list to the detailedEvent screen
 class EventScreenArguments {
   final Event currentEvent;
-  EventScreenArguments(this.currentEvent);
+  final Image eventImage;
+
+  EventScreenArguments(this.currentEvent, this.eventImage);
 }
 
 class DetailedEventScreen extends StatefulWidget {
@@ -34,7 +36,8 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   //int activityId;
   //int initiatorId;
   //DateTime creationTime;
-  String eventName;
+  int eventId;
+  String eventName = "Loading...";
   String description;
   String location;
   DateTime start;
@@ -45,7 +48,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   int maximumAge;
   //bool verified;
 
-  int numParticipants = 1;
+  int numParticipants;
 
   int minimumParticipants = 1;
   int maximumParticipants;
@@ -88,14 +91,11 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
         });
       });
     } else {
-      getEventDetails(args.currentEvent.id).then(setupDisplay);
       setupDisplay(args.currentEvent);
-      getEventImageProviderById(args.currentEvent).then((image) {
-        setState(() {
-          eventPicture = image;
-        });
+      setState(() {
+        eventPicture = args.eventImage.image;
       });
-      getApprovedParticipants(args.currentEvent.activityId).then((participants) {
+      getApprovedParticipants(args.currentEvent.id).then((participants) {
         setState(() {
           numParticipants = participants.length;
         });
@@ -105,6 +105,8 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
 
   void setupDisplay(Event event) {
     setState(() {
+      eventName = event.eventName;
+      eventId = event.id;
       pictureId = event.pictureId;
       minimumAge = event.minimumAge;
       maximumAge = event.maximumAge;
@@ -161,10 +163,16 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
 
   //todo make live updating
   _getParticipantNumbers(){
+    if (numParticipants == null) {
+      return "Fetching...";
+    }
     return '(' + numParticipants.toString() + '/' + minimumParticipants.toString() + ')';
   }
 
   _chooseTextColour(){
+    if (numParticipants == null) {
+      return Theme.of(context).textTheme.body2;
+    }
     if (numParticipants < minimumParticipants){
       //there are less participants than the event requires, therefore red text
       return Theme.of(context).textTheme.body2;
@@ -202,7 +210,8 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
   //Goes to a particular events participants page
   void _goToParticipants(){
     //todo change screen to particular events participants page
-    Navigator.pushNamed(context, ParticipantsScreen.tag);
+    Navigator.pushNamed(context, ParticipantsScreen.tag,
+        arguments: new ParticipantsScreenArguments(eventId));
   }
 
   @override
@@ -212,7 +221,7 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: new AppBar(
         //todo should have the title of the event
-          title: new Text(widget.title),
+          title: new Text(eventName),
           backgroundColor: GroupieColours.logoColor,
           actions: <Widget>[
           ],
@@ -224,7 +233,13 @@ class _DetailedEventScreenState extends State<DetailedEventScreen> {
           //todo replace with loaded image based on event
           //Photo with curved border
           Card(
-            child: Image.asset('assets/hiking.jpg'),
+            child:  Hero(
+              tag: "event_id_" + eventName,
+              child: ClipRRect(
+                  child: Image.asset("assets/hiking.jpg"),
+                  borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+            ),
           ),
 
 

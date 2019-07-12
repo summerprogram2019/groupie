@@ -9,7 +9,8 @@ import 'package:groupie/util.dart'
     GroupieColours,
     getApprovedParticipants,
     getUpcomingEventsForUser,
-    getImageUrl;
+    getImageUrl,
+    getUserId;
 
 class UpcomingEvents extends StatefulWidget {
   final String title;
@@ -49,12 +50,14 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   }
 
   _UpcomingEventsState() : super() {
-    getUpcomingEventsForUser(4).then((participants) {
-      print(participants);
-      buildEventList(participants).then((widgets) {
-        setState(() {
-          eventWidgets = widgets;
-          _eventsLoaded = true;
+    getUserId().then((userId) {
+      getUpcomingEventsForUser(userId).then((participants) {
+        print(participants);
+        buildEventList(participants).then((widgets) {
+          setState(() {
+            eventWidgets = widgets;
+            _eventsLoaded = true;
+          });
         });
       });
     });
@@ -70,13 +73,14 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       });
       Image eventImage = Image.network(await getImageUrl(event.pictureId));
       //todo add current number of participants calculator - could do a nice way with sql
-      int noOfParticipants = (await getApprovedParticipants(event.activityId)).length;
+      int noOfParticipants = (await getApprovedParticipants(event.id)).length;
 
       print(eventImage);
 
       eventCards.add(GestureDetector(
         //todo change the push screen to a generated detailedEvent page
-          onTap: () => Navigator.of(context).pushNamed(DetailedEventScreen.tag, arguments: EventScreenArguments(event)),
+          onTap: () => Navigator.of(context).pushNamed(DetailedEventScreen.tag,
+              arguments: EventScreenArguments(event, eventImage)),
           child: new MiniEventCard(event.eventName, event.description,
               eventImage, event.location, event.start, noOfParticipants,
               event.minimumParticipants, context,

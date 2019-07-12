@@ -10,6 +10,12 @@ import 'package:groupie/util.dart'
         getPendingParticipants,
         getImageUrl;
 
+class ParticipantsScreenArguments {
+  final int eventID;
+
+  ParticipantsScreenArguments(this.eventID);
+}
+
 class ParticipantsScreen extends StatefulWidget {
   final String title;
 
@@ -31,8 +37,21 @@ class _ParticipantsScreenState extends State<ParticipantsScreen> {
   bool _approvedLoaded = false;
   bool _pendingLoaded = false;
 
-  _ParticipantsScreenState() : super() {
-    getApprovedParticipants(2).then((participants) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final ParticipantsScreenArguments args = ModalRoute.of(context).settings.arguments;
+
+    if (args == null || args.eventID == null) {
+      setState(() {
+        _approvedLoaded = true;
+        _pendingLoaded = true;
+      });
+      return;
+    }
+
+    getApprovedParticipants(args.eventID).then((participants) {
       buildUserList(participants).then((widgets) {
         setState(() {
           approvedWidgets = widgets;
@@ -40,7 +59,7 @@ class _ParticipantsScreenState extends State<ParticipantsScreen> {
         });
       });
     });
-    getPendingParticipants(2).then((participants) {
+    getPendingParticipants(args.eventID).then((participants) {
       buildUserList(participants).then((widgets) {
         setState(() {
           pendingWidgets = widgets;
