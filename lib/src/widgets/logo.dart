@@ -8,8 +8,8 @@ class GroupieLogo extends Hero {
         onTap: onTap,
         child: CircleAvatar(
           backgroundColor: Colors.white,
-          radius: 40.0,
-          child: Image.asset('sun.png'),
+          radius: 200.0,
+          child: Image.asset('assets/logo.png'),
         ),
       )
   );
