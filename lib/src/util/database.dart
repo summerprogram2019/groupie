@@ -14,6 +14,8 @@ const String _USER_ENDPOINT = _BASE_ENDPOINT + "/profile_user.php";
 const String _PICTURE_ENDPOINT = _BASE_ENDPOINT + "/pictures.php";
 const String _PARTICIPANT_ENDPOINT = _BASE_ENDPOINT + "/participations.php";
 const String _EVENT_LIST_ENDPOINT = _BASE_ENDPOINT + "/list_events.php";
+const String _EVENT_DETAIL_ENDPOINT = _BASE_ENDPOINT + "/events.php";
+const String _ADD_PARTICIPANT = _BASE_ENDPOINT + "/add_participations.php";
 const String _PICTURE_DIR = _BASE_ENDPOINT + "/images/";
 
 class Reply {
@@ -144,7 +146,7 @@ Future<ImageProvider> getProfileImageProvider() async {
 
 Future<List<User>> _getParticipants(int eventId, String role) async {
   Map<String, String> request = {
-    "activity_id": eventId.toString()
+    "event_id": eventId.toString()
   };
 
   Reply reply = await makeGetRequest(_PARTICIPANT_ENDPOINT, request);
@@ -214,10 +216,10 @@ Future<List<Event>> getUpcomingEventsForUser(int userID) async {
 //fetches the details for a given event Id
 Future<Event> getEventDetails(int activityId) async {
   Map<String, String> request = {
-    "activity_id": activityId.toString()
+    "event_id": activityId.toString()
   };
 
-  Reply reply = await makeGetRequest(_USER_ENDPOINT, request);
+  Reply reply = await makeGetRequest(_EVENT_DETAIL_ENDPOINT, request);
   if (reply.hasError) {
     print(reply.request);
     print(reply.error);
@@ -256,4 +258,27 @@ Future<ImageProvider> getEventImageProvider() async {
   }
 
   return NetworkImage(url);
+}
+
+void acceptEvent(Event event) async {
+  Map<String, String> request = {
+    "event_id": event.id.toString(),
+    "activity_id": event.activityId.toString(),
+    "role": "pending",
+    "account_id": (await getUserId()).toString(),
+  };
+  print(request);
+
+  Response response = await get(_ADD_PARTICIPANT, headers: request);
+
+  if (response.statusCode != 200) {
+    // TODO: Ignore error whoops
+    print("bad response");
+  }
+
+  if (!response.body.startsWith("Successful")) {
+    String error = response.body;
+    // TODO: Ignore error whoops
+    print(error);
+  }
 }

@@ -432,7 +432,7 @@ class EventCard extends Positioned {
               childWhenDragging: Container(),
               feedback: _createEventCard(event),
               child: _createEventCard(event),
-//        data: event,
+              data: event,
             ));
 }
 

@@ -10,7 +10,7 @@ import 'events/upcomingEvents.dart';
 import 'package:groupie/widgets.dart' show EventCard, LoadableScreen, CircleButton;
 import 'package:groupie/model.dart' show Event;
 import 'package:groupie/screens.dart' show CreateNewEventMajorPage;
-import 'package:groupie/util.dart' show GroupieColours, getEvents;
+import 'package:groupie/util.dart' show GroupieColours, getEvents, acceptEvent;
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -159,8 +159,9 @@ class _CardsScreenState extends State<CardsScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Flexible(
-                  child: DragTarget(
+                  child: DragTarget<Event>(
                     builder: (a, b, c) => Container(width: 150),
+                    onWillAccept: (data) => true,
                     onAccept: (data) {
                       Scaffold.of(context).showSnackBar(rejectSnack);
                     },
@@ -168,9 +169,11 @@ class _CardsScreenState extends State<CardsScreen> {
               ),
               Spacer(),
               Flexible(
-                  child: DragTarget(
+                  child: DragTarget<Event>(
                     builder: (a, b, c) => Container(width: 150),
+                    onWillAccept: (data) => true,
                     onAccept: (data) {
+                      acceptEvent(data);
                       Scaffold.of(context).showSnackBar(acceptSnack);
                     },
                   )
