@@ -36,8 +36,11 @@ class _HomePageState extends State<HomePage> {
 
     getEvents().then((events) {
       setState(() {
-        _cardScreen = new CardsScreen(events);
-        _loading = false;
+        _cardScreen = new CardsScreen(events, () {
+          setState(() {
+            _loading = false;
+          });
+        });
       });
     }).catchError((error) {
       setState(() {
@@ -111,8 +114,9 @@ class _HomePageState extends State<HomePage> {
 
 class CardsScreen extends StatefulWidget {
   final List<Event> events;
+  final Function callback;
 
-  CardsScreen(this.events) : super();
+  CardsScreen(this.events, this.callback) : super();
 
   @override
   _CardsScreenState createState() {
@@ -127,13 +131,13 @@ class _CardsScreenState extends State<CardsScreen> {
   final rejectSnack = SnackBar(content: Text('Event rejected!'));
 
   _CardsScreenState(List<Event> events) : super() {
-    Map<int, Widget> eventWidgets = {
-      -1: new Center(child: new Text("Nothing to display"))
-    };
+    Map<int, Widget> eventWidgets = {};
 
     for (Event event in events) {
       getEventImageById(event).then((image) {
         setState(() {
+          this.widget.callback();
+          eventWidgets[-1] = new Center(child: new Text("Nothing to display"));
           eventWidgets[event.id] = EventCard(event, image,
             remove: () {
               setState(() {
