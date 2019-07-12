@@ -167,8 +167,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                     () { setState(() {_pushNotificationToggle = !_pushNotificationToggle;}); }
             ),
 
-            //Privacy policy link (currently opens profile)
-            LinkCard('Privacy Policy', _openDetailedEventScreen),
+            //Privacy policy link (currently opens nothing)
+            LinkCard('Privacy Policy', (){}),
 
             //to push the logout and delete account elements to the bottom of the page
             Spacer(),
