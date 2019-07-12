@@ -452,13 +452,16 @@ Widget _createEventCard(Event event) {
         Image.asset("sun.png"), //Update to load from DB
         SizedBox(height: 10.0),
         Center(
-          child: Text(
-            event.description, //Update to load from DB
-            style: new TextStyle(
-              color: GroupieColours.grey69,
-              fontSize: 15.0,
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              event.description, //Update to load from DB
+              style: new TextStyle(
+                color: GroupieColours.grey69,
+                fontSize: 15.0,
+              ),
             ),
-          ),
+          )
         ),
         SizedBox(height: 18.0),
         new Row(
@@ -481,15 +484,61 @@ Widget _createEventCard(Event event) {
             ]),
             new Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // When database is ready, update these to take directly from there:
-              Text(event.location),
-              Text(DateFunctions.getDateString(event.start)),
-              Text(event.minimumParticipants.toString() +
-                  " - " +
-                  event.maximumParticipants.toString()),
-              Text(event.cost.toString()),
-              Text(event.minimumAge.toString() +
-                  " - " +
-                  event.maximumAge.toString()),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.location,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  DateFormat('d MMMM').format(event.start),
+                    //DateFunctions.getDateString(event.start),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.minimumParticipants.toString() +
+                      " - " +
+                      event.maximumParticipants.toString(),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.cost.toString(),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+
+              Container(
+                width: 120,
+                child: Text(
+                  event.minimumAge.toString() +
+                      " - " +
+                      event.maximumAge.toString(),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
             ]),
           ],
         ),
